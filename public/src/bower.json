@@ -1,0 +1,22 @@
+{
+  "name": "sande",
+  "authors": [
+    "Dean Menso <deanmenso@gmail.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-ui-router": "0.2.15",
+    "toastr": "^2.1.3"
+  }
+}
