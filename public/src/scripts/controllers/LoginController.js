@@ -3,6 +3,9 @@
 
     function LoginController($scope, $state) {
 
+        $scope.Oauth = function() {
+            //
+        };
     }
 
     angular.module('sande')

@@ -10,6 +10,8 @@ var Users = new Schema({
         unique: true
     },
     password: String,
+    OauthId: String,
+    OauthToken: String,
     email: {
         type: String,
         default: ''

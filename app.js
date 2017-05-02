@@ -37,7 +37,7 @@ app.use(cookieParser());
 // passport config
 app.use(passport.initialize());
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/dist')));
 
 app.use('/api/', index);
 app.use('/api/users', users);
