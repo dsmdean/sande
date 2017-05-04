@@ -1,4 +1,3 @@
 /node_modules
 /.tmp
 /public/dist
-/public/src/scripts/services/constants.js
