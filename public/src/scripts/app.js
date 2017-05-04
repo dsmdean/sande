@@ -54,6 +54,7 @@
                 url: '/user',
                 views: {
                     'content@dashboard': {
+                        controller: 'UserProfileController',
                         templateUrl: 'templates/user-profile.html'
                     }
                 }
@@ -61,7 +62,7 @@
 
     }]);
 
-    app.run(['$rootScope', '$log', '$state', function($rootScope, $log, $state) {
+    app.run(['$rootScope', '$log', '$state', 'authService', function($rootScope, $log, $state, authService) {
 
         // $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 
@@ -78,12 +79,12 @@
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             // $log.debug('State changed - Auth: ' + authentication.isAuthenticated());
 
-            // if (!authentication.isAuthenticated() && toState.name != 'login') {
-            //     event.preventDefault();
-            //     $state.go('login');
-            // } else if (authentication.isAuthenticated() && toState.name == 'login') {
-            //     $state.go('home');
-            // }
+            if (!authService.isAuthenticated() && toState.name != 'login' && toState.name != 'register') {
+                event.preventDefault();
+                $state.go('login');
+            } else if (authService.isAuthenticated() && (toState.name == 'login' || toState.name == 'register')) {
+                $state.go('user');
+            }
 
         });
 

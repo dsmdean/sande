@@ -10,14 +10,14 @@
                             </div>
                         </header>
                         <div id="login-box-inner">
-                            <form role="form" action="index.html">
+                            <form role="form" ng-submit="login()">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input class="form-control" type="text" placeholder="Email address">
+                                    <input class="form-control" type="text" ng-model="user.username" placeholder="Username">
                                 </div>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                    <input type="password" class="form-control" placeholder="Password">
+                                    <input type="password" class="form-control" ng-model="user.password" placeholder="Password">
                                 </div>
                                 <div id="remember-me-wrapper">
                                     <div class="row">

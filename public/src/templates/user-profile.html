@@ -2,8 +2,7 @@
     <div class="row">
         <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="">Home</a></li>
-                <li><a href="">User</a></li>
+                <li><a href="">Dashboard</a></li>
                 <li class="active"><span>Profile</span></li>
             </ol>
             <h1>Profile</h1>
@@ -13,39 +12,39 @@
         <div class="col-lg-3 col-md-4 col-sm-4">
             <div class="main-box clearfix">
                 <header class="main-box-header clearfix">
-                    <h2>Jennifer Lawrence</h2>
+                    <h2>{{currentUser.firstname}} {{currentUser.lastname}}</h2>
                 </header>
                 <div class="main-box-body clearfix">
                     <div class="profile-status">
                         <i class="fa fa-circle"></i> Online
                     </div>
-                    <img src="img/samples/scarlet-159.png" alt="" class="profile-img img-responsive center-block" />
+                    <img src="img/default-user-image-159.png" alt="" class="profile-img img-responsive center-block" />
                     <div class="profile-label">
-                        <span class="label label-danger">Admin</span>
+                        <span class="label label-danger">{{currentUser.username}}</span>
                     </div>
-                    <div class="profile-stars">
+                    <!--<div class="profile-stars">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star-o"></i>
                         <span>Super User</span>
-                    </div>
+                    </div>--><br/>
                     <div class="profile-since">
-                        Member since: Jan 2012
+                        Member since: {{currentUser.createdAt | date:'MMM yyyy'}}
                     </div>
-                    <div class="profile-details">
+                    <!--<div class="profile-details">
                         <ul class="fa-ul">
                             <li><i class="fa-li fa fa-truck"></i>Orders: <span>456</span></li>
                             <li><i class="fa-li fa fa-comment"></i>Posts: <span>828</span></li>
                             <li><i class="fa-li fa fa-tasks"></i>Tasks done: <span>1024</span></li>
                         </ul>
-                    </div>
-                    <div class="profile-message-btn center-block text-center">
+                    </div>-->
+                    <!--<div class="profile-message-btn center-block text-center">
                         <a href="" class="btn btn-success">
                             <i class="fa fa-envelope"></i> Send message
                         </a>
-                    </div>
+                    </div>-->
                 </div>
             </div>
         </div>
@@ -60,7 +59,7 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab-newsfeed">
-                            <div id="newsfeed">
+                            <!--<div id="newsfeed">
                                 <div class="story">
                                     <div class="story-user">
                                         <a href="">
@@ -168,10 +167,10 @@
                                         </footer>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="tab-pane fade" id="tab-activity">
-                            <div class="table-responsive">
+                            <!--<div class="table-responsive">
                                 <table class="table">
                                     <tbody>
                                         <tr>
@@ -264,10 +263,10 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div>-->
                         </div>
                         <div class="tab-pane clearfix fade" id="tab-friends">
-                            <ul class="widget-users row">
+                            <!--<ul class="widget-users row">
                                 <li class="col-md-6">
                                     <div class="img">
                                         <img src="img/samples/scarlet.png" alt="" />
@@ -383,10 +382,10 @@
                                 </li>
                             </ul>
                             <br/>
-                            <a href="" class="btn btn-success pull-right">View all users</a>
+                            <a href="" class="btn btn-success pull-right">View all users</a>-->
                         </div>
                         <div class="tab-pane fade" id="tab-chat">
-                            <div class="conversation-wrapper">
+                            <!--<div class="conversation-wrapper">
                                 <div class="conversation-content">
                                     <div class="conversation-inner">
                                         <div class="conversation-item item-left clearfix">
@@ -481,7 +480,7 @@
                                         </div>
                                     </form>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
