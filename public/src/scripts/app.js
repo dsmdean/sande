@@ -7,7 +7,7 @@
 
         $logProvider.debugEnabled(true);
 
-        $urlRouterProvider.otherwise('/login');
+        $urlRouterProvider.otherwise('/404');
 
         $stateProvider
             .state('login', {
@@ -19,6 +19,44 @@
                 url: '/register',
                 controller: 'RegistrationController',
                 templateUrl: 'templates/registration.html'
+            })
+            .state('dashboard', {
+                templateUrl: 'templates/dashboard.html'
+            })
+            .state('page', {
+                parent: 'dashboard',
+                views: {
+                    'header@dashboard': {
+                        controller: 'HeaderController',
+                        templateUrl: 'templates/header.html'
+                    },
+                    'sidebar@dashboard': {
+                        controller: 'SidebarController',
+                        templateUrl: 'templates/sidebar.html'
+                    },
+                    'footer@dashboard': {
+                        controller: 'FooterController',
+                        templateUrl: 'templates/footer.html'
+                    }
+                }
+            })
+            .state('error404', {
+                parent: 'page',
+                url: '/404',
+                views: {
+                    'content@dashboard': {
+                        templateUrl: 'templates/error-404.html'
+                    }
+                }
+            })
+            .state('user', {
+                parent: 'page',
+                url: '/user',
+                views: {
+                    'content@dashboard': {
+                        templateUrl: 'templates/user-profile.html'
+                    }
+                }
             });
 
     }]);

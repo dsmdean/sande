@@ -1,0 +1,14 @@
+<div id="theme-wrapper">
+    <header class="navbar" id="header-navbar">
+        <div ui-view="header" class="container"></div>
+    </header>
+    <div id="page-wrapper" class="container">
+        <div class="row">
+            <div ui-view="sidebar" id="nav-col"></div>
+            <div id="content-wrapper">
+                <div ui-view="content" class="row"></div>
+                <footer ui-view="footer" id="footer-bar" class="row"></footer>
+            </div>
+        </div>
+    </div>
+</div>

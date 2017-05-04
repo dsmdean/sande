@@ -10,7 +10,7 @@
         }
 
         $scope.register = function() {
-            if ($scope.user.password != $scope.user.confirmpassword) {
+            if ($scope.user.password !== $scope.user.confirmpassword) {
                 notifier.error('Passwords do not match');
             } else {
                 authService.register($scope.user)

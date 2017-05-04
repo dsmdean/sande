@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function LoginController($scope, $state) {
+    function LoginController($scope) {
 
         $scope.Oauth = function() {
             //
@@ -9,6 +9,6 @@
     }
 
     angular.module('sande')
-        .controller('LoginController', ['$scope', '$state', LoginController]);
+        .controller('LoginController', ['$scope', LoginController]);
 
 }());

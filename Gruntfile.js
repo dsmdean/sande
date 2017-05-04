@@ -62,7 +62,7 @@ module.exports = function(grunt) {
                 files: [{
                     src: [
                         'public/dist/scripts/*.js',
-                        'public/dist/css/*.css',
+                        'public/dist/styles/*.css',
                     ]
                 }]
             }
@@ -71,9 +71,9 @@ module.exports = function(grunt) {
         // options.assetDirs contains the directories for finding the assets according to their relative paths
         usemin: {
             html: ['public/dist/*.html'],
-            css: ['public/dist/css/*.css'],
+            css: ['public/dist/styles/*.css'],
             options: {
-                assetsDirs: ['public/dist', 'public/dist/css']
+                assetsDirs: ['public/dist', 'public/dist/styles']
             }
         },
         copy: {
@@ -112,14 +112,6 @@ module.exports = function(grunt) {
                         src: ['fonts/*.*'],
                         dest: 'public/dist'
                     }
-                    // {
-                    //     // for fonts
-                    //     expand: true,
-                    //     dot: true,
-                    //     cwd: 'public/src/',
-                    //     src: ['fonts/*.*'],
-                    //     dest: 'public/dist'
-                    // }
                 ]
             }
         },
@@ -133,7 +125,7 @@ module.exports = function(grunt) {
                 tasks: ['build']
             },
             styles: {
-                files: ['public/src/css/*.css'],
+                files: ['public/src/styles/*.css'],
                 tasks: ['build']
             },
             livereload: {
@@ -142,7 +134,7 @@ module.exports = function(grunt) {
                 },
                 files: [
                     'public/src/{,*/}*.html',
-                    '.tmp/css/{,*/}*.css',
+                    '.tmp/styles/{,*/}*.css',
                     'public/src/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
             }

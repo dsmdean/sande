@@ -9,15 +9,15 @@
 
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" />-->
     <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="bower_components/nanoscroller/bin/css/nanoscroller.css" />
     <link rel="stylesheet" type="text/css" href="bower_components/toastr/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/nanoscroller/bin/css/nanoscroller.css" />
+    <link rel="stylesheet" type="text/css" href="bower_components/magnific-popup/dist/magnific-popup.css" />
 
-    <link rel="stylesheet" type="text/css" href="css/compiled/theme_styles.css" />
+    <link rel="stylesheet" type="text/css" href="styles/theme_styles.css" />
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
     <!-- endbuild -->
-
-    <!--<script src="scripts/js/demo-rtl.js"></script>-->
 
     <link type="image/x-icon" href="img/favicon.png" rel="shortcut icon" />
     <!--[if lt IE 9]>
@@ -27,104 +27,21 @@
 
 </head>
 
-<body ng-app="sande">
-    <div class="container">
-        <div ui-view></div>
-    </div>
-    <div id="config-tool" class="closed">
-        <a id="config-tool-cog">
-            <i class="fa fa-cog"></i>
-        </a>
-        <div id="config-tool-options">
-            <h4>Layout Options</h4>
-            <ul>
-                <li>
-                    <div class="checkbox-nice">
-                        <input type="checkbox" id="config-fixed-header" />
-                        <label for="config-fixed-header">
-						Fixed Header
-						</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-nice">
-                        <input type="checkbox" id="config-fixed-sidebar" />
-                        <label for="config-fixed-sidebar">
-						Fixed Left Menu
-						</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-nice">
-                        <input type="checkbox" id="config-fixed-footer" />
-                        <label for="config-fixed-footer">
-						Fixed Footer
-						</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-nice">
-                        <input type="checkbox" id="config-boxed-layout" />
-                        <label for="config-boxed-layout">
-						Boxed Layout
-						</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="checkbox-nice">
-                        <input type="checkbox" id="config-rtl-layout" />
-                        <label for="config-rtl-layout">
-						Right-to-Left
-						</label>
-                    </div>
-                </li>
-            </ul>
-            <br/>
-            <h4>Skin Color</h4>
-            <ul id="skin-colors" class="clearfix">
-                <li>
-                    <a class="skin-changer" data-skin="theme-navyBlue" data-toggle="tooltip" title="Navy Blue" style="background-color: #34495e;">
-                    </a>
-                </li>
-                <li>
-                    <a class="skin-changer" data-skin="theme-white" data-toggle="tooltip" title="White/Green" style="background-color: #2ecc71;">
-                    </a>
-                </li>
-                <li>
-                    <a class="skin-changer blue-gradient" data-skin="theme-blue-gradient" data-toggle="tooltip" title="Gradient">
-                    </a>
-                </li>
-                <li>
-                    <a class="skin-changer" data-skin="theme-greenSea" data-toggle="tooltip" title="Green Sea" style="background-color: #6ff3ad;">
-                    </a>
-                </li>
-                <li>
-                    <a class="skin-changer" data-skin="theme-amethyst" data-toggle="tooltip" title="Amethyst" style="background-color: #9b59b6;">
-                    </a>
-                </li>
-                <li>
-                    <a class="skin-changer" data-skin="theme-blue" data-toggle="tooltip" title="Blue" style="background-color: #7FC8BA;">
-                    </a>
-                </li>
-                <li>
-                    <a class="skin-changer" data-skin="theme-red" data-toggle="tooltip" title="Red" style="background-color: #e74c3c;">
-                    </a>
-                </li>
-                <li>
-                    <a class="skin-changer" data-skin="theme-whbl" data-toggle="tooltip" title="White/Blue" style="background-color: #1ABC9C;">
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<body ng-app="sande" class="fixed-header fixed-leftmenu pace-done theme-blue">
+
+    <div ui-view></div>
 
     <!-- build:js scripts/main.js -->
-    <script src="scripts/js/demo-skin-changer.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js"></script>
-    <!--<script src="scripts/js/demo.js"></script>-->
     <script src="bower_components/toastr/toastr.min.js"></script>
+    <script src="bower_components/nanoscroller/bin/javascripts/jquery.nanoscroller.min.js"></script>
+    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="bower_components/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <script src="scripts/js/scripts.js"></script>
+    <script src="bower_components/PACE/pace.min.js"></script>
+    <script src="scripts/js/maps.js"></script>
 
     <!-- Angular -->
     <script src="bower_components/angular/angular.min.js"></script>
@@ -133,6 +50,9 @@
     <!-- Application code -->
     <script src="scripts/app.js"></script>
 
+    <script src="scripts/controllers/HeaderController.js"></script>
+    <script src="scripts/controllers/SidebarController.js"></script>
+    <script src="scripts/controllers/FooterController.js"></script>
     <script src="scripts/controllers/LoginController.js"></script>
     <script src="scripts/controllers/RegistrationController.js"></script>
 
