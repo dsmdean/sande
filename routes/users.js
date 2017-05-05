@@ -36,8 +36,8 @@ userRouter.post('/register', function(req, res) {
                     var transporter = nodemailer.createTransport({
                         service: 'gmail',
                         auth: {
-                            user: 'deanmenso@gmail.com',
-                            pass: '#15turne#'
+                            user: 'infosandeinc@gmail.com',
+                            pass: '!*adminroot!*'
                         }
                     });
 
