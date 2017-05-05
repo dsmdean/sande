@@ -1,0 +1,17 @@
+body {
+    padding-right: 0px !important;
+}
+
+.danger-close i {
+    margin-right: -15px;
+    width: 22px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid #f4786e;
+    color: #f4786e;
+}
+
+.danger-close i:hover {
+    border: 2px solid #ac2925;
+    color: #ac2925;
+}

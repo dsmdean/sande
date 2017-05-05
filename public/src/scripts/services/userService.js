@@ -53,11 +53,23 @@
                 });
         }
 
+        function deleteUserById(userID) {
+            return $http.delete(baseURL + '/users/' + userID)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error deleting user: ' + response.statusText);
+                    return $q.reject('Error deleting user.');
+                });
+        }
+
         return {
             getUserById: getUserById,
             activateUser: activateUser,
             recoverPassword: recoverPassword,
-            setNewPassword: setNewPassword
+            setNewPassword: setNewPassword,
+            deleteUserById: deleteUserById
         };
     }
 

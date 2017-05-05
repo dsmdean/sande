@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function authService(notifier, $http, constants, $q, localStorage, $rootScope) {
+    function authService(notifier, $http, constants, $q, localStorage, $rootScope, $log) {
 
         var TOKEN_KEY = 'Token';
         var baseURL = constants.APP_SERVER;
@@ -84,7 +84,8 @@
                     return 'User logged in: ' + response.data.user.username;
                 })
                 .catch(function(response) {
-                    return $q.reject(response.data.err);
+                    $log.error(response);
+                    return $q.reject('Error logging in user. (HTTP status: ' + response.status + ')');
                 });
         }
 
@@ -97,7 +98,7 @@
                     return 'User registered: ' + response.config.data.username;
                 })
                 .catch(function(response) {
-                    console.log(response);
+                    $log.error(response);
                     return $q.reject('Error registering user. (HTTP status: ' + response.status + ')');
                 });
         }
@@ -106,10 +107,12 @@
             return $http.get(baseURL + '/users/logout')
                 .then(function(response) {
                     destroyUserCredentials();
+                    $rootScope.$broadcast('logout:Successful');
 
                     return 'Logged out - ' + response.data.status;
                 })
                 .catch(function(response) {
+                    $log.error(response);
                     return $q.reject('Error logging out. (HTTP status: ' + response.status + ')');
                 });
         }
@@ -139,6 +142,6 @@
     }
 
     angular.module('sande')
-        .factory('authService', ['notifier', '$http', 'constants', '$q', 'localStorage', '$rootScope', authService]);
+        .factory('authService', ['notifier', '$http', 'constants', '$q', 'localStorage', '$rootScope', '$log', authService]);
 
 }());

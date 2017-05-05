@@ -12,7 +12,13 @@
         <div class="col-lg-3 col-md-4 col-sm-4">
             <div class="main-box clearfix">
                 <header class="main-box-header clearfix">
-                    <h2>{{currentUser.firstname}} {{currentUser.lastname}}</h2>
+                    <h2>
+                        {{currentUser.firstname}} {{currentUser.lastname}}
+                        <!--<button class="btn btn-primary btn-xs" title="Restore" data-toggle="modal" data-target="#holdModal">&#10004;</button>-->
+                        <a href="" class="md-trigger box-close pull-right danger-close" title="Delete Account" data-toggle="modal" data-target="#deleteModal">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </h2>
                 </header>
                 <div class="main-box-body clearfix">
                     <div class="profile-status">
@@ -485,6 +491,37 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Delete Confirm Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Do you want to delete your account?</h4>
+                <br/>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" data-toggle="modal" data-target="#deleteConfirmModal">Yes, Delete Account</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave Account</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Extra Confirm Modal -->
+<div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Are you sure?</h4>
+                <p>You will be logged out automatically and will no longer be able to use this account.</p>
+                <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" ng-click="deleteAccount()">Yes, Delete Account</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave Account</button>
             </div>
         </div>
     </div>

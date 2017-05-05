@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function HeaderController($scope, $rootScope, $state, authService, notifier) {
+    function HeaderController($scope, $rootScope, $state, authService, notifier, $log) {
 
         $scope.loggedIn = false;
         $scope.isAdmin = false;
@@ -26,20 +26,24 @@
             $state.go("user");
         }
 
+        $rootScope.$on('logout:Successful', function() {
+            $scope.loggedIn = false;
+            $scope.isAdmin = false;
+
+            notifier.success('Logout successful!');
+            $state.go('login');
+        });
+
         $scope.logout = function() {
             authService.logout()
                 .then(function(response) {
-                    $scope.loggedIn = false;
-                    $scope.isAdmin = false;
-
-                    notifier.success('Logout successful!');
-                    $state.go('login');
+                    $log.debug(response);
                 })
                 .catch(showError);
         };
     }
 
     angular.module('sande')
-        .controller('HeaderController', ['$scope', '$rootScope', '$state', 'authService', 'notifier', HeaderController]);
+        .controller('HeaderController', ['$scope', '$rootScope', '$state', 'authService', 'notifier', '$log', HeaderController]);
 
 }());

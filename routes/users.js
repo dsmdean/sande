@@ -159,7 +159,7 @@ userRouter.route('/:userId')
             if (err) next(err);
 
             user.remove({});
-            res.json(user);
+            res.json({ status: "Succesfully deleted " + user.firstname + " " + user.lastname });
         });
     });
 
