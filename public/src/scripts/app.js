@@ -20,15 +20,20 @@
                 controller: 'RegistrationController',
                 templateUrl: 'templates/registration.html'
             })
+            .state('activate', {
+                url: '/activate/:userID',
+                controller: 'UserActivationController',
+                templateUrl: 'templates/user-activation.html'
+            })
             .state('forgot-password', {
                 url: '/forgot-password',
                 controller: 'ForgotPasswordController',
                 templateUrl: 'templates/forgot-password.html'
             })
-            .state('activate', {
-                url: '/activate/:userID',
-                controller: 'UserActivationController',
-                templateUrl: 'templates/user-activation.html'
+            .state('recover', {
+                url: '/recover/:userID',
+                controller: 'RecoverPasswordController',
+                templateUrl: 'templates/recover-password.html'
             })
             .state('dashboard', {
                 templateUrl: 'templates/dashboard.html'
@@ -89,7 +94,7 @@
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             // $log.debug('State changed - Auth: ' + authentication.isAuthenticated());
 
-            if (!authService.isAuthenticated() && toState.name != 'login' && toState.name != 'register' && toState.name != 'forgot-password' && toState.name != 'activate') {
+            if (!authService.isAuthenticated() && toState.name != 'login' && toState.name != 'register' && toState.name != 'forgot-password' && toState.name != 'activate' && toState.name != 'recover') {
                 event.preventDefault();
                 $state.go('login');
             } else if (authService.isAuthenticated() && (toState.name == 'login' || toState.name == 'register')) {

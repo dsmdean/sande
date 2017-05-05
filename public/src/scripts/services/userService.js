@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function userService(notifier, $http, constants) {
+    function userService(notifier, $http, constants, $log, $q) {
 
         var baseURL = constants.APP_SERVER;
 
@@ -31,13 +31,37 @@
                 });
         }
 
+        function recoverPassword(email) {
+            return $http.post(baseURL + '/users/recoverPassword', email)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error sending recovery email: ' + response.statusText);
+                    return $q.reject('Error sending recovery email.');
+                });
+        }
+
+        function setNewPassword(userID, passwords) {
+            return $http.post(baseURL + '/users/' + userID + '/setNewPassword', passwords)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error setting a new password: ' + response.statusText);
+                    return $q.reject('Error setting a new password.');
+                });
+        }
+
         return {
             getUserById: getUserById,
-            activateUser: activateUser
+            activateUser: activateUser,
+            recoverPassword: recoverPassword,
+            setNewPassword: setNewPassword
         };
     }
 
     angular.module('sande')
-        .factory('userService', ['notifier', '$http', 'constants', userService]);
+        .factory('userService', ['notifier', '$http', 'constants', '$log', '$q', userService]);
 
 }());

@@ -16,6 +16,7 @@
                 authService.register($scope.user)
                     .then(function(message) {
                         notifier.success(message);
+                        $scope.user = {};
                         $state.go('login');
                     })
                     .catch(showError);
