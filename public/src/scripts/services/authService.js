@@ -79,7 +79,7 @@
         function login(loginData) {
             return $http.post(baseURL + '/users/login', loginData)
                 .then(function(response) {
-                    storeUserCredentials({ _id: response.data.user._id, firstname: response.data.user.firstname, lastname: response.data.user.lastname, username: response.data.user.username, token: response.data.token, admin: response.data.user.admin, createdAt: response.data.user.createdAt, updatedAt: response.data.user.updatedAt });
+                    storeUserCredentials(response.data.user);
 
                     return 'User logged in: ' + response.data.user.username;
                 })

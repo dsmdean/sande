@@ -17,6 +17,7 @@
                 <div class="main-box-body clearfix">
                     <div class="profile-status">
                         <i class="fa fa-circle"></i> Online
+                        <span ng-if="!currentUser.activated" class="label label-danger">NOT ACTIVATED</span>
                     </div>
                     <img src="img/default-user-image-159.png" alt="" class="profile-img img-responsive center-block" />
                     <div class="profile-label">
