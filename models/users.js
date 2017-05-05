@@ -35,6 +35,10 @@ var Users = new Schema({
     suspended: {
         type: Boolean,
         default: false
+    },
+    activated: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
