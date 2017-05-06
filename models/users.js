@@ -28,6 +28,9 @@ var Users = new Schema({
         type: String,
         default: ''
     },
+    biography: {
+        type: String
+    },
     admin: {
         type: Boolean,
         default: false
