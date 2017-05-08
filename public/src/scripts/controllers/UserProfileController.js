@@ -1,9 +1,8 @@
 (function() {
     'use strict';
 
-    function UserProfileController($scope, authService, userService, notifier, $log, constants, Upload, $timeout) {
+    function UserProfileController($scope, authService, userService, notifier, $log, $state) {
 
-        var baseURL = constants.APP_SERVER;
         $scope.currentUser = authService.getCurrentUser();
         $scope.loading = false;
         $scope.picture = {};
@@ -26,10 +25,11 @@
         $scope.uploadPicture = function() {
             $scope.uploading = true;
 
-            userService.uploadPicture($scope.currentUser._id, $scope.picture)
+            userService.uploadPicture($scope.currentUser, $scope.picture)
                 .then(function(response) {
                     if (response.success) {
                         notifier.success(response.status);
+                        $state.reload();
                     } else {
                         notifier.error(response.status);
                     }
@@ -40,39 +40,8 @@
                 .catch(showError);
         };
 
-        // $scope.uploadPic = function(file) {
-        //     $log.debug(file);
-        //     file.upload = Upload.upload({
-        //         url: baseURL + '/users/' + $scope.currentUser._id + '/uploadPicture',
-        //         data: { file: file },
-        //     });
-
-        //     file.upload.then(function(response) {
-        //         $timeout(function() {
-        //             file.result = response.data;
-        //         });
-        //     }, function(response) {
-        //         if (response.status > 0)
-        //             $scope.errorMsg = response.status + ': ' + response.data;
-        //     }, function(evt) {
-        //         // Math.min is to fix IE which reports 200% sometimes
-        //         file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-        //     });
-        // }
-
         // $("input[name='file']").change(function() {
-        //     var fd = new FormData();
-        //     //Take the first selected file
-        //     fd.append("file", $scope.profilePicture[0]);
-        //     // var file = $('#choose-image').files[0];
-        //     $log.debug($scope.profilePicture);
-        //     $log.debug(fd);
-
-        //     userService.uploadPicture($scope.currentUser._id, $scope.profilePicture)
-        //         .then(function(response) {
-        //             notifier.success(response.status);
-        //         })
-        //         .catch(showError);
+        //     
         // });
 
         $scope.deleteAccount = function() {
@@ -122,6 +91,6 @@
     }
 
     angular.module('sande')
-        .controller('UserProfileController', ['$scope', 'authService', 'userService', 'notifier', '$log', 'constants', 'Upload', '$timeout', UserProfileController]);
+        .controller('UserProfileController', ['$scope', 'authService', 'userService', 'notifier', '$log', '$state', UserProfileController]);
 
 }());

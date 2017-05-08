@@ -3,13 +3,10 @@ var express = require('express');
 var userRouter = express.Router();
 var passport = require('passport');
 var nodemailer = require('nodemailer');
-// var path = require('path');
-// var fs = require('fs');
-// var multiparty = require('multiparty');
 var multer = require('multer');
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, './public/img/uploads/')
+        cb(null, './public/src/img/user-profile/')
     },
     filename: function(req, file, cb) {
         if (!file.originalname.match(/\.(jpeg|jpg|png)$/)) {
@@ -17,7 +14,8 @@ var storage = multer.diskStorage({
             err.code = 'filetype';
             return cb(err);
         } else {
-            cb(null, Date.now() + '_' + file.originalname);
+            var extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
+            cb(null, req.params.userId + '.jpg');
         }
     }
 })
@@ -264,34 +262,20 @@ userRouter.route('/:userId/uploadPicture')
                         status: 'No file was selected'
                     });
                 } else {
-                    res.status(200).json({
-                        success: true,
-                        status: 'You\'ve successfully uploaded your profile picture'
+                    User.findById(req.params.userId, function(err, user) {
+                        if (err) next(err);
+
+                        user.image = user._id + '.jpg';
+                        user.save();
+
+                        res.status(200).json({
+                            success: true,
+                            status: 'You\'ve successfully uploaded your profile picture'
+                        });
                     });
                 }
             }
         });
-        // User.findById(req.params.userId, function(err, user) {
-        //     if (err) next(err);
-
-        //     var form = new multiparty.Form();
-        //     form.parse(req, function(err, fields, files) {
-        //         var file = files.file[0];
-        //         //         var contentType = file.headers['content-type'];
-        //         var extension = file.path.substring(file.path.lastIndexOf('.'));
-        //         //         var destPath = 'C:/Users/Scotty/Desktop/profile/' + user._id + extension;
-
-        //         //         fs.rename(file.path, destPath, function(err) {
-        //         //             if (err) throw err;
-        //         //             console.log("Upload completed!");
-        //         //         });
-        //         // upload.single('file');
-
-        //         res.status(200).json({ status: 'You\'ve successfully uploaded your profile picture' });
-        //     });
-        // });
-
-        // res.status(200).json({ status: 'You\'ve successfully uploaded your profile picture' });
     });
 
 userRouter.get('/facebook', passport.authenticate('facebook'),

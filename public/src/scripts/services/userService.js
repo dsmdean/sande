@@ -87,15 +87,17 @@
                 });
         }
 
-        function uploadPicture(userID, picture) {
+        function uploadPicture(user, picture) {
             var fd = new FormData();
             fd.append('picture', picture.upload);
 
-            return $http.post(baseURL + '/users/' + userID + '/uploadPicture', fd, {
+            return $http.post(baseURL + '/users/' + user._id + '/uploadPicture', fd, {
                     transformRequest: angular.identity,
                     headers: { 'Content-Type': undefined }
                 })
                 .then(function(response) {
+                    user.image = user._id + '.jpg';
+                    authService.updateCurrentUser(user);
                     return response.data;
                 })
                 .catch(function(response) {
