@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('sande', ['ui.router']);
+    var app = angular.module('sande', ['ui.router', 'ngFileUpload']);
 
     app.config(['$logProvider', '$stateProvider', '$urlRouterProvider', function($logProvider, $stateProvider, $urlRouterProvider) {
 

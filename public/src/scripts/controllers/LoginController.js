@@ -4,15 +4,19 @@
     function LoginController($scope, authService, notifier, $rootScope, $state) {
 
         $scope.user = {};
+        $scope.loading = false;
 
         function showError(message) {
             notifier.error(message);
+            $scope.loading = false;
         }
 
         $scope.login = function() {
+            $scope.loading = true;
             authService.login($scope.user)
                 .then(function(response) {
                     notifier.success('Logged in successful!');
+                    $scope.loading = false;
                 })
                 .catch(showError);
         };

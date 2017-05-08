@@ -1,3 +1,5 @@
+<div ng-show="loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
 <div class="col-lg-12">
     <div class="row">
         <div class="col-lg-12">
@@ -96,7 +98,7 @@
                                                 <textarea class="form-control" id="bio" ng-model="currentUser.biography" rows="3"></textarea>
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary col-xs-3">Update Profile</button>
+                                                <button type="submit" class="btn btn-primary col-lg-3 col-md-4 col-xs-6" ng-click="updateProfile()">Update Profile</button>
                                             </div>
                                         </form>
                                     </div>
@@ -107,9 +109,36 @@
                                             <h2>Profile Picture</h2>
                                         </header>
                                         <div class="main-box-body clearfix">
-                                            <img src="img/default-user-image-159.png" alt="" class="profile-img img-responsive center-block" />
-                                            <input type="file" accept="image/*">
-                                            <!--<button type="file" class="btn btn-primary center-block" accept="image/*">New Picture</button>-->
+                                            <img ng-src="{{thumbnail.data.url || 'img/default-user-image-159.png'}}" alt="" class="profile-img img-responsive center-block" />
+                                            <!--<img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="profile-img img-responsive center-block" />-->
+                                            <!--<input type="file" accept="image/*">-->
+                                            <form enctype="multipart/form-data" ng-submit="uploadPicture()">
+                                                <!--<input id="choose-image" type="file" name="file" accept="image/*" required>
+                                                <button type="submit" class="btn btn-primary col-lg-12 col-md-12 col-xs-12">Upload Picture</button>-->
+                                                <!--<input id="choose-image" type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+                                                <button type="button" class="btn btn-primary col-lg-12 col-md-12 col-xs-12" ng-click="uploadPic(picFile)">Upload Picture</button>
+                                                <span class="progress" ng-show="picFile.progress >= 0">
+                                                    <div style="width:{{picFile.progress}}%" 
+                                                        ng-bind="picFile.progress + '%'"></div>
+                                                </span>
+                                                <span ng-show="picFile.result">Upload Successful</span>
+                                                <i ng-show="myForm.file.$error.required">*required</i><br>
+                                                <i ng-show="myForm.file.$error.maxSize">File too large 
+                                                    {{errorFile.size / 1000000|number:1}}MB: max 2M</i>-->
+
+                                                <div class="progress" ng-show="uploading">
+                                                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                                        <span class="sr-only"></span>
+                                                    </div>
+                                                </div>
+
+                                                <label class="btn btn-success">
+                                                    Browse
+                                                    <input id="choose-image" class="hidden" type="file" file-parse="picture.upload" name="picture" ng-disabled="uploading">
+                                                </label>
+                                                <button type="submit" class="btn btn-primary col-lg-12 col-md-12 col-xs-12" ng-disabled="uploading">Upload Picture</button>
+                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -126,18 +155,18 @@
                                         <form role="form" ng-submit="">
                                             <div class="form-group">
                                                 <label for="oldpassword">Old Password</label>
-                                                <input type="password" class="form-control" id="oldpassword">
+                                                <input type="password" class="form-control" ng-model="account.password" id="oldpassword">
                                             </div>
                                             <div class="form-group">
                                                 <label for="newpassword">New Password</label>
-                                                <input type="password" class="form-control" id="newpassword">
+                                                <input type="password" class="form-control" ng-model="account.newPassword" id="newpassword">
                                             </div>
                                             <div class="form-group">
                                                 <label for="confirmnewpassword">Confirm New Password</label>
-                                                <input type="password" class="form-control" id="confirmnewpassword">
+                                                <input type="password" class="form-control" ng-model="account.confirmNewPassword" id="confirmnewpassword">
                                             </div>
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-success col-xs-3">Update Password</button>
+                                                <button type="submit" ng-click="updatePassword()" class="btn btn-success col-lg-3 col-md-4 col-xs-6">Update Password</button>
                                             </div>
                                         </form>
                                     </div>
@@ -148,7 +177,7 @@
                                     </header>
                                     <div class="main-box-body clearfix">
                                         <p>Once you delete your account, there is no going back. Please be certain.</p>
-                                        <button type="button" class="btn btn-danger col-xs-3" data-toggle="modal" data-target="#deleteModal">Delete your account</button>
+                                        <button type="button" class="btn btn-danger col-lg-3 col-md-4 col-xs-6" data-toggle="modal" data-target="#deleteModal">Delete Account</button>
                                     </div>
                                 </div>
                             </div>

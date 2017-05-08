@@ -61,6 +61,9 @@
         }
 
         function storeUserCredentials(credentials) {
+            delete credentials['hash'];
+            delete credentials['salt'];
+
             localStorage.storeObject(TOKEN_KEY, credentials);
             useCredentials(credentials);
         }
@@ -79,6 +82,7 @@
         function login(loginData) {
             return $http.post(baseURL + '/users/login', loginData)
                 .then(function(response) {
+                    response.data.user.token = response.data.token;
                     storeUserCredentials(response.data.user);
 
                     return 'User logged in: ' + response.data.user.username;
@@ -129,6 +133,12 @@
             return currentUser;
         }
 
+        function updateCurrentUser(updatedData) {
+            updatedData.token = authToken;
+            localStorage.remove(TOKEN_KEY);
+            storeUserCredentials(updatedData);
+        }
+
         loadUserCredentials();
 
         return {
@@ -137,7 +147,8 @@
             logout: logout,
             isAuthenticated: isAuthenticated,
             isAdmin: isAdmin,
-            getCurrentUser: getCurrentUser
+            getCurrentUser: getCurrentUser,
+            updateCurrentUser: updateCurrentUser
         };
     }
 

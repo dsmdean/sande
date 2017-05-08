@@ -23,6 +23,7 @@
     "nanoscroller": "^0.8.7",
     "magnific-popup": "^1.1.0",
     "jquery-slimscroll": "^1.3.8",
-    "PACE": "pace#^1.0.2"
+    "PACE": "pace#^1.0.2",
+    "ng-file-upload": "^12.2.13"
   }
 }

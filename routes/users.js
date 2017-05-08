@@ -3,6 +3,29 @@ var express = require('express');
 var userRouter = express.Router();
 var passport = require('passport');
 var nodemailer = require('nodemailer');
+// var path = require('path');
+// var fs = require('fs');
+// var multiparty = require('multiparty');
+var multer = require('multer');
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './public/img/uploads/')
+    },
+    filename: function(req, file, cb) {
+        if (!file.originalname.match(/\.(jpeg|jpg|png)$/)) {
+            var err = new Error();
+            err.code = 'filetype';
+            return cb(err);
+        } else {
+            cb(null, Date.now() + '_' + file.originalname);
+        }
+    }
+})
+
+var upload = multer({
+    storage: storage,
+    limits: { fileSize: 2000000 }
+}).single('picture');
 
 // import models
 var User = require('../models/users');
@@ -101,7 +124,7 @@ userRouter.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
-userRouter.get('/logout', function(req, res) {
+userRouter.get('/logout', Verify.verifyOrdinaryUser, function(req, res) {
     req.logout();
     res.status(200).json({
         status: 'Logout Successful!'
@@ -135,6 +158,7 @@ userRouter.route('/recoverPassword')
     });
 
 userRouter.route('/:userId')
+    .all(Verify.verifyOrdinaryUser)
     // get a specific user
     .get(function(req, res, next) {
         User.findById(req.params.userId, function(err, user) {
@@ -150,7 +174,7 @@ userRouter.route('/:userId')
             new: true
         }, function(err, user) {
             if (err) next(err);
-            res.json(user);
+            res.json({ status: "You've succesfully updated your profile.", user: user });
         });
     })
     // delete a specific user
@@ -171,7 +195,7 @@ userRouter.route('/:userId/activate')
 
             user.activated = true;
             user.save();
-            res.json({ message: 'You\'ve succesfully activated your account!', users: user });
+            res.json({ message: 'You\'ve succesfully activated your account!', user: user });
         });
     });
 
@@ -198,16 +222,76 @@ userRouter.route('/:userId/setPassword')
             }
             if (!user) {
                 return res.status(401).json({
-                    err: 'Unauthorized: Password is not correct!'
+                    err: 'Your old password is not correct.'
                 });
             }
 
             // set new password
             user.setPassword(req.body.newPassword, function() {
                 user.save();
-                res.status(200).json({ status: 'Password reset successful!' });
+                res.status(200).json({ status: 'You\'ve successfully set a new password!' });
             });
         })(req, res, next);
+    });
+
+userRouter.route('/:userId/uploadPicture')
+    // upload a new profile picture
+    .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+        upload(req, res, function(err) {
+            if (err) {
+                if (err.code === 'LIMIT_FILE_SIZE') {
+                    res.status(202).json({
+                        success: false,
+                        status: 'File size is too large. Max limit is 2MB'
+                    });
+                } else if (err.code === 'filetype') {
+                    res.status(202).json({
+                        success: false,
+                        status: 'File type is invalid. Must be .jpeg/.jpg/.png'
+                    });
+                } else {
+                    console.log(err);
+                    res.status(202).json({
+                        success: false,
+                        status: 'File was not able to be uploaded'
+                    });
+                }
+            } else {
+                if (!req.file) {
+                    console.log(req.file);
+                    res.status(202).json({
+                        success: false,
+                        status: 'No file was selected'
+                    });
+                } else {
+                    res.status(200).json({
+                        success: true,
+                        status: 'You\'ve successfully uploaded your profile picture'
+                    });
+                }
+            }
+        });
+        // User.findById(req.params.userId, function(err, user) {
+        //     if (err) next(err);
+
+        //     var form = new multiparty.Form();
+        //     form.parse(req, function(err, fields, files) {
+        //         var file = files.file[0];
+        //         //         var contentType = file.headers['content-type'];
+        //         var extension = file.path.substring(file.path.lastIndexOf('.'));
+        //         //         var destPath = 'C:/Users/Scotty/Desktop/profile/' + user._id + extension;
+
+        //         //         fs.rename(file.path, destPath, function(err) {
+        //         //             if (err) throw err;
+        //         //             console.log("Upload completed!");
+        //         //         });
+        //         // upload.single('file');
+
+        //         res.status(200).json({ status: 'You\'ve successfully uploaded your profile picture' });
+        //     });
+        // });
+
+        // res.status(200).json({ status: 'You\'ve successfully uploaded your profile picture' });
     });
 
 userRouter.get('/facebook', passport.authenticate('facebook'),

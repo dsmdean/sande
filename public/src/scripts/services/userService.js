@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function userService(notifier, $http, constants, $log, $q) {
+    function userService(notifier, $http, constants, $log, $q, authService) {
 
         var baseURL = constants.APP_SERVER;
 
@@ -64,16 +64,59 @@
                 });
         }
 
+        function updateProfile(updatedData) {
+            return $http.put(baseURL + '/users/' + updatedData._id, updatedData)
+                .then(function(response) {
+                    authService.updateCurrentUser(response.data.user);
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error updating user: ' + response.statusText);
+                    return $q.reject('Error updating user.');
+                });
+        }
+
+        function updatePassword(userID, passwords) {
+            return $http.put(baseURL + '/users/' + userID + '/setPassword', passwords)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error setting a new password: ' + response.statusText);
+                    return $q.reject('Error setting a new password. Check if old password is correct!');
+                });
+        }
+
+        function uploadPicture(userID, picture) {
+            var fd = new FormData();
+            fd.append('picture', picture.upload);
+
+            return $http.post(baseURL + '/users/' + userID + '/uploadPicture', fd, {
+                    transformRequest: angular.identity,
+                    headers: { 'Content-Type': undefined }
+                })
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error uploading picture: ' + response.statusText);
+                    return $q.reject('Error uploading picture.');
+                });
+        }
+
         return {
             getUserById: getUserById,
             activateUser: activateUser,
             recoverPassword: recoverPassword,
             setNewPassword: setNewPassword,
-            deleteUserById: deleteUserById
+            deleteUserById: deleteUserById,
+            updateProfile: updateProfile,
+            updatePassword: updatePassword,
+            uploadPicture: uploadPicture
         };
     }
 
     angular.module('sande')
-        .factory('userService', ['notifier', '$http', 'constants', '$log', '$q', userService]);
+        .factory('userService', ['notifier', '$http', 'constants', '$log', '$q', 'authService', userService]);
 
 }());
