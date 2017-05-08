@@ -1,11 +1,14 @@
 (function() {
     'use strict';
 
-    function UserProfileController($scope, authService, userService, notifier, $log, $state) {
+    function UserProfileController($scope, authService, userService, notifier, $log, $state, $timeout) {
 
         $scope.currentUser = authService.getCurrentUser();
         $scope.loading = false;
         $scope.picture = {};
+        $scope.thumbnail = {
+            available: false
+        };
         $scope.account = {
             username: $scope.currentUser.username,
             password: '',
@@ -40,9 +43,26 @@
                 .catch(showError);
         };
 
-        // $("input[name='file']").change(function() {
-        //     
-        // });
+        $scope.photoChanged = function(files) {
+            // console.log(files);
+            if(files.length > 0 && files[0].name.match(/\.(png|jpeg|jpg)$/)) {
+                $scope.uploading = true;
+                var file = files[0];
+                var fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = function(e) {
+                    $timeout(function() {
+                        $scope.thumbnail.available = true;
+                        $scope.thumbnail.dataUrl = e.target.result;
+                        $scope.uploading = false;
+                    });
+                }
+            } else {
+                $scope.thumbnail = {
+                    available: false
+                };
+            }
+        };
 
         $scope.deleteAccount = function() {
             authService.logout()
@@ -91,6 +111,6 @@
     }
 
     angular.module('sande')
-        .controller('UserProfileController', ['$scope', 'authService', 'userService', 'notifier', '$log', '$state', UserProfileController]);
+        .controller('UserProfileController', ['$scope', 'authService', 'userService', 'notifier', '$log', '$state', '$timeout', UserProfileController]);
 
 }());

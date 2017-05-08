@@ -109,8 +109,8 @@
                                             <h2>Profile Picture</h2>
                                         </header>
                                         <div class="main-box-body clearfix">
-                                            <img ng-src="img/user-profile/{{currentUser.image}}" alt="" class="profile-img img-responsive center-block"
-                                            />
+                                            <img ng-hide="thumbnail.available" ng-src="img/user-profile/{{currentUser.image}}" alt="" class="profile-img img-responsive center-block"/>
+                                            <img ng-show="thumbnail.available" ng-src="{{thumbnail.dataUrl}}" alt="" class="profile-img img-responsive center-block"/>
                                             <form enctype="multipart/form-data" ng-submit="uploadPicture()">
                                                 <div class="progress" ng-show="uploading">
                                                     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
@@ -120,7 +120,7 @@
 
                                                 <label class="btn btn-success">
                                                     Browse
-                                                    <input id="choose-image" class="hidden" type="file" file-parse="picture.upload" name="picture" ng-disabled="uploading">
+                                                    <input id="choose-image" class="hidden" type="file" file-parse="picture.upload" name="picture" ng-disabled="uploading" onchange="angular.element(this).scope().photoChanged(this.files)">
                                                 </label>
                                                 <button type="submit" class="btn btn-primary col-lg-12 col-md-12 col-xs-12" ng-disabled="uploading">Upload Picture</button>
                                             </form>
