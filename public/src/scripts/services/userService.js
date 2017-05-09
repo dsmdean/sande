@@ -97,7 +97,8 @@
                 })
                 .then(function(response) {
                     user.image = user._id + '.jpg';
-                    authService.updateCurrentUser(user);
+                    // $log.debug(response.data.user);
+                    authService.updateCurrentUser(response.data.user);
                     return response.data;
                 })
                 .catch(function(response) {

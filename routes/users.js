@@ -14,8 +14,9 @@ var storage = multer.diskStorage({
             err.code = 'filetype';
             return cb(err);
         } else {
+            file.date = Date.now();
             var extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
-            cb(null, req.params.userId + '.jpg');
+            cb(null, file.date + '_' + req.params.userId + '.jpg');
         }
     }
 })
@@ -122,6 +123,7 @@ userRouter.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+// logout user
 userRouter.get('/logout', Verify.verifyOrdinaryUser, function(req, res) {
     req.logout();
     res.status(200).json({
@@ -129,6 +131,7 @@ userRouter.get('/logout', Verify.verifyOrdinaryUser, function(req, res) {
     });
 });
 
+// send forgot password email
 userRouter.route('/recoverPassword')
     // recover a specific user's password
     .post(function(req, res, next) {
@@ -155,6 +158,7 @@ userRouter.route('/recoverPassword')
         });
     });
 
+// specific user
 userRouter.route('/:userId')
     .all(Verify.verifyOrdinaryUser)
     // get a specific user
@@ -185,8 +189,8 @@ userRouter.route('/:userId')
         });
     });
 
+// activate a specific user
 userRouter.route('/:userId/activate')
-    // activate a specific user
     .put(function(req, res, next) {
         User.findById(req.params.userId, function(err, user) {
             if (err) next(err);
@@ -197,8 +201,8 @@ userRouter.route('/:userId/activate')
         });
     });
 
+// set a new user's password
 userRouter.route('/:userId/setNewPassword')
-    // set a new user's password
     .post(function(req, res, next) {
         User.findById(req.params.userId, function(err, user) {
             if (err) next(err);
@@ -210,8 +214,8 @@ userRouter.route('/:userId/setNewPassword')
         });
     });
 
+// update a specific user password
 userRouter.route('/:userId/setPassword')
-    // update a specific user password
     .put(Verify.verifyOrdinaryUser, function(req, res, next) {
         // check if user & password correct
         passport.authenticate('local', function(err, user, info) {
@@ -232,8 +236,8 @@ userRouter.route('/:userId/setPassword')
         })(req, res, next);
     });
 
+// upload a new profile picture
 userRouter.route('/:userId/uploadPicture')
-    // upload a new profile picture
     .post(Verify.verifyOrdinaryUser, function(req, res, next) {
         upload(req, res, function(err) {
             if (err) {
@@ -265,12 +269,15 @@ userRouter.route('/:userId/uploadPicture')
                     User.findById(req.params.userId, function(err, user) {
                         if (err) next(err);
 
-                        user.image = user._id + '.jpg';
+                        // console.log(req.file);
+
+                        user.image = req.file.date + '_' + user._id + '.jpg';
                         user.save();
 
                         res.status(200).json({
                             success: true,
-                            status: 'You\'ve successfully uploaded your profile picture'
+                            status: 'You\'ve successfully uploaded your profile picture',
+                            user: user
                         });
                     });
                 }
@@ -278,9 +285,11 @@ userRouter.route('/:userId/uploadPicture')
         });
     });
 
+// log in using facebook
 userRouter.get('/facebook', passport.authenticate('facebook'),
     function(req, res) {});
 
+// facebook callback
 userRouter.get('/facebook/callback', function(req, res, next) {
     passport.authenticate('facebook', function(err, user, info) {
         if (err) {
