@@ -42,7 +42,11 @@ var Users = new Schema({
     activated: {
         type: Boolean,
         default: false
-    }
+    },
+    companies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Companies'
+    }]
 }, {
     timestamps: true
 });

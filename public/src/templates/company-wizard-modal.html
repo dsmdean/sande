@@ -1,0 +1,75 @@
+<div ng-controller="RegisterCompanyController" class="modal fade wizard-modal" id="wizardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top: -237px; width: 750px; margin-left: -375px; display: block; padding-right: 17px;">
+    <div class="wizard-modal-header modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h3 class="wizard-title">Create Company</h3>
+        <span class="wizard-subtitle"></span>
+    </div>
+    <div class="pull-left wizard-steps" style="height: 425px;">
+        <div class="wizard-nav-container" style="height: 360px;">
+            <ul class="nav nav-list" role="tablist" style="padding-bottom:30px;">
+                <li class="wizard-nav-item active" role="presentation"><a class="wizard-nav-link" href="/user#category" aria-controls="home" role="tab" data-toggle="tab"><i class="icon-chevron-right"></i>New Company</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="wizard-cards">
+        <div class="wizard-card-container tab-content">
+            <div class="wizard-card tab-pane active" role="tabpanel" id="category" style="height: 350px;">
+                <h3><span>Company Category</span></h3>
+                <div class="wizard-input-section">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-sm-6 col-xs-12" ng-repeat="category in companyCategories">
+                                <div class="radio">
+                                    <input type="radio" name="optionsRadios" id="optionsRadios{{$index}}" ng-model="company.category" value="{{category._id}}">
+                                    <label for="optionsRadios{{$index}}">
+                                        <div class="main-box infographic-box colored {{category.color}}">
+                                            <!--<i class="fa fa-envelope"></i>-->
+                                            <span class="headline">{{category.category}}</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3><span>Company Info</span></h3>
+                <div class="wizard-input-section">
+                    <p>
+                        To complete the process, please enter the company's info.
+                    </p>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" ng-model="company.name" placeholder="Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" ng-model="company.email" placeholder="Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" class="form-control" id="phone" ng-model="company.phone" placeholder="Phone" />
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" ng-model="company.address" placeholder="Address" />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" rows="3" ng-model="company.description" placeholder="Description"></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="wizard-modal-footer">
+            <div class="wizard-buttons-container">
+                <button class="btn wizard-cancel wizard-close" type="button" data-dismiss="modal" aria-label="Close" style="display: inline-block;">Cancel</button>
+                <div class="btn-group-single pull-right">
+                    <button class="btn wizard-next btn-primary" type="button" data-dismiss="modal" ng-click="createCompany()">Finish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

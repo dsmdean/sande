@@ -108,3 +108,8 @@ form .progress {
     position: relative;
     top: 120%;
 }
+
+hr {
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
