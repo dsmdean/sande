@@ -1,0 +1,127 @@
+<div ng-show="loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<!--<div ng-controller="RegisterCompanyController" class="modal fade wizard-modal" id="wizardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="margin-top: -237px; width: 750px; margin-left: -375px; display: block; padding-right: 17px;">-->
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li><a href="">Dashboard</a></li>
+                <li class="active"><span>CREATE COMPANY</span></li>
+            </ol>
+            <h1>Create Company</h1>
+        </div>
+    </div>
+    <div class="row" id="user-profile">
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <div class="main-box clearfix">
+                <header class="main-box-header clearfix">
+                    <h2>
+                        {{company.name}}
+                    </h2>
+                </header>
+                <div class="main-box-body clearfix">
+                    <img ng-hide="thumbnail.available" ng-src="img/company-profile/default-company-image-159.jpg" alt="" class="profile-img img-responsive center-block" />
+                    <img ng-show="thumbnail.available" ng-src="{{thumbnail.dataUrl}}" alt="" class="profile-img img-responsive center-block" />
+                    <form enctype="multipart/form-data" ng-submit="uploadPicture()">
+                        <div class="progress" ng-show="uploading">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+
+                        <label class="btn btn-primary col-lg-12 col-md-12 col-xs-12">
+                            Browse
+                            <input id="choose-image" class="hidden" type="file" file-parse="picture.upload" name="picture" ng-disabled="uploading" onchange="angular.element(this).scope().photoChanged(this.files)">
+                        </label>
+                        <!--<button type="submit" class="btn btn-success col-lg-12 col-md-12 col-xs-12" ng-disabled="uploading">Upload Picture</button>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8">
+            <div class="main-box clearfix">
+                <div class="tabs-wrapper profile-tabs">
+                    <ul class="nav nav-tabs">
+                        <li class="{{categoryTab}}"><a>Category</a></li>
+                        <li class="{{infoTab}}"><a>Info</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade in {{categoryTab}}" id="tab-category">
+                            <div class="row">
+                                <div class="col-lg-10 col-md-11 col-sm-12">
+                                    <form role="form" ng-submit="">
+                                        <h3><span>Company Category</span></h3>
+                                        <div class="wizard-input-section">
+                                            <div class="row">
+                                                <div class="form-group">
+                                                    <div class="col-sm-6 col-xs-12" ng-repeat="category in companyCategories">
+                                                        <div class="radio">
+                                                            <input type="radio" name="optionsRadios" id="optionsRadios{{$index}}" ng-model="company.category" value="{{category._id}}">
+                                                            <label for="optionsRadios{{$index}}">
+                                                        <div class="main-box infographic-box colored {{category.color}}">
+                                                            <span class="headline">{{category.category}}</span>
+                                                        </div>
+                                                    </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" ng-click="next()" class="btn btn-primary col-lg-3 col-md-4 col-xs-6 pull-right">Next</button>
+                                        </div><br/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade in {{infoTab}}" id="tab-info">
+                            <div class="row">
+                                <div class="col-lg-10 col-md-11 col-sm-12">
+                                    <form role="form" ng-submit="">
+                                        <h3><span>Company Info</span></h3>
+                                        <p>
+                                            To complete the process, please enter the company's info.
+                                        </p>
+                                        <div class="row">
+                                            <div class="form-group col-xs-6">
+                                                <label for="name">Name</label>
+                                                <input type="text" class="form-control" id="name" ng-model="company.name" placeholder="Name" />
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" id="email" ng-model="company.email" placeholder="Email" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-xs-6">
+                                                <label for="phone">Phone</label>
+                                                <input type="text" class="form-control" id="phone" ng-model="company.phone" placeholder="Phone" />
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label for="address">Address</label>
+                                                <input type="text" class="form-control" id="address" ng-model="company.address" placeholder="Address" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" id="description" rows="3" ng-model="company.description" placeholder="Description"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" ng-click="previous()" class="btn btn-primary col-lg-3 col-md-4 col-xs-6">Previous</button>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" ng-click="createCompany()" class="btn btn-success col-lg-3 col-md-4 col-xs-6 pull-right">Create Company</button>
+                                        </div><br/>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!--</div>-->

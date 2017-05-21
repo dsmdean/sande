@@ -29,8 +29,8 @@
                     <hr/>
                     <!--<li><a href=""><i class="fa fa-cog"></i>Settings</a></li>
                     <li><a href=""><i class="fa fa-envelope-o"></i>Messages</a></li>-->
-                    <li><a href="" data-toggle="modal" data-target="#wizardModal"><i class="fa fa-plus"></i>Create company</a></li>
-                    <li ng-repeat="company in currentUser.companies"><a href=""><i class="fa fa-building"></i>{{company.name}}</a></li>
+                    <li><a href="" ui-sref="company-create"><i class="fa fa-plus"></i>Create company</a></li>
+                    <li ng-repeat="company in currentUser.companies"><a href="" ui-sref="company-profile({name: company.name})"><i class="fa fa-building-o"></i>{{company.name}}</a></li>
                     <hr/>
                     <li><a href="" ng-click="logout()"><i class="fa fa-power-off"></i>Logout</a></li>
                 </ul>

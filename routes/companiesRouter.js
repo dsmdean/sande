@@ -28,19 +28,18 @@ companiesRouter.route('/')
             company.save();
 
             //save company to user
-            User.findById(req.decoded._id, function(err, user) {
-                if (err) next(err);
+            User.findById(req.decoded._id)
+                .populate('companies')
+                .exec(function(err, user) {
+                    if (err) next(err);
 
-                user.companies.push(company._id);
-                user.save();
+                    user.companies.push(company._id);
+                    user.save();
 
-                // res.writeHead(200, {
-                //     'Content-Type': 'text/plain'
-                // });
+                    user.companies[user.companies.length - 1] = company;
 
-                // res.end({ status: 'Successfully created the company: ' + company.name, company: company });
-                res.json({ status: 'Successfully created the company: ' + company.name, company: company, user: user });
-            });
+                    res.json({ success: true, status: 'Successfully created the company: ' + company.name, company: company, user: user });
+                });
         });
     })
     .delete(function(req, res, next) {
@@ -68,11 +67,23 @@ companiesRouter.route('/:companyId')
         });
     })
     .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
-        Companies.remove(req.params.companyId, function(err, resp) {
+        Companies.remove({ _id: req.params.companyId }, function(err, resp) {
             if (err) next(err);
 
             res.json(resp);
         });
     });
+
+companiesRouter.route('/getByName/:companyName')
+    .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findOne({ name: req.params.companyName })
+            .populate('category')
+            .populate('users.user')
+            .exec(function(err, company) {
+                if (err) next(err);
+                res.json(company);
+            });
+    });
+
 
 module.exports = companiesRouter;

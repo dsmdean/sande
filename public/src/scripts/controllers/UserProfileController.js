@@ -45,7 +45,7 @@
 
         $scope.photoChanged = function(files) {
             // console.log(files);
-            if(files.length > 0 && files[0].name.match(/\.(png|jpeg|jpg)$/)) {
+            if (files.length > 0 && files[0].name.match(/\.(png|jpeg|jpg)$/)) {
                 $scope.uploading = true;
                 var file = files[0];
                 var fileReader = new FileReader();

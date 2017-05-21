@@ -73,6 +73,26 @@
                         templateUrl: 'templates/user-profile.html'
                     }
                 }
+            })
+            .state('company-create', {
+                parent: 'page',
+                url: '/create-company',
+                views: {
+                    'content@dashboard': {
+                        controller: 'RegisterCompanyController',
+                        templateUrl: 'templates/create-company.html'
+                    }
+                }
+            })
+            .state('company-profile', {
+                parent: 'page',
+                url: '/company-profile/:name',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompanyProfileController',
+                        templateUrl: 'templates/company-profile.html'
+                    }
+                }
             });
 
     }]);

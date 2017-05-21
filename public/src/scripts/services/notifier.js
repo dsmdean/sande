@@ -4,8 +4,8 @@
     function notifier() {
 
         toastr.options = {
-            "showDuration": "5000",
-            "timeOut": "5000"
+            "showDuration": "3000",
+            "timeOut": "3000"
         };
 
         function success(message) {

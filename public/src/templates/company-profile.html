@@ -1,0 +1,554 @@
+<div ng-show="loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li><a href="">Dashboard</a></li>
+                <li><a href="">COMPANY</a></li>
+                <li class="active"><span>PROFILE</span></li>
+            </ol>
+            <h1>{{company.name}} <small>/ {{company.category.category}}</small></h1>
+        </div>
+    </div>
+    <div class="row">
+
+        <!-- COL 1 -->
+        <div class="col-md-4 col-lg-3">
+            <section class="panel">
+                <div class="panel-body noradius padding-10">
+
+                    <figure class="margin-bottom-10">
+                        <!-- image -->
+                        <img class="img-responsive" src="img/company-profile/{{company.image}}" alt="">
+                    </figure>
+                    <!-- /image -->
+
+                    <!-- progress bar -->
+                    <h6 class="progress-head">Profile Completion <span class="pull-right">60%</span></h6>
+                    <div class="progress progress-xs">
+                        <div class="progress-bar" role="progressbar" style="width: 60%;"></div>
+                    </div>
+                    <!-- /progress bar -->
+
+                    <!-- updated -->
+                    <ul class="list-unstyled size-13">
+                        <li class="text-gray"><i class="fa fa-envelope"></i> {{company.email}}</li>
+                        <li class="text-gray"><i class="fa fa-phone"></i> {{company.phone}}</li>
+                        <!--<li>Confirm Your Account</li>-->
+                        <!--<li>Update Your Address</li>-->
+                    </ul>
+                    <!-- /updated -->
+
+                    <hr class="half-margins">
+
+                    <!-- About -->
+                    <h3 class="text-black">
+                        Description
+                        <!--<small class="text-gray size-14"> / CEO</small>-->
+                    </h3>
+                    <p class="size-12">{{company.description}}</p>
+                    <!-- /About -->
+
+                    <!--<hr class="half-margins">-->
+
+                    <!-- Social -->
+                    <!--<h6>Follow Me</h6>
+                    <a href="#" class="btn ico-only btn-facebook btn-xs" title="Facebook"><i class="fa fa-facebook"></i></a>
+                    <a href="#" class="btn ico-only btn-twitter btn-xs" title="Twitter"><i class="fa fa-twitter"></i></a>
+                    <a href="#" class="btn ico-only btn-google-plus btn-xs" title="Google plus"><i class="fa fa-google-plus"></i></a>
+                    <a href="#" class="btn ico-only btn-linkedin btn-xs" title="Linked In"><i class="fa fa-linkedin"></i></a>
+                    <a href="#" class="btn ico-only btn-pinterest btn-xs" title="Pinterest"><i class="fa fa-pinterest"></i></a>
+                    <a href="#" class="btn ico-only btn-flickr btn-xs" title="Flickr"><i class="fa fa-flickr"></i></a>
+                    <a href="#" class="btn ico-only btn-tumblr btn-xs" title="Tumblr"><i class="fa fa-tumblr"></i></a>
+                    <a href="#" class="btn ico-only btn-skype btn-xs" title="Skype"><i class="fa fa-skype"></i></a>
+                    <a href="#" class="btn ico-only btn-stackoverflow btn-xs" title="Stack Overflow"><i class="fa fa-stack-overflow"></i></a>
+                    <a href="#" class="btn ico-only btn-instagram btn-xs" title="Instagram"><i class="fa fa-instagram"></i></a>
+                    <a href="#" class="btn ico-only btn-dribbble btn-xs" title="Dribble"><i class="fa fa-dribbble"></i></a>
+                    <a href="#" class="btn ico-only btn-youtube btn-xs" title="Youtube"><i class="fa fa-youtube"></i></a>
+                    <a href="#" class="btn ico-only btn-vimeo btn-xs" title="Vimeo"><i class="fa fa-vimeo-square"></i></a>
+                    <a href="#" class="btn ico-only btn-rss btn-xs" title="Rss"><i class="fa fa-rss"></i></a>-->
+                    <!-- /Social -->
+
+                </div>
+            </section>
+        </div>
+        <!-- /COL 1 -->
+
+        <!-- COL 2 -->
+        <div class="col-md-8 col-lg-6">
+            <div class="tabs white nomargin-top">
+                <ul class="nav nav-tabs tabs-primary">
+                    <!--<li class="active">
+                        <a href="/company#tab-overview" data-toggle="tab" aria-expanded="true">Overview</a>
+                    </li>-->
+                    <li class="active">
+                        <a href="/company#tab-edit" data-toggle="tab" aria-expanded="true">Edit</a>
+                    </li>
+                    <li class="">
+                        <a href="/company#tab-users" data-toggle="tab" aria-expanded="false">Users</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <!-- Overview -->
+                    <!--<div id="tab-overview" class="tab-pane fade in">
+
+                        <form class="well">
+                            <textarea rows="2" class="form-control" placeholder="What's on your mind?"></textarea>
+
+                            <div class="margin-top-10">
+                                <button type="submit" class="btn btn-sm btn-primary pull-right">Post</button>
+                                <a href="#" class="btn btn-link profile-btn-link" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add a Location"><i class="fa fa-map-marker"></i></a>
+                                <a href="#" class="btn btn-link profile-btn-link" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add Photo"><i class="fa fa-camera"></i></a>
+                                <a href="#" class="btn btn-link profile-btn-link" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Add File"><i class="fa fa-file"></i></a>
+                            </div>
+                        </form>
+
+                        <hr class="invisible half-margins">
+
+                        <ul class="comment list-unstyled">
+                            <li class="comment">
+
+                                <img class="avatar" src="img/company-profile/default-company-image.jpg" width="50" height="50" alt="avatar">
+
+                                <div class="comment-body">
+                                    <a href="#" class="comment-author">
+                                        <small class="text-muted pull-right"> 12 Minutes ago </small>
+                                        <span>Melisa Scarlet</span>
+                                    </a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+                                    </p>
+                                </div>
+
+                                <ul class="list-inline size-11 margin-top-10">
+                                    <li>
+                                        <a href="#" class="text-info"><i class="fa fa-reply"></i> Reply</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-success"><i class="fa fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-muted">Show All Comments (36)</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-danger">Delete</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-primary">Edit</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="comment comment-reply">
+
+                                <img class="avatar" src="img/company-profile/default-company-image.jpg" width="35" height="35" alt="avatar">
+
+                                <div class="comment-body">
+                                    <a href="#" class="comment-author">
+                                        <small class="text-muted pull-right"> 4 Minutes ago </small>
+                                        <span>Ioana Scarlet</span>
+                                    </a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy! <i class="fa fa-smile-o green"></i>
+                                    </p>
+                                </div>
+
+                                <ul class="list-inline size-11">
+                                    <li>
+                                        <a href="#" class="text-success"><i class="fa fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-danger">Delete</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-primary">Edit</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                            <li class="comment comment-reply">
+
+                                <img class="avatar" src="img/company-profile/default-company-image.jpg" width="35" height="35" alt="avatar">
+
+                                <div class="comment-body">
+                                    <a href="#" class="comment-author">
+                                        <small class="text-muted pull-right"> a moment ago </small>
+                                        <span>Simona Scarlet</span>
+                                    </a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy! <i class="fa fa-smile-o green"></i>
+                                    </p>
+                                </div>
+
+                                <ul class="list-inline size-11">
+                                    <li>
+                                        <a href="#" class="text-success"><i class="fa fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-danger">Delete</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-primary">Edit</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        </ul>
+
+                        <ul class="comment list-unstyled">
+                            <li class="comment">
+
+                                <img class="avatar" src="img/company-profile/default-company-image.jpg" width="50" height="50" alt="avatar">
+
+                                <div class="comment-body">
+                                    <a href="#" class="comment-author">
+                                        <small class="text-muted pull-right"> 12 Minutes ago </small>
+                                        <span>Melisa Scarlet</span>
+                                    </a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+                                    </p>
+                                </div>
+
+                                <ul class="list-inline size-11 margin-top-10">
+                                    <li>
+                                        <a href="#" class="text-info"><i class="fa fa-reply"></i> Reply</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-success"><i class="fa fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-danger">Delete</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-primary">Edit</a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="comment comment-reply">
+
+                                <img class="avatar" src="img/company-profile/default-company-image.jpg" width="35" height="35" alt="avatar">
+
+                                <div class="comment-body">
+                                    <a href="#" class="comment-author">
+                                        <small class="text-muted pull-right"> 4 Minutes ago </small>
+                                        <span>Ioana Scarlet</span>
+                                    </a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy! <i class="fa fa-smile-o green"></i>
+                                    </p>
+                                </div>
+
+                                <ul class="list-inline size-11">
+                                    <li>
+                                        <a href="#" class="text-success"><i class="fa fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-danger">Delete</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-primary">Edit</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+
+                            <li class="comment comment-reply">
+
+                                <img class="avatar" src="img/company-profile/default-company-image.jpg" width="35" height="35" alt="avatar">
+
+                                <div class="comment-body">
+                                    <a href="#" class="comment-author">
+                                        <small class="text-muted pull-right"> a moment ago </small>
+                                        <span>Simona Scarlet</span>
+                                    </a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy! <i class="fa fa-smile-o green"></i>
+                                    </p>
+                                </div>
+
+                                <ul class="list-inline size-11">
+                                    <li>
+                                        <a href="#" class="text-success"><i class="fa fa-thumbs-up"></i> Like</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-danger">Delete</a>
+                                    </li>
+                                    <li class="pull-right">
+                                        <a href="#" class="text-primary">Edit</a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li>
+                                <div class="input-group">
+                                    <input id="btn-input" type="text" class="form-control" placeholder="Type your message...">
+                                    <span class="input-group-btn">
+															<button class="btn btn-primary" id="btn-chat">
+																<i class="fa fa-reply"></i> Reply
+															</button> 
+														</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>-->
+
+                    <div id="tab-edit" class="tab-pane fade in active">
+
+                        <form class="form-horizontal" ng-submit="updateCompany()">
+                            <h4>Personal Information</h4>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="companyName">Name</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="companyName" ng-model="company.name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="companyEmail">Email</label>
+                                    <div class="col-md-8">
+                                        <input type="email" class="form-control" id="companyEmail" ng-model="company.email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="companyPhone">Phone</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="companyPhone" ng-model="company.phone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="companyAddress">Address</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="companyAddress" ng-model="company.location.address">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="companyCity">City</label>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="companyCity" ng-model="company.location.city">
+                                    </div>
+                                    <label class="col-md-2 control-label" for="companyProvince">Province</label>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" id="companyProvince" ng-model="company.location.province">
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <!--<div class="row">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="reset" class="btn btn-default">Reset</button>
+                                </div>
+                            </div>-->
+                            <hr>
+
+                            <h4>About</h4>
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="companyDescription">Description</label>
+                                    <div class="col-md-8">
+                                        <textarea class="form-control" rows="3" id="companyDescription" ng-model="company.description"></textarea>
+                                    </div>
+                                </div>
+                                <!--<div class="form-group">
+                                <div class="sky-form">
+                                    <label class="col-xs-3 control-label">Profile Image</label>
+                                    <div class="col-md-8">
+                                        <label for="file" class="input input-file">
+                                                <div class="button">
+                                                    <input type="file" id="file" onchange="this.parentNode.nextSibling.value = this.value">Browse
+                                                </div>
+                                                <input type="text" readonly="">
+                                            </label>
+                                        <a href="#" class="btn btn-danger btn-xs nomargin"><i class="fa fa-times"></i> Remove Current Image</a>
+                                    </div>
+                                </div>
+                            </div>-->
+                            </fieldset>
+                            <div class="row">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <!--<button type="reset" class="btn btn-default">Reset</button>-->
+                                </div>
+                            </div>
+                        </form>
+
+                        <!--<h4>Change Password</h4>
+                            <fieldset class="mb-xl">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="profileNewPassword">New Password</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="profileNewPassword">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label" for="profileNewPasswordRepeat">Repeat New Password</label>
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="profileNewPasswordRepeat">
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <div class="row">
+                                <div class="col-md-9 col-md-offset-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                    <button type="reset" class="btn btn-default">Reset</button>
+                                </div>
+                            </div>-->
+                    </div>
+
+                    <!-- Users -->
+                    <div class="tab-pane clearfix fade" id="tab-users">
+                        <ul class="widget-users row">
+                            <!--<li class="col-md-6">
+                                <div class="img">
+                                    <img src="img/samples/scarlet.png" alt="" />
+                                </div>
+                                <div class="details">
+                                    <div class="name">
+                                        <a href="#">Jennifer Lawrence</a>
+                                    </div>
+                                    <div class="time">
+                                        <i class="fa fa-clock-o"></i> Last online: 5 minutes ago
+                                    </div>
+                                    <div class="type">
+                                        <span class="label label-danger">Admin</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="col-md-6">
+                                <div class="img">
+                                    <img src="img/samples/kunis.png" alt="" />
+                                </div>
+                                <div class="details">
+                                    <div class="name">
+                                        <a href="#">Mila Kunis</a>
+                                    </div>
+                                    <div class="time online">
+                                        <i class="fa fa-check-circle"></i> Online
+                                    </div>
+                                    <div class="type">
+                                        <span class="label label-warning">Pending</span>
+                                    </div>
+                                </div>
+                            </li>-->
+                            <li class="col-md-6" ng-repeat="user in company.users">
+                                <div class="img">
+                                    <img ng-src="img/user-profile/{{user.user.image}}" height="50px" alt="" />
+                                </div>
+                                <div class="details">
+                                    <div class="name">
+                                        <a href="">{{user.user.firstname}} {{user.user.lastname}}</a>
+                                    </div>
+                                    <div class="time online">
+                                        <i class="fa fa-check-circle"></i> Online
+                                    </div>
+                                    <div class="type">
+                                        <span class="label label-danger">Admin</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /COL 2 -->
+
+        <!-- COL 3 -->
+        <!--<div class="col-md-12 col-lg-3">
+            <section class="panel panel-default">
+                <header class="panel-heading">
+                    <h2 class="panel-title elipsis">
+                        <i class="fa fa-rss"></i> Projects
+                    </h2>
+                </header>
+
+                <div class="panel-body noradius padding-10">
+                    <ul class="bullet-list list-unstyled">
+                        <li class="red">
+                            <h3>Epona HTML5 Template</h3>
+                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
+                        </li>
+                        <li class="green">
+                            <h3>Atropos Template</h3>
+                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
+                        </li>
+                        <li class="blue">
+                            <h3>isisone Template</h3>
+                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
+                        </li>
+                        <li class="orange">
+                            <h3>Deusone Template</h3>
+                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="panel panel-default">
+                <header class="panel-heading">
+                    <h2 class="panel-title elipsis">
+                        <i class="fa fa-rss"></i> Activity
+                    </h2>
+                </header>
+
+                <div class="panel-body noradius padding-10">
+                    <div class="row profile-activity">
+                        <div class="col-xs-2 col-sm-1">
+                            <time datetime="2017-06-29" class="datebox">
+                                <strong>Jun</strong>
+                                <span>29</span>
+                            </time>
+                        </div>
+                        <div class="col-xs-10 col-sm-11">
+                            <h6><a href="page-sidebar.html">Lorem ipsum dolor sit amet</a></h6>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+                            </p>
+                        </div>
+                        <div class="col-sm-12">
+                            <hr class="half-margins">
+                        </div>
+                        <div class="col-xs-2 col-sm-1">
+                            <time datetime="2017-06-29" class="datebox">
+                                <strong>Jun</strong>
+                                <span>29</span>
+                            </time>
+                        </div>
+                        <div class="col-xs-10 col-sm-11">
+                            <h6><a href="page-sidebar.html">Sed diam nonummy nibh euismod</a></h6>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+                            </p>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <hr class="half-margins">
+                        </div>
+
+                        <div class="text-center">
+                            <ul class="pagination pagination-sm">
+                                <li class="disabled"><a href="#">Prev</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">Next</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>-->
+        <!-- /COL 3 -->
+
+    </div>
+
+</div>

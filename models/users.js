@@ -26,7 +26,7 @@ var Users = new Schema({
     },
     image: {
         type: String,
-        default: 'default-user-image-159.png'
+        default: 'default-user-image-159.jpg'
     },
     biography: {
         type: String

@@ -39,7 +39,7 @@ var CompaniesSchema = new Schema({
     },
     image: {
         type: String,
-        default: 'default-user-image-159.png'
+        default: 'default-company-image-300.jpg'
     },
     users: [{
         user: {
