@@ -18,16 +18,30 @@
             <section class="panel">
                 <div class="panel-body noradius padding-10">
 
-                    <figure class="margin-bottom-10">
+                    <figure class="margin-bottom-10 img-container">
                         <!-- image -->
-                        <img class="img-responsive" src="img/company-profile/{{company.image}}" alt="">
+                        <img ng-hide="thumbnail.available" ng-src="img/company-profile/{{company.image}}" alt="" class="profile-img img-responsive center-block pic" />
+                        <img ng-show="thumbnail.available" ng-src="{{thumbnail.dataUrl}}" alt="" class="profile-img img-responsive center-block pic" />
+                        <form enctype="multipart/form-data" ng-submit="uploadPicture()" class="button-overlay">
+                            <!--<div class="progress" ng-show="uploading">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                    <span class="sr-only"></span>
+                                </div>
+                            </div>-->
+
+                            <label class="btn btn-primary col-lg-12 col-md-12 col-xs-12 button-hover">
+                                Browse
+                                <input id="choose-image" class="hidden" type="file" file-parse="picture.upload" name="picture" ng-disabled="uploading" onchange="angular.element(this).scope().photoChanged(this.files)">
+                            </label>
+                            <button type="submit" class="btn btn-success col-lg-12 col-md-12 col-xs-12 button-hover" ng-disabled="uploading">Upload Picture</button>
+                        </form>
                     </figure>
                     <!-- /image -->
 
                     <!-- progress bar -->
-                    <h6 class="progress-head">Profile Completion <span class="pull-right">60%</span></h6>
-                    <div class="progress progress-xs">
-                        <div class="progress-bar" role="progressbar" style="width: 60%;"></div>
+                    <h6 class="progress-head" ng-show="uploading">Uploading Profile Picture</h6>
+                    <div class="progress progress-xs" ng-show="uploading">
+                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
                     </div>
                     <!-- /progress bar -->
 
@@ -339,12 +353,6 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <!--<div class="row">
-                                <div class="col-md-9 col-md-offset-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-default">Reset</button>
-                                </div>
-                            </div>-->
                             <hr>
 
                             <h4>About</h4>

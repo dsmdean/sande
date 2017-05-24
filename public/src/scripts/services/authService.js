@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function authService(notifier, $http, constants, $q, localStorage, $rootScope, $log) {
+    function authService(notifier, $http, constants, $q, localStorage, $rootScope, $log, $cacheFactory) {
 
         var TOKEN_KEY = 'Token';
         var baseURL = constants.APP_SERVER;
@@ -75,6 +75,8 @@
             admin = false;
             $http.defaults.headers.common['x-access-token'] = authToken;
             localStorage.remove(TOKEN_KEY);
+            var httpCache = $cacheFactory.get('$http');
+            httpCache.removeAll();
             // localStorage.remove('tokenExpiration');
             // stopInterval();
         }
@@ -153,6 +155,6 @@
     }
 
     angular.module('sande')
-        .factory('authService', ['notifier', '$http', 'constants', '$q', 'localStorage', '$rootScope', '$log', authService]);
+        .factory('authService', ['notifier', '$http', 'constants', '$q', 'localStorage', '$rootScope', '$log', '$cacheFactory', authService]);
 
 }());

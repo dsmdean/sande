@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function companyService(notifier, $http, constants, $log, $q, authService) {
+    function companyService(notifier, $http, constants, $log, $q, authService, $rootScope) {
 
         var baseURL = constants.APP_SERVER;
 
@@ -10,14 +10,10 @@
         }
 
         function createCompany(companyData, picture) {
-            var fd = new FormData();
-            fd.append('picture', picture.upload);
-            companyData.fd = fd;
-
             return $http.post(baseURL + '/companies', companyData)
                 .then(function(response) {
                     authService.updateCurrentUser(response.data.user);
-                    console.log(response.data.user);
+                    // console.log(response.data.user);
                     return response.data;
                 })
                 .catch(function(response) {
@@ -35,6 +31,17 @@
                     headers: { 'Content-Type': undefined }
                 })
                 .then(function(response) {
+                    var user = authService.getCurrentUser();
+                    var companies = user.companies;
+
+                    for (var i = 0; i < companies.length; i++) {
+                        if (companies[i]._id === company._id) {
+                            user.companies[i] = response.data.company;
+                            authService.updateCurrentUser(user);
+                            break;
+                        }
+                    }
+
                     return response.data;
                 })
                 .catch(function(response) {
@@ -43,8 +50,9 @@
                 });
         }
 
-        function getCompanyByName(name) {
-            return $http.get(baseURL + '/companies/getByName/' + name)
+        function getCompanyByName(companyName) {
+            $rootScope.companyName = companyName;
+            return $http.get(baseURL + '/companies/getByName/' + companyName)
                 .then(function(response) {
                     return response.data;
                 })
@@ -85,6 +93,6 @@
     }
 
     angular.module('sande')
-        .factory('companyService', ['notifier', '$http', 'constants', '$log', '$q', 'authService', companyService]);
+        .factory('companyService', ['notifier', '$http', 'constants', '$log', '$q', 'authService', '$rootScope', companyService]);
 
 }());

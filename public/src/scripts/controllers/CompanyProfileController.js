@@ -38,7 +38,7 @@
         $scope.uploadPicture = function() {
             $scope.uploading = true;
 
-            companyService.uploadPicture($scope.currentUser, $scope.picture)
+            companyService.uploadPicture($scope.company, $scope.picture)
                 .then(function(response) {
                     if (response.success) {
                         notifier.success(response.status);

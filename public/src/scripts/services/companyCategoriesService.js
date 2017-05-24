@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function companyCategoriesService(notifier, $http, constants, $log, $q) {
+    function companyCategoriesService(notifier, $http, constants, $log, $q, $rootScope) {
 
         var baseURL = constants.APP_SERVER;
 
@@ -9,8 +9,10 @@
             notifier.error(message.data.err);
         }
 
-        function getAllCategories() {
-            return $http.get(baseURL + '/company-categories')
+        function getAllCompanyCategories() {
+            return $http.get(baseURL + '/company-categories', {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -20,8 +22,11 @@
                 });
         }
 
-        function getCategoryById(categoryId) {
-            return $http.get(baseURL + '/company-categories/' + categoryId)
+        function getCompanyCategoryById(companyCategoryId) {
+            $rootScope.companyCategoryId = companyCategoryId;
+            return $http.get(baseURL + '/company-categories/' + companyCategoryId, {
+                    cache: true
+                })
                 .then(function(response) {
                     return response.data;
                 })
@@ -32,12 +37,12 @@
         }
 
         return {
-            getAllCategories: getAllCategories,
-            getCategoryById: getCategoryById
+            getAllCompanyCategories: getAllCategories,
+            getCompanyCategoryById: getCategoryById
         };
     }
 
     angular.module('sande')
-        .factory('companyCategoriesService', ['notifier', '$http', 'constants', '$log', '$q', companyCategoriesService]);
+        .factory('companyCategoriesService', ['notifier', '$http', 'constants', '$log', '$q', '$rootScope', companyCategoriesService]);
 
 }());

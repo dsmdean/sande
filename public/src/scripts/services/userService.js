@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function userService(notifier, $http, constants, $log, $q, authService) {
+    function userService(notifier, $http, constants, $log, $q, authService, $rootScope) {
 
         var baseURL = constants.APP_SERVER;
 
@@ -10,6 +10,7 @@
         }
 
         function getUserById(userID) {
+            $rootScope.userID = userID;
             return $http.get(baseURL + '/users/' + userID)
                 .then(function(response) {
                     return response.data;
@@ -120,6 +121,6 @@
     }
 
     angular.module('sande')
-        .factory('userService', ['notifier', '$http', 'constants', '$log', '$q', 'authService', userService]);
+        .factory('userService', ['notifier', '$http', 'constants', '$log', '$q', 'authService', '$rootScope', userService]);
 
 }());

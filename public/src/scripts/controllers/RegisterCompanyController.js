@@ -19,7 +19,7 @@
             $scope.loading = false;
         }
 
-        companyCategoriesService.getAllCategories()
+        companyCategoriesService.getAllCompanyCategories()
             .then(function(response) {
                 var j = 0;
                 for (var i = 0; i < response.length; i++) {

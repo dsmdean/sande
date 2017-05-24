@@ -214,3 +214,53 @@ div.tabs div.tab-content {
 .open ul.sidesubmenu {
     position: relative;
 }
+
+.img-container {
+    position: relative;
+    /*width: 50%;*/
+}
+
+.pic {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.button-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    /*background-color: #000;*/
+}
+
+.img-container:hover .button-overlay {
+    opacity: 1;
+}
+
+.button-hover {
+    color: white;
+    /*font-size: 20px;*/
+    position: relative;
+    top: 78%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+
+/*.button-hover {
+    margin-top: -222px;
+    padding-top: 156px;
+    opacity: 1;
+}*/
+
+
+/*.button-hover:hover {
+    opacity: 1;
+}*/

@@ -118,6 +118,7 @@
                 event.preventDefault();
                 $state.go('login');
             } else if (authService.isAuthenticated() && (toState.name == 'login' || toState.name == 'register')) {
+                event.preventDefault();
                 $state.go('user');
             }
 

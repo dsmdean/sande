@@ -23,7 +23,7 @@
                 $scope.isAdmin = true;
             }
 
-            $state.go("user");
+            // $state.go("page.user");
         }
 
         $rootScope.$on('logout:Successful', function() {
