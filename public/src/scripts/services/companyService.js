@@ -9,7 +9,7 @@
             notifier.error(message.data.err);
         }
 
-        function createCompany(companyData, picture) {
+        function createCompany(companyData) {
             return $http.post(baseURL + '/companies', companyData)
                 .then(function(response) {
                     authService.updateCurrentUser(response.data.user);

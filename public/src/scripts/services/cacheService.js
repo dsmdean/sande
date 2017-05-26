@@ -21,7 +21,7 @@
         };
     }
 
-    angular.module('app')
+    angular.module('sande')
         .factory('cacheService', ['$cacheFactory', '$rootScope', 'constants', cacheService]);
 
 }());

@@ -14,7 +14,7 @@
     <div class="row">
 
         <!-- COL 1 -->
-        <div class="col-md-4 col-lg-3">
+        <div class="col-sm-4 col-md-4 col-lg-3">
             <section class="panel">
                 <div class="panel-body noradius padding-10">
 
@@ -90,17 +90,20 @@
         <!-- /COL 1 -->
 
         <!-- COL 2 -->
-        <div class="col-md-8 col-lg-6">
+        <div class="col-sm-8 col-md-8 col-lg-6">
             <div class="tabs white nomargin-top">
                 <ul class="nav nav-tabs tabs-primary">
                     <!--<li class="active">
                         <a href="/company#tab-overview" data-toggle="tab" aria-expanded="true">Overview</a>
                     </li>-->
                     <li class="active">
-                        <a href="/company#tab-edit" data-toggle="tab" aria-expanded="true">Edit</a>
+                        <a href="/company-profile#tab-edit" data-toggle="tab" aria-expanded="true">Edit</a>
                     </li>
                     <li class="">
-                        <a href="/company#tab-users" data-toggle="tab" aria-expanded="false">Users</a>
+                        <a href="/company-profile#tab-users" data-toggle="tab" aria-expanded="false">Users</a>
+                    </li>
+                    <li class="">
+                        <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">Products</a>
                     </li>
                 </ul>
 
@@ -313,6 +316,7 @@
 
                     </div>-->
 
+                    <!-- Edit -->
                     <div id="tab-edit" class="tab-pane fade in active">
 
                         <form class="form-horizontal" ng-submit="updateCompany()">
@@ -463,17 +467,193 @@
                             </li>
                         </ul>
                     </div>
+
+                    <!-- Products -->
+                    <div class="tab-pane clearfix fade" id="tab-products">
+                        <div class="main-box-body clearfix">
+                            <ul class="widget-products">
+                                <li>
+                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
+                                        <span class="img">
+                                            <img src="img/samples/ipad.png" alt=""/>
+                                        </span>
+                                        <span class="product clearfix">
+                                            <span class="name">
+                                                iPad mini 32GB WiFi Black&Slate
+                                            </span>
+                                        <span class="price">
+                                                <i class="fa fa-money"></i> &dollar;320,00
+                                            </span>
+                                        <span class="warranty">
+                                                <i class="fa fa-certificate"></i> Warranty: 2 years
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
+                                        <span class="img">
+                                            <img src="img/samples/ipad.png" alt=""/>
+                                        </span>
+                                        <span class="product clearfix">
+                                            <span class="name">
+                                                iPad mini 16GB WiFi Black&Slate
+                                            </span>
+                                        <span class="price">
+                                                <i class="fa fa-money"></i> &dollar;273,68
+                                            </span>
+                                        <span class="warranty">
+                                                <i class="fa fa-certificate"></i> Warranty: 2 years
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
+                                        <span class="img">
+                                            <img src="img/samples/ipad.png" alt=""/>
+                                        </span>
+                                        <span class="product clearfix">
+                                            <span class="name">
+                                                iPad mini 32GB WiFi Cellular Black&Slate
+                                            </span>
+                                        <span class="price">
+                                                <i class="fa fa-money"></i> &dollar;447,29
+                                            </span>
+                                        <span class="warranty">
+                                                <i class="fa fa-certificate"></i> Warranty: 4 years
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
+                                        <span class="img">
+                                            <img src="img/samples/ipad.png" alt=""/>
+                                        </span>
+                                        <span class="product clearfix">
+                                            <span class="name">
+                                                iPad mini 32GB WiFi Cellular Black&Slate
+                                            </span>
+                                        <span class="price">
+                                                <i class="fa fa-money"></i> &dollar;447,29
+                                            </span>
+                                        <span class="warranty">
+                                                <i class="fa fa-certificate"></i> Warranty: 4 years
+                                            </span>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="tab-pane clearfix fade" id="tab-products-details">
+                        <div class="main-box-body clearfix">
+                            <header class="main-box-header clearfix">
+                                <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">
+                                    < Back to Products</a>
+                            </header><br>
+                            <!--<h4>Products</h4>-->
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12 product-image">
+                                    <!-- Tab panes -->
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane fade in active" id="one">
+                                            <img src="http://images.factorydirect.ca/images/specs/IP1617.jpg" alt="">
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="two">
+                                            <img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" alt="">
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="three">
+                                            <img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" alt="">
+                                        </div>
+                                    </div>
+                                    <!-- Nav tabs -->
+                                    <div class="row product-tabs" role="tablist">
+                                        <div role="presentation" class="col-lg-4 col-md-4 col-xs-6 active">
+                                            <a href="/company-profile#one" aria-controls="one" role="tab" data-toggle="tab" aria-expanded="true"><img src="http://images.factorydirect.ca/images/specs/IP1617.jpg" class="img-thumbnail" alt=""></a>
+                                        </div>
+                                        <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
+                                            <a href="/company-profile#two" aria-controls="two" role="tab" data-toggle="tab" aria-expanded="false"><img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" class="img-thumbnail" alt=""></a>
+                                        </div>
+                                        <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
+                                            <a href="/company-profile#three" aria-controls="three" role="tab" data-toggle="tab" aria-expanded="false"><img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" class="img-thumbnail" alt=""></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 product-info">
+                                    <div class="list-pro-rating">
+                                        <i class="fa fa-star icolor"></i>
+                                        <i class="fa fa-star icolor"></i>
+                                        <i class="fa fa-star icolor"></i>
+                                        <i class="fa fa-star icolor"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <h3>iPad mini 32GB WiFi Black Slate</h3>
+                                    <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla lorem aliquam diam dignissim condimentum. Suspendisse sed est at magna iaculis rhoncus. Donec non ligula quis lacus vehicula fermentum.
+                                    </p>
+                                    <hr>
+                                    <h2 class="price">
+                                        &dollar;50,66
+                                        <small>&nbsp;&nbsp;&nbsp;<s>40% off</s></small>
+                                    </h2>
+                                    <hr>
+                                    <span class="warranty">
+                                        <i class="fa fa-certificate"></i> Warranty: 2 years
+                                    </span><br><br>
+                                    <div class="form-group">
+                                        <label for="color">Color</label>
+                                        <select class="form-control" id="color">
+                                            <option>Green</option>
+                                            <option>Black</option>
+                                            <option>Gold</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="size">Size</label>
+                                        <select class="form-control" id="size">
+                                            <option>S</option>
+                                            <option>M</option>
+                                            <option>X</option>
+                                            <option>XL</option>
+                                            <option>2X</option>
+                                            <option>3X</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success col-lg-6 col-md-8 col-xs-12"><span><i class="fa fa-cart-plus"></i> Add to Cart</span></button>
+                                    </div><br><br>
+                                </div>
+                                <!--<div class="product-categories">
+                                    <strong>Categories:</strong>
+                                    <span>FootwearMen's &gt; FootwearCasual &gt; ShoesClarks &gt; Casual</span>
+                                    <br>
+                                    <strong>Services:</strong>
+                                    <span>Cash On Delivery available?</span>
+                                    <br>
+                                    <strong>Categories:</strong>
+                                    <span>30 Days Exchange Policy?</span>
+                                    <br>
+                                    <strong>Payment Method</strong>
+                                    <span>Safe and Secure Payments. Easy returns.</span>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <!-- /COL 2 -->
 
         <!-- COL 3 -->
-        <!--<div class="col-md-12 col-lg-3">
-            <section class="panel panel-default">
+        <div class="col-md-12 col-lg-3">
+            <!--<section class="panel panel-default">
                 <header class="panel-heading">
                     <h2 class="panel-title elipsis">
-                        <i class="fa fa-rss"></i> Projects
+                        <i class="fa fa-wrench"></i> Services
                     </h2>
                 </header>
 
@@ -497,7 +677,7 @@
                         </li>
                     </ul>
                 </div>
-            </section>
+            </section>-->
 
             <section class="panel panel-default">
                 <header class="panel-heading">
@@ -554,7 +734,7 @@
                     </div>
                 </div>
             </section>
-        </div>-->
+        </div>
         <!-- /COL 3 -->
 
     </div>

@@ -37,8 +37,8 @@
         }
 
         return {
-            getAllCompanyCategories: getAllCategories,
-            getCompanyCategoryById: getCategoryById
+            getAllCompanyCategories: getAllCompanyCategories,
+            getCompanyCategoryById: getCompanyCategoryById
         };
     }
 
