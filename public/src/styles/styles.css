@@ -282,6 +282,10 @@ form .progress {
         color: #444444;
     }
     
+    .widget-products img {
+        width: 100%;
+    }
+    
     .price>i {
         color: #7FC8BA;
     }

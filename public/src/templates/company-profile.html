@@ -97,7 +97,7 @@
                         <a href="/company#tab-overview" data-toggle="tab" aria-expanded="true">Overview</a>
                     </li>-->
                     <li class="active">
-                        <a href="/company-profile#tab-edit" data-toggle="tab" aria-expanded="true">Edit</a>
+                        <a href="/company-profile#tab-edit" data-toggle="tab" aria-expanded="true">Settings</a>
                     </li>
                     <li class="">
                         <a href="/company-profile#tab-users" data-toggle="tab" aria-expanded="false">Users</a>
@@ -367,20 +367,25 @@
                                         <textarea class="form-control" rows="3" id="companyDescription" ng-model="company.description"></textarea>
                                     </div>
                                 </div>
-                                <!--<div class="form-group">
-                                <div class="sky-form">
-                                    <label class="col-xs-3 control-label">Profile Image</label>
-                                    <div class="col-md-8">
-                                        <label for="file" class="input input-file">
-                                                <div class="button">
-                                                    <input type="file" id="file" onchange="this.parentNode.nextSibling.value = this.value">Browse
-                                                </div>
-                                                <input type="text" readonly="">
-                                            </label>
-                                        <a href="#" class="btn btn-danger btn-xs nomargin"><i class="fa fa-times"></i> Remove Current Image</a>
+                            </fieldset>
+                            <hr>
+
+                            <h4>What Do You Offer?</h4>
+                            <fieldset class="col-md-offset-3">
+                                <div class="form-group">
+                                    <div class="radio">
+                                        <input type="radio" name="settings" id="services" ng-model="company.offerSettings" value="services">
+                                        <label class="col-md-8" for="services">Services (You offer different services)</label>
+                                    </div>
+                                    <div class="radio">
+                                        <input type="radio" name="settings" id="products" ng-model="company.offerSettings" value="products">
+                                        <label class="col-md-8" for="products">Products (You offer different products through your online/local shop)</label>
+                                    </div>
+                                    <div class="radio">
+                                        <input type="radio" name="settings" id="both" ng-model="company.offerSettings" value="both">
+                                        <label class="col-md-8" for="both">Both</label>
                                     </div>
                                 </div>
-                            </div>-->
                             </fieldset>
                             <div class="row">
                                 <div class="col-md-9 col-md-offset-3">
@@ -471,75 +476,25 @@
                     <!-- Products -->
                     <div class="tab-pane clearfix fade" id="tab-products">
                         <div class="main-box-body clearfix">
+                            <header class="main-box-header clearfix">
+                                <a href="/company-profile#tab-add-product" data-toggle="tab" aria-expanded="false">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Product</a>
+                            </header><br>
                             <ul class="widget-products">
-                                <li>
-                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
+                                <li ng-repeat="product in company.products">
+                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false" ng-click="setDetailedProduct(product)">
                                         <span class="img">
-                                            <img src="img/samples/ipad.png" alt=""/>
+                                            <img ng-src="img/company-profile/{{product.images[0]}}" alt=""/>
                                         </span>
                                         <span class="product clearfix">
                                             <span class="name">
-                                                iPad mini 32GB WiFi Black&Slate
+                                                {{product.name}}
                                             </span>
                                         <span class="price">
-                                                <i class="fa fa-money"></i> &dollar;320,00
+                                                <i class="fa fa-money"></i> &dollar;{{product.price}}
                                             </span>
                                         <span class="warranty">
                                                 <i class="fa fa-certificate"></i> Warranty: 2 years
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
-                                        <span class="img">
-                                            <img src="img/samples/ipad.png" alt=""/>
-                                        </span>
-                                        <span class="product clearfix">
-                                            <span class="name">
-                                                iPad mini 16GB WiFi Black&Slate
-                                            </span>
-                                        <span class="price">
-                                                <i class="fa fa-money"></i> &dollar;273,68
-                                            </span>
-                                        <span class="warranty">
-                                                <i class="fa fa-certificate"></i> Warranty: 2 years
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
-                                        <span class="img">
-                                            <img src="img/samples/ipad.png" alt=""/>
-                                        </span>
-                                        <span class="product clearfix">
-                                            <span class="name">
-                                                iPad mini 32GB WiFi Cellular Black&Slate
-                                            </span>
-                                        <span class="price">
-                                                <i class="fa fa-money"></i> &dollar;447,29
-                                            </span>
-                                        <span class="warranty">
-                                                <i class="fa fa-certificate"></i> Warranty: 4 years
-                                            </span>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false">
-                                        <span class="img">
-                                            <img src="img/samples/ipad.png" alt=""/>
-                                        </span>
-                                        <span class="product clearfix">
-                                            <span class="name">
-                                                iPad mini 32GB WiFi Cellular Black&Slate
-                                            </span>
-                                        <span class="price">
-                                                <i class="fa fa-money"></i> &dollar;447,29
-                                            </span>
-                                        <span class="warranty">
-                                                <i class="fa fa-certificate"></i> Warranty: 4 years
                                             </span>
                                         </span>
                                     </a>
@@ -553,7 +508,7 @@
                         <div class="main-box-body clearfix">
                             <header class="main-box-header clearfix">
                                 <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">
-                                    < Back to Products</a>
+                                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back to Products</a>
                             </header><br>
                             <!--<h4>Products</h4>-->
                             <div class="row">
@@ -561,7 +516,7 @@
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="one">
-                                            <img src="http://images.factorydirect.ca/images/specs/IP1617.jpg" alt="">
+                                            <img ng-src="img/company-profile/{{detailedProduct.images[0]}}" alt="">
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="two">
                                             <img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" alt="">
@@ -573,7 +528,7 @@
                                     <!-- Nav tabs -->
                                     <div class="row product-tabs" role="tablist">
                                         <div role="presentation" class="col-lg-4 col-md-4 col-xs-6 active">
-                                            <a href="/company-profile#one" aria-controls="one" role="tab" data-toggle="tab" aria-expanded="true"><img src="http://images.factorydirect.ca/images/specs/IP1617.jpg" class="img-thumbnail" alt=""></a>
+                                            <a href="/company-profile#one" aria-controls="one" role="tab" data-toggle="tab" aria-expanded="true"><img ng-src="img/company-profile/{{detailedProduct.images[0]}}" class="img-thumbnail" alt=""></a>
                                         </div>
                                         <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
                                             <a href="/company-profile#two" aria-controls="two" role="tab" data-toggle="tab" aria-expanded="false"><img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" class="img-thumbnail" alt=""></a>
@@ -584,6 +539,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 product-info">
+                                    <h3>{{detailedProduct.name}}</h3>
                                     <div class="list-pro-rating">
                                         <i class="fa fa-star icolor"></i>
                                         <i class="fa fa-star icolor"></i>
@@ -591,20 +547,24 @@
                                         <i class="fa fa-star icolor"></i>
                                         <i class="fa fa-star"></i>
                                     </div>
-                                    <h3>iPad mini 32GB WiFi Black Slate</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec fringilla lorem aliquam diam dignissim condimentum. Suspendisse sed est at magna iaculis rhoncus. Donec non ligula quis lacus vehicula fermentum.
-                                    </p>
+
+                                    <p>{{detailedProduct.description}}</p>
                                     <hr>
                                     <h2 class="price">
-                                        &dollar;50,66
+                                        &dollar;{{detailedProduct.price}}
                                         <small>&nbsp;&nbsp;&nbsp;<s>40% off</s></small>
                                     </h2>
                                     <hr>
                                     <span class="warranty">
                                         <i class="fa fa-certificate"></i> Warranty: 2 years
                                     </span><br><br>
-                                    <div class="form-group">
+                                    <div class="form-group" ng-repeat="option in detailedProduct.options">
+                                        <label for="{{option.name}}">{{option.name}}</label>
+                                        <select class="form-control" id="{{option.name}}">
+                                            <option ng-repeat="optionsOption in option.options">{{optionsOption}}</option>
+                                        </select>
+                                    </div>
+                                    <!--<div class="form-group">
                                         <label for="color">Color</label>
                                         <select class="form-control" id="color">
                                             <option>Green</option>
@@ -622,7 +582,7 @@
                                             <option>2X</option>
                                             <option>3X</option>
                                         </select>
-                                    </div>
+                                    </div>-->
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-success col-lg-6 col-md-8 col-xs-12"><span><i class="fa fa-cart-plus"></i> Add to Cart</span></button>
                                     </div><br><br>
@@ -641,6 +601,78 @@
                                     <span>Safe and Secure Payments. Easy returns.</span>
                                 </div>-->
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Product -->
+                    <div class="tab-pane clearfix fade" id="tab-add-product">
+                        <div class="main-box-body clearfix">
+                            <header class="main-box-header clearfix">
+                                <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">
+                                    <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back to Products</a>
+                            </header><br>
+                            <!--<h4>Products</h4>-->
+                            <form class="form-horizontal" ng-submit="addProduct()">
+                                <h2 class="text-center" style="margin-top:0px;padding-top: 0px">Add Product</h2>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="productName">Name</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="productName" ng-model="newProduct.name" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="productPrice">Price</label>
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">$</div>
+                                                <input type="number" class="form-control" id="productPrice" ng-model="newProduct.price" placeholder="Price" required>
+                                                <!--<div class="input-group-addon">.00</div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label" for="productDescription">Description</label>
+                                        <div class="col-md-8">
+                                            <textarea class="form-control" rows="3" id="productDescription" ng-model="newProduct.description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div ng-show="newOption">
+                                        <hr>
+                                        <h4>Product Options <small>(seperate options with a comma, no space)</small></h4>
+                                        <div class="form-group" ng-repeat="option in newProduct.options">
+                                            <label class="col-md-3 control-label" for="productOptionsName">Option Name</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" id="productOptionsName" ng-model="option.name" placeholder="Color or Size etc">
+                                            </div>
+                                            <div>
+                                                <label class="col-md-3 control-label" for="productOptionsOption">Options {{option.name}}</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" rows="3" id="productOptionsOption" ng-model="newProduct.options[$index].options" onchange="angular.element(this).scope().optionsOptionProduct()"></textarea>
+                                                    <hr>
+                                                </div>
+                                            </div>
+                                            <!--<div ng-repeat="optionS in option.options">
+                                                <label class="col-md-3 control-label" for="productOptionsOption">Option {{optionS}}</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" id="productOptionsOption" ng-model="optionS" placeholder="S, M, L ?">
+                                                </div>
+                                            </div>-->
+                                            <!--<a ng-click="addOptionsOptionProduct($index)"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>-->
+
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-3">
+                                        <a ng-hide="newOption" class="btn btn-primary col-md-12" ng-click="addOptiontoNewProduct()">Add Option</a>
+                                        <a ng-show="newOption" class="btn btn-primary col-md-12" ng-click="addOptiontoNewProduct()">One more option</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <a href="/company-profile#tab-products" class="btn btn-success col-md-12" data-toggle="tab" aria-expanded="false" ng-click="addCompanyProduct()">Add Product</a>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

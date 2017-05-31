@@ -31,6 +31,7 @@ var Verify = require('./verify');
 var companiesRouter = express.Router();
 companiesRouter.use(bodyParser.json());
 
+// GET/DELETE all companies - POST company
 companiesRouter.route('/')
     .get(function(req, res, next) {
         Companies.find({}, function(err, companies) {
@@ -71,6 +72,7 @@ companiesRouter.route('/')
         });
     });
 
+// GET - PUT - DELETE company by id
 companiesRouter.route('/:companyId')
     .get(function(req, res, next) {
         Companies.findById(req.params.companyId, function(err, company) {
@@ -96,6 +98,7 @@ companiesRouter.route('/:companyId')
         });
     });
 
+// GET company by name
 companiesRouter.route('/getByName/:companyName')
     .get(Verify.verifyOrdinaryUser, function(req, res, next) {
         Companies.findOne({ name: req.params.companyName })
@@ -105,6 +108,35 @@ companiesRouter.route('/getByName/:companyName')
                 if (err) next(err);
                 res.json(company);
             });
+    });
+
+// GET/DELETE all company products - POST company product
+companiesRouter.route('/:companyId/products')
+    .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+            res.json(company.products);
+        });
+    })
+    .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            req.body.images = [];
+            req.body.images.push('default-company-image-300.jpg');
+            company.products.push(req.body);
+            company.save();
+            res.json({ status: "Succesfully added company product!", product: company.products[company.products.length - 1] });
+        });
+    })
+    .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.products = [];
+            company.save();
+            res.json({ status: "Succesfully deleted company products!", company: company });
+        });
     });
 
 // upload a new profile picture

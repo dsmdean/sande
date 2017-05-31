@@ -2,6 +2,50 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+//create a products Schema
+var ProductsSchema = new Schema({
+    name: {
+        type: String
+    },
+    description: {
+        type: String
+    },
+    images: [{
+        type: String,
+        default: 'default-company-image-300.jpg'
+    }],
+    options: [{
+        name: {
+            type: String
+        },
+        options: [{
+            type: String
+        }]
+    }],
+    price: {
+        type: Number
+    },
+    stock: {
+        type: Number,
+        default: 0
+    }
+}, {
+    timestamps: true
+});
+
+//create a services Schema
+var ServicesSchema = new Schema({
+    name: {
+        type: String,
+        unique: true
+    },
+    description: {
+        type: String
+    }
+}, {
+    timestamps: true
+});
+
 //create a companies Schema
 var CompaniesSchema = new Schema({
     category: {
@@ -46,7 +90,19 @@ var CompaniesSchema = new Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Users'
         }
-    }]
+    }],
+    settings: {
+        products: {
+            type: Boolean,
+            default: false
+        },
+        services: {
+            type: Boolean,
+            default: false
+        }
+    },
+    products: [ProductsSchema],
+    services: [ServicesSchema]
 }, {
     timestamps: true
 });

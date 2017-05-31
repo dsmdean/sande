@@ -84,11 +84,24 @@
                 });
         }
 
+        function addCompanyProduct(companyId, productData) {
+            return $http.post(baseURL + '/companies/' + companyId + '/products', productData)
+                .then(function(response) {
+                    // console.log(response.data.user);
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error posting a company product: ' + response.statusText);
+                    return $q.reject('Error posting a company product.');
+                });
+        }
+
         return {
             createCompany: createCompany,
             uploadPicture: uploadPicture,
             getCompanyByName: getCompanyByName,
-            updateCompany: updateCompany
+            updateCompany: updateCompany,
+            addCompanyProduct: addCompanyProduct
         };
     }
 

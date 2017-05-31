@@ -5,10 +5,15 @@
 
         $scope.currentUser = authService.getCurrentUser();
         $scope.loading = false;
+        $scope.detailedProduct = {};
         $scope.picture = {};
         $scope.thumbnail = {
             available: false
         };
+        $scope.newProduct = {
+            options: []
+        };
+        $scope.newOption = false;
 
         function showError(message) {
             notifier.error(message);
@@ -18,11 +23,35 @@
         companyService.getCompanyByName($state.params.name)
             .then(function(response) {
                 $scope.company = response;
+
+                if ($scope.company.settings.services === true && $scope.company.settings.products === true) {
+                    $scope.company.offerSettings = "both";
+                } else if ($scope.company.settings.services === true) {
+                    $scope.company.offerSettings = "services";
+                } else if ($scope.company.settings.products === true) {
+                    $scope.company.offerSettings = "products";
+                }
             })
             .catch(showError);
 
         $scope.updateCompany = function() {
+            // $log.log($scope.company);
             $scope.loading = true;
+
+            switch ($scope.company.offerSettings) {
+                case "services":
+                    $scope.company.settings.services = true;
+                    $scope.company.settings.products = false;
+                    break;
+                case "products":
+                    $scope.company.settings.products = true;
+                    $scope.company.settings.services = false;
+                    break;
+                case "both":
+                    $scope.company.settings.services = true;
+                    $scope.company.settings.products = true;
+            };
+
             companyService.updateCompany($scope.company)
                 .then(function(response) {
                     notifier.success('Company updated!');
@@ -71,6 +100,36 @@
                 $scope.thumbnail = {
                     available: false
                 };
+            }
+        };
+
+        $scope.addCompanyProduct = function() {
+            $scope.loading = true;
+            companyService.addCompanyProduct($scope.company._id, $scope.newProduct)
+                .then(function(response) {
+                    notifier.success(response.status);
+                    $scope.loading = false;
+                    $scope.company.products.push(response.product);
+                    $scope.newProduct = {};
+                })
+                .catch(showError);
+        };
+
+        $scope.setDetailedProduct = function(product) {
+            $scope.detailedProduct = product;
+        }
+
+        $scope.addOptiontoNewProduct = function() {
+            $scope.newOption = true;
+            $scope.newProduct.options.push({ name: '', options: '' });
+        };
+
+        $scope.optionsOptionProduct = function() {
+            for (var i = 0; i < $scope.newProduct.options.length; i++) {
+                if (!Array.isArray($scope.newProduct.options[i].options)) {
+                    $scope.newProduct.options[i].options = $scope.newProduct.options[i].options.split(',');
+                    $log.log($scope.newProduct);
+                }
             }
         };
     }
