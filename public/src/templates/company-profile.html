@@ -102,7 +102,7 @@
                     <li class="">
                         <a href="/company-profile#tab-users" data-toggle="tab" aria-expanded="false">Users</a>
                     </li>
-                    <li class="">
+                    <li class="" ng-show="company.settings.products">
                         <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">Products</a>
                     </li>
                 </ul>
@@ -481,22 +481,30 @@
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Product</a>
                             </header><br>
                             <ul class="widget-products">
-                                <li ng-repeat="product in company.products">
+                                <li ng-repeat="product in company.products | orderBy: '-'">
                                     <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false" ng-click="setDetailedProduct(product)">
-                                        <span class="img">
-                                            <img ng-src="img/company-profile/{{product.images[0]}}" alt=""/>
-                                        </span>
-                                        <span class="product clearfix">
-                                            <span class="name">
+                                        <div class="img col-lg-1 col-xs-2">
+                                            <img ng-src="img/company-profile/{{product.images[0]}}" alt="" />
+                                        </div>
+                                        <div class="product clearfix col-lg-10 col-xs-9">
+                                            <div class="name col-lg-12">
                                                 {{product.name}}
-                                            </span>
-                                        <span class="price">
+                                            </div>
+                                            <div class="col-lg-3 col-md-4">
+                                                <span class="product price">
                                                 <i class="fa fa-money"></i> &dollar;{{product.price}}
                                             </span>
-                                        <span class="warranty">
+                                            </div>
+                                            <div class="col-lg-9 col-md-8">
+                                                <p>{{product.description | limitTo: 70}}...</p>
+                                            </div>
+                                            <!--<span class="price">
+                                                <i class="fa fa-money"></i> &dollar;{{product.price}}
+                                            </span>-->
+                                            <!--<span class="warranty">
                                                 <i class="fa fa-certificate"></i> Warranty: 2 years
-                                            </span>
-                                        </span>
+                                            </span>-->
+                                        </div>
                                     </a>
                                 </li>
                             </ul>
@@ -512,94 +520,120 @@
                             </header><br>
                             <!--<h4>Products</h4>-->
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-xs-12 product-image">
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane fade in active" id="one">
-                                            <img ng-src="img/company-profile/{{detailedProduct.images[0]}}" alt="">
+                                <!--View-->
+                                <div ng-hide="editProduct">
+                                    <div class="col-lg-6 col-md-6 col-xs-12 product-image">
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane fade in active" id="one">
+                                                <img ng-src="img/company-profile/{{detailedProduct.images[0]}}" alt="">
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="two">
+                                                <img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" alt="">
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane fade" id="three">
+                                                <img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" alt="">
+                                            </div>
                                         </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="two">
-                                            <img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" alt="">
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane fade" id="three">
-                                            <img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" alt="">
+                                        <!-- Nav tabs -->
+                                        <div class="row product-tabs" role="tablist">
+                                            <div role="presentation" class="col-lg-4 col-md-4 col-xs-6 active">
+                                                <a href="/company-profile#one" aria-controls="one" role="tab" data-toggle="tab" aria-expanded="true"><img ng-src="img/company-profile/{{detailedProduct.images[0]}}" class="img-thumbnail" alt=""></a>
+                                            </div>
+                                            <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
+                                                <a href="/company-profile#two" aria-controls="two" role="tab" data-toggle="tab" aria-expanded="false"><img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" class="img-thumbnail" alt=""></a>
+                                            </div>
+                                            <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
+                                                <a href="/company-profile#three" aria-controls="three" role="tab" data-toggle="tab" aria-expanded="false"><img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" class="img-thumbnail" alt=""></a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <!-- Nav tabs -->
-                                    <div class="row product-tabs" role="tablist">
-                                        <div role="presentation" class="col-lg-4 col-md-4 col-xs-6 active">
-                                            <a href="/company-profile#one" aria-controls="one" role="tab" data-toggle="tab" aria-expanded="true"><img ng-src="img/company-profile/{{detailedProduct.images[0]}}" class="img-thumbnail" alt=""></a>
-                                        </div>
-                                        <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
-                                            <a href="/company-profile#two" aria-controls="two" role="tab" data-toggle="tab" aria-expanded="false"><img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" class="img-thumbnail" alt=""></a>
-                                        </div>
-                                        <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
-                                            <a href="/company-profile#three" aria-controls="three" role="tab" data-toggle="tab" aria-expanded="false"><img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" class="img-thumbnail" alt=""></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-xs-12 product-info">
-                                    <h3>{{detailedProduct.name}}</h3>
-                                    <div class="list-pro-rating">
-                                        <i class="fa fa-star icolor"></i>
-                                        <i class="fa fa-star icolor"></i>
-                                        <i class="fa fa-star icolor"></i>
-                                        <i class="fa fa-star icolor"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-xs-12 product-info">
+                                        <h3>{{detailedProduct.name}}&nbsp; <a href="" ng-click="toggleEditProduct()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></h3>
+                                        <!--<div class="list-pro-rating">
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star icolor"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>-->
 
-                                    <p>{{detailedProduct.description}}</p>
-                                    <hr>
-                                    <h2 class="price">
-                                        &dollar;{{detailedProduct.price}}
-                                        <small>&nbsp;&nbsp;&nbsp;<s>40% off</s></small>
-                                    </h2>
-                                    <hr>
-                                    <span class="warranty">
-                                        <i class="fa fa-certificate"></i> Warranty: 2 years
-                                    </span><br><br>
-                                    <div class="form-group" ng-repeat="option in detailedProduct.options">
-                                        <label for="{{option.name}}">{{option.name}}</label>
-                                        <select class="form-control" id="{{option.name}}">
+                                        <p>{{detailedProduct.description}}</p>
+                                        <hr>
+                                        <h2 class="price">
+                                            &dollar;{{detailedProduct.price}}
+                                            <!--<small>&nbsp;&nbsp;&nbsp;<s>40% off</s></small>-->
+                                        </h2>
+                                        <hr>
+                                        <!--<span class="warranty">
+                                            <i class="fa fa-certificate"></i> Warranty: 2 years
+                                        </span><br><br>-->
+                                        <div class="form-group" ng-repeat="option in detailedProduct.options">
+                                            <label for="{{option.name}}">{{option.name}}</label>
+                                            <select class="form-control" id="{{option.name}}">
                                             <option ng-repeat="optionsOption in option.options">{{optionsOption}}</option>
                                         </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success col-lg-6 col-md-8 col-xs-12"><span><i class="fa fa-cart-plus"></i> Add to Cart</span></button>
+                                        </div><br><br>
                                     </div>
-                                    <!--<div class="form-group">
-                                        <label for="color">Color</label>
-                                        <select class="form-control" id="color">
-                                            <option>Green</option>
-                                            <option>Black</option>
-                                            <option>Gold</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="size">Size</label>
-                                        <select class="form-control" id="size">
-                                            <option>S</option>
-                                            <option>M</option>
-                                            <option>X</option>
-                                            <option>XL</option>
-                                            <option>2X</option>
-                                            <option>3X</option>
-                                        </select>
-                                    </div>-->
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-success col-lg-6 col-md-8 col-xs-12"><span><i class="fa fa-cart-plus"></i> Add to Cart</span></button>
-                                    </div><br><br>
                                 </div>
-                                <!--<div class="product-categories">
-                                    <strong>Categories:</strong>
-                                    <span>FootwearMen's &gt; FootwearCasual &gt; ShoesClarks &gt; Casual</span>
-                                    <br>
-                                    <strong>Services:</strong>
-                                    <span>Cash On Delivery available?</span>
-                                    <br>
-                                    <strong>Categories:</strong>
-                                    <span>30 Days Exchange Policy?</span>
-                                    <br>
-                                    <strong>Payment Method</strong>
-                                    <span>Safe and Secure Payments. Easy returns.</span>
-                                </div>-->
+                                <!--Edit-->
+                                <div ng-show="editProduct">
+                                    <form class="form-horizontal">
+                                        <h2 class="text-center" style="margin-top:0px;padding-top: 0px">Edit Product: {{detailedProduct.name}}</h2>
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="productName">Name</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" id="productName" ng-model="detailedProduct.name" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="productPrice">Price</label>
+                                                <div class="col-md-8">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon">$</div>
+                                                        <input type="text" class="form-control" id="productPrice" ng-model="detailedProduct.price" placeholder="Price" required>
+                                                        <!--<div class="input-group-addon">.00</div>-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="productDescription">Description</label>
+                                                <div class="col-md-8">
+                                                    <textarea class="form-control" rows="3" id="productDescription" ng-model="detailedProduct.description"></textarea>
+                                                </div>
+                                            </div>
+                                            <div ng-hide="detailedProduct.options.length < 1">
+                                                <hr>
+                                                <h4 class="col-md-offset-3">Product Options <small>(seperate options with a comma, no space)</small></h4>
+                                                <div ng-repeat="option in detailedProduct.options">
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" for="productOptionsName">Option Name</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" class="form-control" id="productOptionsName" ng-model="option.name" placeholder="Color or Size etc">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-md-3 control-label" for="productOptionsOption">Options {{option.name}}</label>
+                                                        <div class="col-md-8">
+                                                            <textarea class="form-control" rows="3" id="productOptionsOption" ng-model="detailedProduct.options[$index].options" onchange="angular.element(this).scope().addOptionsOptionToDetailedProduct()"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" ng-click="deleteOptionDetailedProduct($index)" class="btn btn-xs btn-danger col-lg-offset-9 col-md-offset-8 col-lg-2 col-md-3 delete-option"><i class="fa fa-times"></i> Delete Option</button>
+                                                    <hr style="width:75%;margin-left:20%">
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                        <div class="form-group">
+                                            <button ng-click="toggleEditProduct()" class="btn btn-default col-md-offset-2 col-md-3 col-xs-11"><span>Go Back</span></button>
+                                            <button ng-click="addOptionToDetailedProduct()" class="btn btn-primary col-md-3 col-xs-11"><span>Add Option</span></button>
+                                            <button ng-click="editCompanyProduct()" class="btn btn-success col-md-3 col-xs-11"><span>Save</span></button>
+                                        </div><br><br>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -639,34 +673,28 @@
                                     </div>
                                     <div ng-show="newOption">
                                         <hr>
-                                        <h4>Product Options <small>(seperate options with a comma, no space)</small></h4>
-                                        <div class="form-group" ng-repeat="option in newProduct.options">
-                                            <label class="col-md-3 control-label" for="productOptionsName">Option Name</label>
-                                            <div class="col-md-8">
-                                                <input type="text" class="form-control" id="productOptionsName" ng-model="option.name" placeholder="Color or Size etc">
+                                        <h4 class="col-md-offset-3">Product Options <small>(seperate options with a comma, no space)</small></h4>
+                                        <div ng-repeat="option in newProduct.options">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label" for="productOptionsName">Option Name</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" id="productOptionsName" ng-model="option.name" placeholder="Color or Size etc">
+                                                </div>
                                             </div>
-                                            <div>
+                                            <div class="form-group">
                                                 <label class="col-md-3 control-label" for="productOptionsOption">Options {{option.name}}</label>
                                                 <div class="col-md-8">
-                                                    <textarea class="form-control" rows="3" id="productOptionsOption" ng-model="newProduct.options[$index].options" onchange="angular.element(this).scope().optionsOptionProduct()"></textarea>
+                                                    <textarea class="form-control" rows="3" id="productOptionsOption" ng-model="newProduct.options[$index].options" onchange="angular.element(this).scope().addOptionsOptionToNewProduct()"></textarea>
                                                     <hr>
                                                 </div>
                                             </div>
-                                            <!--<div ng-repeat="optionS in option.options">
-                                                <label class="col-md-3 control-label" for="productOptionsOption">Option {{optionS}}</label>
-                                                <div class="col-md-8">
-                                                    <input type="text" class="form-control" id="productOptionsOption" ng-model="optionS" placeholder="S, M, L ?">
-                                                </div>
-                                            </div>-->
-                                            <!--<a ng-click="addOptionsOptionProduct($index)"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>-->
-
                                         </div>
                                     </div>
                                 </fieldset>
                                 <div class="row">
                                     <div class="col-md-4 col-md-offset-3">
-                                        <a ng-hide="newOption" class="btn btn-primary col-md-12" ng-click="addOptiontoNewProduct()">Add Option</a>
-                                        <a ng-show="newOption" class="btn btn-primary col-md-12" ng-click="addOptiontoNewProduct()">One more option</a>
+                                        <a ng-hide="newOption" class="btn btn-primary col-md-12" ng-click="addOptionToNewProduct()">Add Option</a>
+                                        <a ng-show="newOption" class="btn btn-primary col-md-12" ng-click="addOptionToNewProduct()">One more option</a>
                                     </div>
                                     <div class="col-md-4">
                                         <a href="/company-profile#tab-products" class="btn btn-success col-md-12" data-toggle="tab" aria-expanded="false" ng-click="addCompanyProduct()">Add Product</a>

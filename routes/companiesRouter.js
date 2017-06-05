@@ -139,6 +139,39 @@ companiesRouter.route('/:companyId/products')
         });
     });
 
+// GET/PUT/DELETE specific company product
+companiesRouter.route('/:companyId/products/:productId')
+    .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+            res.json(company.products.id(req.params.productId));
+        });
+    })
+    .put(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.products.id(req.params.productId).remove();
+            company.products.push(req.body);
+            company.save();
+
+            res.json({ status: "Product updated successfully!", products: company.products, product: req.body });
+        });
+    })
+    .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.products.id(req.params.productId).remove();
+
+            company.save(function(err, company) {
+                if (err) next(err);
+
+                res.json({ status: 'Product deleted!' });
+            });
+        });
+    });
+
 // upload a new profile picture
 companiesRouter.route('/:companyId/uploadPicture')
     .post(Verify.verifyOrdinaryUser, function(req, res, next) {

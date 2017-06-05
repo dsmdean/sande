@@ -4429,7 +4429,7 @@ input[type="radio"] {
     border-bottom: 2px solid #ebebeb
 }
 .widget-products li>a {
-    height: 88px;
+    min-height: 102px;
     display: block;
     width: 100%;
     color: #929292;
@@ -4478,8 +4478,9 @@ input[type="radio"] {
 }
 .widget-products li .product {
     display: block;
-    margin-left: 90px;
-    margin-top: 19px;
+    /*margin-left: 90px;*/
+    
+    margin-top: 5px;
 }
 .widget-products li .product>.name {
     display: block;

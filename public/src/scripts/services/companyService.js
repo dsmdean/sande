@@ -96,12 +96,25 @@
                 });
         }
 
+        function editCompanyProduct(companyId, productData) {
+            return $http.put(baseURL + '/companies/' + companyId + '/products/' + productData._id, productData)
+                .then(function(response) {
+                    // console.log(response.data.user);
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error edting the company product: ' + response.statusText);
+                    return $q.reject('Error editing the company product.');
+                });
+        }
+
         return {
             createCompany: createCompany,
             uploadPicture: uploadPicture,
             getCompanyByName: getCompanyByName,
             updateCompany: updateCompany,
-            addCompanyProduct: addCompanyProduct
+            addCompanyProduct: addCompanyProduct,
+            editCompanyProduct: editCompanyProduct
         };
     }
 

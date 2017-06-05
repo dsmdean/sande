@@ -4,24 +4,30 @@
     function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout) {
 
         $scope.currentUser = authService.getCurrentUser();
-        $scope.loading = false;
-        $scope.detailedProduct = {};
+        $scope.loading = true;
+        // COMPANY IMAGE UPLOAD SECTION
         $scope.picture = {};
         $scope.thumbnail = {
             available: false
         };
+        // ADD PRODUCT SECTION
         $scope.newProduct = {
             options: []
         };
         $scope.newOption = false;
+        // DETAILED PRODUCT SECTION
+        $scope.detailedProduct = {};
+        $scope.editProduct = false;
 
         function showError(message) {
             notifier.error(message);
             $scope.loading = false;
         }
 
+        // GET COMPANY DATA
         companyService.getCompanyByName($state.params.name)
             .then(function(response) {
+                $scope.loading = false;
                 $scope.company = response;
 
                 if ($scope.company.settings.services === true && $scope.company.settings.products === true) {
@@ -34,6 +40,7 @@
             })
             .catch(showError);
 
+        // SETTINGS SECTION
         $scope.updateCompany = function() {
             // $log.log($scope.company);
             $scope.loading = true;
@@ -60,6 +67,7 @@
                 .catch(showError);
         };
 
+        // COMPANY IMAGE UPLOAD SECTION
         $scope.getImage = function() {
             $('#choose-image').click();
         };
@@ -103,6 +111,7 @@
             }
         };
 
+        // ADD PRODUCT SECTION
         $scope.addCompanyProduct = function() {
             $scope.loading = true;
             companyService.addCompanyProduct($scope.company._id, $scope.newProduct)
@@ -111,26 +120,69 @@
                     $scope.loading = false;
                     $scope.company.products.push(response.product);
                     $scope.newProduct = {};
+                    $scope.newOption = false;
                 })
                 .catch(showError);
         };
 
-        $scope.setDetailedProduct = function(product) {
-            $scope.detailedProduct = product;
-        }
-
-        $scope.addOptiontoNewProduct = function() {
+        $scope.addOptionToNewProduct = function() {
             $scope.newOption = true;
             $scope.newProduct.options.push({ name: '', options: '' });
         };
 
-        $scope.optionsOptionProduct = function() {
+        $scope.addOptionsOptionToNewProduct = function() {
             for (var i = 0; i < $scope.newProduct.options.length; i++) {
                 if (!Array.isArray($scope.newProduct.options[i].options)) {
                     $scope.newProduct.options[i].options = $scope.newProduct.options[i].options.split(',');
                     $log.log($scope.newProduct);
                 }
             }
+        };
+
+        // DETAILED PRODUCT SECTION
+        $scope.setDetailedProduct = function(product) {
+            $scope.detailedProduct = product;
+        }
+
+        $scope.toggleEditProduct = function() {
+            $scope.editProduct = !$scope.editProduct;
+        };
+
+        $scope.addOptionToDetailedProduct = function() {
+            if (!Array.isArray($scope.detailedProduct.options)) {
+                $scope.detailedProduct.options = [];
+            }
+            $scope.detailedProduct.options.push({ name: '', options: '' });
+            // $log.log($scope.detailedProduct);
+        };
+
+        $scope.addOptionsOptionToDetailedProduct = function() {
+            for (var i = 0; i < $scope.detailedProduct.options.length; i++) {
+                if (!Array.isArray($scope.detailedProduct.options[i].options)) {
+                    $scope.detailedProduct.options[i].options = $scope.detailedProduct.options[i].options.split(',');
+                    $log.log($scope.detailedProduct);
+                }
+            }
+        };
+
+        $scope.deleteOptionDetailedProduct = function(index) {
+            $scope.detailedProduct.options.splice(index, 1);
+            $log.log($scope.detailedProduct);
+        };
+
+        $scope.editCompanyProduct = function() {
+            // $log.log($scope.detailedProduct);
+
+            $scope.loading = true;
+            companyService.editCompanyProduct($scope.company._id, $scope.detailedProduct)
+                .then(function(response) {
+                    notifier.success(response.status);
+                    $scope.loading = false;
+                    $scope.company.products = response.products;
+                    $scope.detailedProduct = response.product;
+                    $scope.toggleEditProduct();
+                })
+                .catch(showError);
         };
     }
 
