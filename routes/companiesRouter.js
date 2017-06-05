@@ -167,7 +167,67 @@ companiesRouter.route('/:companyId/products/:productId')
             company.save(function(err, company) {
                 if (err) next(err);
 
-                res.json({ status: 'Product deleted!' });
+                res.json({ status: 'Product deleted!', products: company.products });
+            });
+        });
+    });
+
+// GET/DELETE all company services - POST company service
+companiesRouter.route('/:companyId/services')
+    .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+            res.json(company.services);
+        });
+    })
+    .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.services.push(req.body);
+            company.save();
+            res.json({ status: "Succesfully added company service!", service: req.body });
+        });
+    })
+    .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.services = [];
+            company.save();
+            res.json({ status: "Succesfully deleted company services!", company: company });
+        });
+    });
+
+// GET/PUT/DELETE specific company service
+companiesRouter.route('/:companyId/services/:serviceId')
+    .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+            res.json(company.services.id(req.params.serviceId));
+        });
+    })
+    .put(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.services.id(req.params.serviceId).remove();
+            company.services.push(req.body);
+            company.save();
+
+            res.json({ status: "Service updated successfully!", services: company.services, service: req.body });
+        });
+    })
+    .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.services.id(req.params.serviceId).remove();
+
+            company.save(function(err, company) {
+                if (err) next(err);
+
+                res.json({ status: 'Service deleted!' });
             });
         });
     });

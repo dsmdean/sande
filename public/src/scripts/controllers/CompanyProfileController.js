@@ -18,6 +18,8 @@
         // DETAILED PRODUCT SECTION
         $scope.detailedProduct = {};
         $scope.editProduct = false;
+        // ADD SERVICE SECTION
+        $scope.newService = {};
 
         function showError(message) {
             notifier.error(message);
@@ -32,6 +34,8 @@
 
                 if ($scope.company.settings.services === true && $scope.company.settings.products === true) {
                     $scope.company.offerSettings = "both";
+                } else if ($scope.company.settings.services === false && $scope.company.settings.products === false) {
+                    $scope.company.offerSettings = "none";
                 } else if ($scope.company.settings.services === true) {
                     $scope.company.offerSettings = "services";
                 } else if ($scope.company.settings.products === true) {
@@ -57,6 +61,10 @@
                 case "both":
                     $scope.company.settings.services = true;
                     $scope.company.settings.products = true;
+                    break;
+                case "none":
+                    $scope.company.settings.services = false;
+                    $scope.company.settings.products = false;
             };
 
             companyService.updateCompany($scope.company)
@@ -181,6 +189,33 @@
                     $scope.company.products = response.products;
                     $scope.detailedProduct = response.product;
                     $scope.toggleEditProduct();
+                })
+                .catch(showError);
+        };
+
+        $scope.deleteCompanyProduct = function() {
+            $scope.loading = true;
+            $(".modal-backdrop").hide();
+            companyService.deleteCompanyProduct($scope.company._id, $scope.detailedProduct._id)
+                .then(function(response) {
+                    notifier.success(response.status);
+                    $scope.loading = false;
+                    $scope.company.products = response.products;
+                    $scope.detailedProduct = {};
+                    $scope.editProduct = false;
+                })
+                .catch(showError);
+        };
+
+        // ADD SERVICE SECTION
+        $scope.addCompanyService = function() {
+            $scope.loading = true;
+            companyService.addCompanyService($scope.company._id, $scope.newService)
+                .then(function(response) {
+                    notifier.success(response.status);
+                    $scope.loading = false;
+                    $scope.company.services.push(response.service);
+                    $scope.newService = {};
                 })
                 .catch(showError);
         };

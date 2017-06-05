@@ -108,13 +108,37 @@
                 });
         }
 
+        function deleteCompanyProduct(companyId, productId) {
+            return $http.delete(baseURL + '/companies/' + companyId + '/products/' + productId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error deleting a company product: ' + response.statusText);
+                    return $q.reject('Error deleting a company product.');
+                });
+        }
+
+        function addCompanyService(companyId, serviceData) {
+            return $http.post(baseURL + '/companies/' + companyId + '/services', serviceData)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error posting a company service: ' + response.statusText);
+                    return $q.reject('Error posting a company service.');
+                });
+        }
+
         return {
             createCompany: createCompany,
             uploadPicture: uploadPicture,
             getCompanyByName: getCompanyByName,
             updateCompany: updateCompany,
             addCompanyProduct: addCompanyProduct,
-            editCompanyProduct: editCompanyProduct
+            editCompanyProduct: editCompanyProduct,
+            deleteCompanyProduct: deleteCompanyProduct,
+            addCompanyService: addCompanyService
         };
     }
 
