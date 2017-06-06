@@ -18,6 +18,10 @@
         // DETAILED PRODUCT SECTION
         $scope.detailedProduct = {};
         $scope.editProduct = false;
+        $scope.productPicture = {};
+        $scope.productThumbnail = {
+            available: false
+        };
         // ADD SERVICE SECTION
         $scope.newService = {};
 
@@ -188,7 +192,7 @@
                     $scope.loading = false;
                     $scope.company.products = response.products;
                     $scope.detailedProduct = response.product;
-                    $scope.toggleEditProduct();
+                    $scope.editProduct = false;
                 })
                 .catch(showError);
         };
@@ -205,6 +209,63 @@
                     $scope.editProduct = false;
                 })
                 .catch(showError);
+        };
+
+        // PRODUCT IMAGE UPLOAD SECTION
+        $scope.detailPhotoChanged = function(files) {
+            // console.log(files);
+            if (files.length > 0 && files[0].name.match(/\.(png|jpeg|jpg)$/)) {
+                $scope.productUploading = true;
+                var file = files[0];
+                var fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = function(e) {
+                    $timeout(function() {
+                        $scope.productThumbnail.available = true;
+                        $scope.productThumbnail.dataUrl = e.target.result;
+                        $scope.productUploading = false;
+                    });
+                }
+            } else {
+                $scope.productThumbnail = {
+                    available: false
+                };
+            }
+        };
+
+        $scope.addCompanyProductImage = function() {
+            $scope.productUploading = true;
+            $scope.loading = true;
+            $("#addProductImageModal").hide();
+            $(".modal-backdrop").hide();
+
+            companyService.addCompanyProductImage($scope.company, $scope.detailedProduct, $scope.productPicture)
+                .then(function(response) {
+                    if (response.success) {
+                        notifier.success(response.status);
+                        $scope.company.products = response.products;
+                        $scope.detailedProduct = response.product;
+                    } else {
+                        notifier.error(response.status);
+                    }
+
+                    $scope.productUploading = false;
+                    $scope.productPicture = {};
+                    $scope.loading = false;
+                    $scope.productThumbnail = {
+                        available: false
+                    };
+                })
+                .catch(showError);
+        };
+
+        $scope.deleteProductImageModal = function(index) {
+            if ($scope.detailedProduct.images.length > 1) {
+                $scope.detailedProduct.images.splice(index, 1);
+                $scope.editCompanyProduct();
+            } else {
+                notifier.error("Must add other picture before deleting this one!");
+            }
         };
 
         // ADD SERVICE SECTION

@@ -2,27 +2,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var multer = require('multer');
-var storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './public/src/img/company-profile/')
-    },
-    filename: function(req, file, cb) {
-        if (!file.originalname.match(/\.(jpeg|jpg|png)$/)) {
-            var err = new Error();
-            err.code = 'filetype';
-            return cb(err);
-        } else {
-            file.date = Date.now();
-            var extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
-            cb(null, file.date + '_' + req.params.companyId + '.jpg');
-        }
-    }
-})
-
-var upload = multer({
-    storage: storage,
-    limits: { fileSize: 2000000 }
-}).single('picture');
 
 var Companies = require('../models/companies');
 var User = require('../models/users');
@@ -151,6 +130,7 @@ companiesRouter.route('/:companyId/products/:productId')
         Companies.findById(req.params.companyId, function(err, company) {
             if (err) next(err);
 
+            // company.products.id(req.params.productId) = req.body;
             company.products.id(req.params.productId).remove();
             company.products.push(req.body);
             company.save();
@@ -169,6 +149,78 @@ companiesRouter.route('/:companyId/products/:productId')
 
                 res.json({ status: 'Product deleted!', products: company.products });
             });
+        });
+    });
+
+// POST a company product image
+companiesRouter.route('/:companyId/products/:productId/uploadNewPicture')
+    .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+        var storage = multer.diskStorage({
+            destination: function(req, file, cb) {
+                cb(null, './public/src/img/company-profile/products/')
+            },
+            filename: function(req, file, cb) {
+                if (!file.originalname.match(/\.(jpeg|jpg|png)$/)) {
+                    var err = new Error();
+                    err.code = 'filetype';
+                    return cb(err);
+                } else {
+                    file.date = Date.now();
+                    var extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
+                    cb(null, file.date + '_' + req.params.companyId + '_' + req.params.productId + '.jpg');
+                }
+            }
+        });
+
+        var upload = multer({
+            storage: storage,
+            limits: { fileSize: 2000000 }
+        }).single('picture');
+
+        upload(req, res, function(err) {
+            if (err) {
+                if (err.code === 'LIMIT_FILE_SIZE') {
+                    res.status(202).json({
+                        success: false,
+                        status: 'File size is too large. Max limit is 2MB'
+                    });
+                } else if (err.code === 'filetype') {
+                    res.status(202).json({
+                        success: false,
+                        status: 'File type is invalid. Must be .jpeg/.jpg/.png'
+                    });
+                } else {
+                    console.log(err);
+                    res.status(202).json({
+                        success: false,
+                        status: 'File was not able to be uploaded'
+                    });
+                }
+            } else {
+                if (!req.file) {
+                    console.log(req.file);
+                    res.status(202).json({
+                        success: false,
+                        status: 'No file was selected'
+                    });
+                } else {
+                    Companies.findById(req.params.companyId, function(err, company) {
+                        if (err) next(err);
+
+                        var imageName = req.file.date + '_' + req.params.companyId + '_' + req.params.productId + '.jpg';
+                        // var product = company.products.id(req.params.productId);
+                        company.products.id(req.params.productId).images.push(imageName);
+                        company.save();
+
+                        res.status(200).json({
+                            success: true,
+                            status: 'You\'ve successfully uploaded the picture',
+                            product: company.products.id(req.params.productId),
+                            products: company.products
+                        });
+                    });
+                }
+            }
         });
     });
 
@@ -235,6 +287,28 @@ companiesRouter.route('/:companyId/services/:serviceId')
 // upload a new profile picture
 companiesRouter.route('/:companyId/uploadPicture')
     .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+        var storage = multer.diskStorage({
+            destination: function(req, file, cb) {
+                cb(null, './public/src/img/company-profile/')
+            },
+            filename: function(req, file, cb) {
+                if (!file.originalname.match(/\.(jpeg|jpg|png)$/)) {
+                    var err = new Error();
+                    err.code = 'filetype';
+                    return cb(err);
+                } else {
+                    file.date = Date.now();
+                    var extension = file.originalname.substring(file.originalname.lastIndexOf('.'));
+                    cb(null, file.date + '_' + req.params.companyId + '.jpg');
+                }
+            }
+        });
+
+        var upload = multer({
+            storage: storage,
+            limits: { fileSize: 2000000 }
+        }).single('picture');
+
         upload(req, res, function(err) {
             if (err) {
                 if (err.code === 'LIMIT_FILE_SIZE') {

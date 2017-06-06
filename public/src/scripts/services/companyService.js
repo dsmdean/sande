@@ -119,6 +119,23 @@
                 });
         }
 
+        function addCompanyProductImage(company, product, picture) {
+            var fd = new FormData();
+            fd.append('picture', picture.upload);
+
+            return $http.post(baseURL + '/companies/' + company._id + '/products/' + product._id + '/uploadNewPicture', fd, {
+                    transformRequest: angular.identity,
+                    headers: { 'Content-Type': undefined }
+                })
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error uploading picture: ' + response.statusText);
+                    return $q.reject('Error uploading picture.');
+                });
+        }
+
         function addCompanyService(companyId, serviceData) {
             return $http.post(baseURL + '/companies/' + companyId + '/services', serviceData)
                 .then(function(response) {
@@ -138,6 +155,7 @@
             addCompanyProduct: addCompanyProduct,
             editCompanyProduct: editCompanyProduct,
             deleteCompanyProduct: deleteCompanyProduct,
+            addCompanyProductImage: addCompanyProductImage,
             addCompanyService: addCompanyService
         };
     }

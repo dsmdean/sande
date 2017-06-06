@@ -241,12 +241,31 @@ form .progress {
         opacity: 1;
     }
     
-    .button-hover {
+    .img-company-profile-button-hover {
         color: white;
         /*font-size: 20px;*/
         position: relative;
         top: 78%;
         left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+    
+    .img-product-button-hover {
+        color: white;
+        /*font-size: 20px;*/
+        position: relative;
+        top: 58%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+    
+    .img-product-button-add-hover {
+        color: white;
+        position: relative;
+        top: 8%;
+        left: 75%;
         transform: translate(-50%, -50%);
         -ms-transform: translate(-50%, -50%);
     }

@@ -29,11 +29,11 @@
                                 </div>
                             </div>-->
 
-                            <label class="btn btn-primary col-lg-12 col-md-12 col-xs-12 button-hover">
+                            <label class="btn btn-primary col-lg-12 col-md-12 col-xs-12 img-company-profile-button-hover">
                                 Browse
                                 <input id="choose-image" class="hidden" type="file" file-parse="picture.upload" name="picture" ng-disabled="uploading" onchange="angular.element(this).scope().photoChanged(this.files)">
                             </label>
-                            <button type="submit" class="btn btn-success col-lg-12 col-md-12 col-xs-12 button-hover" ng-disabled="uploading">Upload Picture</button>
+                            <button type="submit" class="btn btn-success col-lg-12 col-md-12 col-xs-12 img-company-profile-button-hover" ng-disabled="uploading">Upload Picture</button>
                         </form>
                     </figure>
                     <!-- /image -->
@@ -491,7 +491,7 @@
                                 <li ng-repeat="product in company.products | orderBy: '-'">
                                     <a href="/company-profile#tab-products-details" data-toggle="tab" aria-expanded="false" ng-click="setDetailedProduct(product)">
                                         <div class="img col-lg-1 col-xs-2">
-                                            <img ng-src="img/company-profile/{{product.images[0]}}" alt="" />
+                                            <img ng-src="img/company-profile/products/{{product.images[0]}}" alt="" />
                                         </div>
                                         <div class="product clearfix col-lg-10 col-xs-9">
                                             <div class="name col-lg-12">
@@ -533,26 +533,22 @@
                                     <div class="col-lg-6 col-md-6 col-xs-12 product-image">
                                         <!-- Tab panes -->
                                         <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane fade in active" id="one">
-                                                <img ng-src="img/company-profile/{{detailedProduct.images[0]}}" alt="">
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="two">
-                                                <img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" alt="">
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane fade" id="three">
-                                                <img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" alt="">
+                                            <div role="tabpanel" class="tab-pane fade in" ng-class="{'active': $index===0}" id="{{$index}}" ng-repeat="img in detailedProduct.images">
+                                                <figure class="margin-bottom-10 img-container">
+                                                    <!-- image -->
+                                                    <!--<img ng-src="img/company-profile/products/{{img}}" class="profile-img img-responsive center-block pic">-->
+                                                    <img ng-src="img/company-profile/products/{{img}}" alt="" class="profile-img img-responsive center-block pic" />
+                                                    <form enctype="multipart/form-data" class="button-overlay">
+                                                        <button type="button" data-toggle="modal" data-target="#addProductImageModal" class="btn btn-xs btn-default col-lg-1 col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                        <button type="button" ng-click="deleteProductImageModal($index)" class="btn btn-xs btn-danger col-lg-1 col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                    </form>
+                                                </figure>
                                             </div>
                                         </div>
                                         <!-- Nav tabs -->
                                         <div class="row product-tabs" role="tablist">
-                                            <div role="presentation" class="col-lg-4 col-md-4 col-xs-6 active">
-                                                <a href="/company-profile#one" aria-controls="one" role="tab" data-toggle="tab" aria-expanded="true"><img ng-src="img/company-profile/{{detailedProduct.images[0]}}" class="img-thumbnail" alt=""></a>
-                                            </div>
-                                            <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
-                                                <a href="/company-profile#two" aria-controls="two" role="tab" data-toggle="tab" aria-expanded="false"><img src="http://ecx.images-amazon.com/images/I/21iEPbXQN9L._SS400_.jpg" class="img-thumbnail" alt=""></a>
-                                            </div>
-                                            <div role="presentation" class="col-lg-4 col-md-4 col-xs-6">
-                                                <a href="/company-profile#three" aria-controls="three" role="tab" data-toggle="tab" aria-expanded="false"><img src="https://images10.newegg.com/ProductImage/58-753-133-16.jpg" class="img-thumbnail" alt=""></a>
+                                            <div role="presentation" class="col-lg-4 col-md-4 col-xs-6" ng-class="{'active': $index===0}" ng-repeat="img in detailedProduct.images">
+                                                <a href="/company-profile#{{$index}}" aria-controls="{{$index}}" role="tab" data-toggle="tab" aria-expanded="true"><img ng-src="img/company-profile/products/{{img}}" class="img-thumbnail" alt=""></a>
                                             </div>
                                         </div>
                                     </div>
@@ -875,6 +871,39 @@
                 <br/>
                 <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false" ng-click="deleteCompanyProduct()">Yes, Delete Product</button>
                 <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">No, Leave</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Product Image Modal -->
+<div class="modal fade" id="addProductImageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <br/>
+                <div class="col-md-offset-2 col-md-4">
+                    <img ng-hide="productThumbnail.available" ng-src="img/company-profile/products/default-company-image-300.jpg" alt="" class="img-responsive center-block" />
+                    <img ng-show="productThumbnail.available" ng-src="{{productThumbnail.dataUrl}}" alt="" class="img-responsive center-block" />
+                </div>
+                <div class="col-md-4">
+                    <h4 class="modal-title">Select the new image!</h4>
+                    <br/><br/>
+                    <form enctype="multipart/form-data">
+                        <div class="progress" ng-show="productUploading">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only"></span>
+                            </div>
+                        </div>
+
+                        <label class="btn btn-primary col-lg-12 col-md-12 col-xs-12">
+                            Browse
+                            <input id="choose-image" class="hidden" type="file" file-parse="productPicture.upload" name="picture" ng-disabled="productUploading" onchange="angular.element(this).scope().detailPhotoChanged(this.files)">
+                        </label>
+                        <button type="button" data-dismiss="modal" ng-click="addCompanyProductImage()" class="btn btn-success col-lg-12 col-md-12 col-xs-12" ng-disabled="productUploading">Upload Picture</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
