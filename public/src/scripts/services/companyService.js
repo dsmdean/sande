@@ -147,6 +147,28 @@
                 });
         }
 
+        function editCompanyService(companyId, serviceData) {
+            return $http.put(baseURL + '/companies/' + companyId + '/services/' + serviceData._id, serviceData)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error editing a company service: ' + response.statusText);
+                    return $q.reject('Error editing a company service.');
+                });
+        }
+
+        function deleteCompanyService(companyId, serviceData) {
+            return $http.delete(baseURL + '/companies/' + companyId + '/services/' + serviceData._id, serviceData)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error deleting a company service: ' + response.statusText);
+                    return $q.reject('Error deleting a company service.');
+                });
+        }
+
         return {
             createCompany: createCompany,
             uploadPicture: uploadPicture,
@@ -156,7 +178,9 @@
             editCompanyProduct: editCompanyProduct,
             deleteCompanyProduct: deleteCompanyProduct,
             addCompanyProductImage: addCompanyProductImage,
-            addCompanyService: addCompanyService
+            addCompanyService: addCompanyService,
+            editCompanyService: editCompanyService,
+            deleteCompanyService: deleteCompanyService
         };
     }
 

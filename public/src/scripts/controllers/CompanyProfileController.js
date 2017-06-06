@@ -24,6 +24,9 @@
         };
         // ADD SERVICE SECTION
         $scope.newService = {};
+        // DETAILED SERVICE SECTION
+        $scope.editService = false;
+        $scope.detailedService = {};
 
         function showError(message) {
             notifier.error(message);
@@ -277,6 +280,39 @@
                     $scope.loading = false;
                     $scope.company.services.push(response.service);
                     $scope.newService = {};
+                })
+                .catch(showError);
+        };
+
+        // DETAILED SERVICE SECTION
+        $scope.toggleEditService = function() {
+            $scope.editService = !$scope.editService;
+        };
+
+        $scope.editCompanyService = function(service) {
+            $scope.loading = true;
+            companyService.editCompanyService($scope.company._id, service)
+                .then(function(response) {
+                    $scope.loading = false;
+                    notifier.success(response.status);
+                    $scope.company.services = response.services;
+                    $scope.editService = false;
+                })
+                .catch(showError);
+        };
+
+        $scope.setDeleteService = function(service) {
+            $scope.detailedService = service;
+        };
+
+        $scope.deleteCompanyService = function() {
+            $scope.loading = true;
+            companyService.deleteCompanyService($scope.company._id, $scope.detailedService)
+                .then(function(response) {
+                    $scope.loading = false;
+                    notifier.success(response.status);
+                    $scope.company.services = response.services;
+                    $scope.editService = false;
                 })
                 .catch(showError);
         };
