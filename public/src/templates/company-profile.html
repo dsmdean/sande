@@ -401,29 +401,6 @@
                                 </div>
                             </div>
                         </form>
-
-                        <!--<h4>Change Password</h4>
-                            <fieldset class="mb-xl">
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="profileNewPassword">New Password</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="profileNewPassword">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label" for="profileNewPasswordRepeat">Repeat New Password</label>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control" id="profileNewPasswordRepeat">
-                                    </div>
-                                </div>
-                            </fieldset>
-
-                            <div class="row">
-                                <div class="col-md-9 col-md-offset-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                    <button type="reset" class="btn btn-default">Reset</button>
-                                </div>
-                            </div>-->
                     </div>
 
                     <!-- Users -->
@@ -539,8 +516,8 @@
                                                     <!--<img ng-src="img/company-profile/products/{{img}}" class="profile-img img-responsive center-block pic">-->
                                                     <img ng-src="img/company-profile/products/{{img}}" alt="" class="profile-img img-responsive center-block pic" />
                                                     <form enctype="multipart/form-data" class="button-overlay">
-                                                        <button type="button" data-toggle="modal" data-target="#addProductImageModal" class="btn btn-xs btn-default col-lg-1 col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                        <button type="button" ng-click="deleteProductImageModal($index)" class="btn btn-xs btn-danger col-lg-1 col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                                        <button type="button" data-toggle="modal" data-target="#addProductImageModal" class="btn btn-xs btn-default col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                        <button type="button" ng-click="deleteProductImageModal($index)" class="btn btn-xs btn-danger col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-times" aria-hidden="true"></i></button>
                                                     </form>
                                                 </figure>
                                             </div>
@@ -577,8 +554,8 @@
                                         <div class="form-group" ng-repeat="option in detailedProduct.options">
                                             <label for="{{option.name}}">{{option.name}}</label>
                                             <select class="form-control" id="{{option.name}}">
-                                            <option ng-repeat="optionsOption in option.options">{{optionsOption}}</option>
-                                        </select>
+                                                <option ng-repeat="optionsOption in option.options">{{optionsOption}}</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-success col-lg-6 col-md-8 col-xs-12"><span><i class="fa fa-cart-plus"></i> Add to Cart</span></button>
@@ -798,75 +775,52 @@
 
         <!-- COL 3 -->
         <div class="col-md-12 col-lg-3">
-            <!--<section class="panel panel-default">
-                <header class="panel-heading">
-                    <h2 class="panel-title elipsis">
-                        <i class="fa fa-wrench"></i> Services
-                    </h2>
-                </header>
-
-                <div class="panel-body noradius padding-10">
-                    <ul class="bullet-list list-unstyled">
-                        <li class="red">
-                            <h3>Epona HTML5 Template</h3>
-                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
-                        </li>
-                        <li class="green">
-                            <h3>Atropos Template</h3>
-                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
-                        </li>
-                        <li class="blue">
-                            <h3>isisone Template</h3>
-                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
-                        </li>
-                        <li class="orange">
-                            <h3>Deusone Template</h3>
-                            <span class="text-gray size-12">Lorem ipsum dolor sit amet, consectetuer adipiscing </span>
-                        </li>
-                    </ul>
-                </div>
-            </section>-->
-
             <section class="panel panel-default">
                 <header class="panel-heading">
                     <h2 class="panel-title elipsis">
-                        <i class="fa fa-rss"></i> Activity
+                        <i class="fa fa-rss"></i> Events
                     </h2>
                 </header>
 
                 <div class="panel-body noradius padding-10">
+                    <a href=""> View All Events</a>
+                    <a href="" class="pull-right" data-toggle="modal" data-target="#addEventModal">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Event
+                    </a><br/><br/>
                     <div class="row profile-activity">
-                        <div class="col-xs-2 col-sm-1">
-                            <time datetime="2017-06-29" class="datebox">
+                        <div ng-repeat="event in companyEvent | orderBy: 'date'">
+                            <div class="col-xs-3 col-sm-2">
+                                <time datetime="event.date" class="datebox">
+                                <strong>{{event.date | date :  "MMM"}}</strong>
+                                <span>{{event.date | date :  "dd"}}</span>
+                            </time>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <h4><a href="">{{event.name}}</a></h4>
+                                <p>{{event.description | limitTo: 100}}...</p>
+                            </div>
+                            <div class="col-sm-12">
+                                <hr class="half-margins">
+                            </div>
+                        </div>
+                        <!--<div>
+                            <div class="col-xs-3 col-sm-2">
+                                <time datetime="2017-06-29" class="datebox">
                                 <strong>Jun</strong>
                                 <span>29</span>
                             </time>
-                        </div>
-                        <div class="col-xs-10 col-sm-11">
-                            <h6><a href="page-sidebar.html">Lorem ipsum dolor sit amet</a></h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
-                            </p>
-                        </div>
-                        <div class="col-sm-12">
-                            <hr class="half-margins">
-                        </div>
-                        <div class="col-xs-2 col-sm-1">
-                            <time datetime="2017-06-29" class="datebox">
-                                <strong>Jun</strong>
-                                <span>29</span>
-                            </time>
-                        </div>
-                        <div class="col-xs-10 col-sm-11">
-                            <h6><a href="page-sidebar.html">Sed diam nonummy nibh euismod</a></h6>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
-                            </p>
-                        </div>
+                            </div>
+                            <div class="col-xs-9 col-sm-10">
+                                <h6><a href="page-sidebar.html">Sed diam nonummy nibh euismod</a></h6>
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
+                                </p>
+                            </div>
 
-                        <div class="col-sm-12">
-                            <hr class="half-margins">
-                        </div>
+                            <div class="col-sm-12">
+                                <hr class="half-margins">
+                            </div>
+                        </div>-->
 
                         <div class="text-center">
                             <ul class="pagination pagination-sm">
@@ -947,6 +901,88 @@
                         <button type="button" data-dismiss="modal" ng-click="addCompanyProductImage()" class="btn btn-success col-lg-12 col-md-12 col-xs-12" ng-disabled="productUploading">Upload Picture</button>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Event Modal -->
+<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 30px;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Event</h4>
+                <br/>
+                <form class="form-horizontal">
+                    <fieldset>
+                        <hr/>
+                        <h5 class="col-md-offset-3">Info</h5>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="eventName">Name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="eventName" ng-model="newEvent.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="eventDate">Date</label>
+                            <div class="col-md-8">
+                                <input type="date" class="form-control" id="eventDate" ng-model="newEvent.date">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="eventType">Type</label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="eventType" ng-model="newEvent.type">
+                                    <option value=""></option>
+                                    <option value="Event">Event</option>
+                                    <option value="Meeting">Meeting</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="eventDescription">Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="3" id="eventDescription" ng-model="newEvent.description"></textarea>
+                            </div>
+                        </div>
+                        <hr/>
+                        <h5 class="col-md-offset-3">Location</h5>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="eventAddress">Address</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="eventAddress" ng-model="newEvent.location.address">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="eventCity">City</label>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="eventCity" ng-model="newEvent.location.city">
+                            </div>
+                            <label class="col-md-2 control-label" for="eventProvince">Province</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="eventProvince" ng-model="newEvent.location.province">
+                            </div>
+                        </div>
+                        <hr/>
+                        <h5 class="col-md-offset-3">Settings</h5>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" for="eventPublic">Public</label>
+                            <div class="col-md-8">
+                                <div class="onoffswitch">
+                                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="eventPublic" ng-model="newEvent.public" checked>
+                                    <label class="onoffswitch-label" for="eventPublic">
+                                    <div class="onoffswitch-inner"></div>
+                                    <div class="onoffswitch-switch"></div>
+                                </label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <br/>
+                <button type="button" class="btn btn-success btn-sm" data-dismiss="modal" ng-click="addEvent()">Save this event</button>
+                <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Leave</button>
             </div>
         </div>
     </div>

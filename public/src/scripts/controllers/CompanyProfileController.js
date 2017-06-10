@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout) {
+    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService) {
 
         $scope.currentUser = authService.getCurrentUser();
         $scope.loading = true;
@@ -27,6 +27,8 @@
         // DETAILED SERVICE SECTION
         $scope.editService = false;
         $scope.detailedService = {};
+        // EVENTS SECTION
+        $scope.newEvent = {};
 
         function showError(message) {
             notifier.error(message);
@@ -48,6 +50,12 @@
                 } else if ($scope.company.settings.products === true) {
                     $scope.company.offerSettings = "products";
                 }
+
+                eventService.getCompanyEvents($scope.company._id)
+                    .then(function(response) {
+                        $scope.companyEvent = response;
+                    })
+                    .catch(showError);
             })
             .catch(showError);
 
@@ -316,9 +324,29 @@
                 })
                 .catch(showError);
         };
+
+        // EVENTS SECTION
+        $scope.addEvent = function() {
+            $scope.loading = true;
+            $scope.newEvent.created = $scope.company._id;
+            $scope.newEvent.creator = {};
+            $scope.newEvent.creator.type = "Company";
+            $scope.newEvent.creator.company = $scope.company._id;
+
+            // $log.log($scope.newEvent);
+
+            eventService.addEvent($scope.newEvent)
+                .then(function(response) {
+                    notifier.success(response.status);
+                    $scope.loading = false;
+                    $scope.newEvent = {};
+                    $scope.companyEvent.push(response.event);
+                })
+                .catch(showError);
+        };
     }
 
     angular.module('sande')
-        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', CompanyProfileController]);
+        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', CompanyProfileController]);
 
 }());
