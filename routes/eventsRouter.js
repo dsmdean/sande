@@ -57,14 +57,14 @@ eventsRouter.route('/:eventId')
             new: true
         }, function(err, event) {
             if (err) next(err);
-            res.json(event);
+            res.json({ status: "You've successfully edited the event!", event: event });
         });
     })
     .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
         Events.remove({ _id: req.params.eventId }, function(err, resp) {
             if (err) next(err);
 
-            res.json(resp);
+            res.json({ status: "You've successfully deleted the event!" });
         });
     });
 

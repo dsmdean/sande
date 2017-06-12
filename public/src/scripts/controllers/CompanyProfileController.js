@@ -344,6 +344,44 @@
                 })
                 .catch(showError);
         };
+
+        $scope.setDetailedEvent = function(event) {
+            $scope.detailedEvent = event;
+        };
+
+        $scope.updateEvent = function() {
+            $scope.loading = true;
+            eventService.updateEvent($scope.detailedEvent)
+                .then(function(response) {
+                    notifier.success(response.status);
+                    $scope.loading = false;
+
+                    for (var i = 0; i < $scope.companyEvent.length; i++) {
+                        if ($scope.companyEvent[i]._id === $scope.detailedEvent._id) {
+                            $scope.companyEvent[i] = $scope.detailedEvent;
+                            break;
+                        }
+                    }
+                })
+                .catch(showError);
+        };
+
+        $scope.deleteEvent = function() {
+            $scope.loading = true;
+            eventService.deleteEvent($scope.detailedEvent)
+                .then(function(response) {
+                    notifier.success(response.status);
+                    $scope.loading = false;
+
+                    for (var i = 0; i < $scope.companyEvent.length; i++) {
+                        if ($scope.companyEvent[i]._id === $scope.detailedEvent._id) {
+                            $scope.companyEvent.splice(i, 1);
+                            break;
+                        }
+                    }
+                })
+                .catch(showError);
+        };
     }
 
     angular.module('sande')
