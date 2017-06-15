@@ -50,6 +50,17 @@
                 });
         }
 
+        function searchCompaniesByName(companyName) {
+            return $http.get(baseURL + '/companies/searchByName/' + companyName)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error getting companies: ' + response.statusText);
+                    return $q.reject('Error getting companies.');
+                });
+        }
+
         function getCompanyByName(companyName) {
             $rootScope.companyName = companyName;
             return $http.get(baseURL + '/companies/getByName/' + companyName)
@@ -57,8 +68,8 @@
                     return response.data;
                 })
                 .catch(function(response) {
-                    $log.error('Error creating a company: ' + response.statusText);
-                    return $q.reject('Error creating a company.');
+                    $log.error('Error getting the company: ' + response.statusText);
+                    return $q.reject('Error getting the company.');
                 });
         }
 
@@ -172,6 +183,7 @@
         return {
             createCompany: createCompany,
             uploadPicture: uploadPicture,
+            searchCompaniesByName: searchCompaniesByName,
             getCompanyByName: getCompanyByName,
             updateCompany: updateCompany,
             addCompanyProduct: addCompanyProduct,

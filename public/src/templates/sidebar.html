@@ -1,11 +1,17 @@
 <section id="col-left" class="col-left-nano">
     <div id="col-left-inner" class="col-left-nano-content">
         <div id="user-left-box" class="clearfix hidden-sm hidden-xs dropdown profile2-dropdown">
-            <img alt="" ng-src="img/user-profile/{{currentUser.image}}" />
+            <img ng-hide="isCompany" alt="" ng-src="img/user-profile/{{currentUser.image}}" />
+            <img ng-show="isCompany" alt="" ng-src="img/company-profile/{{currentCompany.image}}" />
             <div class="user-box">
                 <span class="name">
                     <a ui-sref="user">
-                        {{currentUser.firstname}} {{currentUser.lastname[0]}}.
+                        <div ng-hide="isCompany">
+                            {{currentUser.firstname}} {{currentUser.lastname[0]}}.
+                        </div>
+                        <div ng-show="isCompany">
+                            {{currentCompany.name}}
+                        </div>
                         <!--<i class="fa fa-angle-down"></i>-->
                     </a>
                     <!--<ul class="dropdown-menu">
@@ -25,20 +31,22 @@
                 <li class="nav-header nav-header-first hidden-sm hidden-xs">
                     Navigation
                 </li>
-                <li>
+                <!--<li>
                     <a href="">
                         <i class="fa fa-dashboard"></i>
                         <span>Dashboard</span>
                         <span class="label label-primary label-circle pull-right">0</span>
                     </a>
-                </li>
-                <li ng-class="getClass('/user')">
+                </li>-->
+
+                <!-- USER -->
+                <li ng-hide="isCompany" ng-class="getClass('/user')">
                     <a ui-sref="user">
                         <i class="fa fa-user"></i>
                         <span>User Profile</span>
                     </a>
                 </li>
-                <li class="dropdown" ng-class="getClass('/company')">
+                <li ng-hide="isCompany" class="dropdown" ng-class="getClass('/company')">
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-building-o"></i>
                         <span>Companies</span>
@@ -56,6 +64,20 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+
+                <!-- COMPANY -->
+                <li ng-show="isCompany" ng-class="getClass('/company/{{currentCompany.name}}')">
+                    <a ui-sref="company-profile({name: currentCompany.name})">
+                        <i class="fa fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li ng-show="isCompany" ng-class="getClass('/company/calendar/{{currentCompany.name}}')">
+                    <a ui-sref="company-calendar({name: currentCompany.name})">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                        <span>Calendar</span>
+                    </a>
                 </li>
             </ul>
         </div>

@@ -17,6 +17,14 @@
 
     <link rel="stylesheet" type="text/css" href="styles/theme_styles.css" />
     <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+
+    <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css" />
+    <link rel="stylesheet" href="styles/fullcalendar.css" type="text/css" />
+    <!--<link rel="stylesheet" href="styles/fullcalendar.print.css" type="text/css" media="print" />-->
+    <link rel="stylesheet" href="styles/calendar.css" type="text/css" media="screen" />
+
+
+
     <!--<link rel="stylesheet" type="text/css" href="styles/bootstrap-wizard.css" />-->
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300|Titillium+Web:200,300,400' rel='stylesheet' type='text/css'>
     <!-- endbuild -->
@@ -34,6 +42,7 @@
     <div ui-view></div>
 
     <!-- build:js scripts/main.js -->
+    <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="bower_components/toastr/toastr.min.js"></script>
@@ -51,6 +60,12 @@
     <script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 
+    <!-- Calendar -->
+    <!--<script src="scripts/js/fullcalendar.min.js"></script>-->
+    <script type="text/javascript" src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+    <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="bower_components/fullcalendar/dist/gcal.js"></script>
+
     <!-- Application code -->
     <script src="scripts/app.js"></script>
 
@@ -67,6 +82,8 @@
     <script src="scripts/controllers/UserProfileController.js"></script>
     <script src="scripts/controllers/RegisterCompanyController.js"></script>
     <script src="scripts/controllers/CompanyProfileController.js"></script>
+    <script src="scripts/controllers/CompanyCalendarController.js"></script>
+    <script src="scripts/controllers/CompanySearchController.js"></script>
 
     <script src="scripts/services/notifier.js"></script>
     <script src="scripts/services/constants.js"></script>

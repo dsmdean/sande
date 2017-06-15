@@ -34,6 +34,22 @@ var EventsSchema = new Schema({
         type: Date,
         required: true
     },
+    // startDate: {
+    //     type: Date,
+    //     required: true
+    // },
+    // startTime: {
+    //     type: Date,
+    //     required: true
+    // },
+    // endDate: {
+    //     type: Date,
+    //     required: true
+    // },
+    // endTime: {
+    //     type: Date,
+    //     required: true
+    // },
     image: {
         type: String,
         default: ''

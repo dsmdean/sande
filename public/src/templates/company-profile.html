@@ -701,7 +701,7 @@
                                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="/company-profile#service{{$index}}">{{service.name}}</a>
                                         </h4>
                                     </div>
-                                    <div id="service{{$index}}" class="panel-collapse collapse">
+                                    <div id="service{{$index}}" class="panel-collapse collapse" ng-class="{'in': $index===0}">
                                         <div class="panel-body">
                                             <a href="" ng-click="toggleEditService()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Toggle Edit Service</a>
                                             <a href="" data-toggle="modal" data-target="#deleteServiceModal" ng-click="setDeleteService(service)" class="red pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete Service</a>
@@ -783,7 +783,7 @@
                 </header>
 
                 <div class="panel-body noradius padding-10">
-                    <a href=""> View All Events</a>
+                    <a href="" ui-sref="company-calendar({name: company.name})"> View Calendar</a>
                     <a href="" class="pull-right" data-toggle="modal" data-target="#addEventModal">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Event
                     </a><br/><br/>
@@ -826,7 +826,7 @@
                             </div>
                         </div>-->
 
-                        <div class="text-center">
+                        <!--<div class="text-center">
                             <ul class="pagination pagination-sm">
                                 <li class="disabled"><a href="#">Prev</a></li>
                                 <li class="active"><a href="#">1</a></li>
@@ -835,7 +835,7 @@
                                 <li><a href="#">4</a></li>
                                 <li><a href="#">Next</a></li>
                             </ul>
-                        </div>
+                        </div>-->
 
                     </div>
                 </div>

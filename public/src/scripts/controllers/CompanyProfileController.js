@@ -4,7 +4,7 @@
     function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService) {
 
         $scope.currentUser = authService.getCurrentUser();
-        $scope.loading = true;
+        $scope.loading = false;
         // COMPANY IMAGE UPLOAD SECTION
         $scope.picture = {};
         $scope.thumbnail = {
@@ -38,8 +38,8 @@
         // GET COMPANY DATA
         companyService.getCompanyByName($state.params.name)
             .then(function(response) {
-                $scope.loading = false;
                 $scope.company = response;
+                authService.setCurrentCompany(response);
 
                 if ($scope.company.settings.services === true && $scope.company.settings.products === true) {
                     $scope.company.offerSettings = "both";

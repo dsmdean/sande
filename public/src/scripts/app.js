@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('sande', ['ui.router', 'ngFileUpload']);
+    var app = angular.module('sande', ['ui.router', 'ngFileUpload', 'ui.calendar']);
 
     app.config(['$logProvider', '$stateProvider', '$urlRouterProvider', function($logProvider, $stateProvider, $urlRouterProvider) {
 
@@ -86,11 +86,31 @@
             })
             .state('company-profile', {
                 parent: 'page',
-                url: '/company-profile/:name',
+                url: '/company/:name',
                 views: {
                     'content@dashboard': {
                         controller: 'CompanyProfileController',
                         templateUrl: 'templates/company-profile.html'
+                    }
+                }
+            })
+            .state('company-calendar', {
+                parent: 'page',
+                url: '/company/calendar/:name',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompanyCalendarController',
+                        templateUrl: 'templates/company-calendar.html'
+                    }
+                }
+            })
+            .state('company-search', {
+                parent: 'page',
+                url: '/search/company/:search',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompanySearchController',
+                        templateUrl: 'templates/company-search.html'
                     }
                 }
             });
@@ -120,6 +140,14 @@
             } else if (authService.isAuthenticated() && (toState.name == 'login' || toState.name == 'register')) {
                 event.preventDefault();
                 $state.go('user');
+            }
+
+            if (toState.name === 'user') {
+                authService.removeCurrentCompany();
+            }
+
+            if (toState.name === 'company-profile') {
+                authService.setCompany();
             }
 
         });

@@ -77,7 +77,19 @@ companiesRouter.route('/:companyId')
         });
     });
 
-// GET company by name
+// GET companies by name
+companiesRouter.route('/searchByName/:companyName')
+    .get(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.find({ name: { $regex: "^" + req.params.companyName } })
+            .populate('category')
+            .populate('users.user')
+            .exec(function(err, companies) {
+                if (err) next(err);
+                res.json(companies);
+            });
+    });
+
+// GET specific company by name
 companiesRouter.route('/getByName/:companyName')
     .get(Verify.verifyOrdinaryUser, function(req, res, next) {
         Companies.findOne({ name: req.params.companyName })

@@ -1,13 +1,26 @@
 (function() {
     'use strict';
 
-    function SidebarController($scope, $location, authService) {
+    function SidebarController($scope, $location, authService, $rootScope) {
 
         $scope.getClass = function(path) {
+            // console.log(path);
             return $location.path().substr(0, path.length) === path ? 'active' : '';
         }
 
         $scope.currentUser = authService.getCurrentUser();
+        $scope.isCompany = authService.isCompany();
+        $scope.currentCompany = authService.getCurrentCompany();
+
+        $rootScope.$on('company:setCurrent', function() {
+            $scope.isCompany = authService.isCompany();
+            $scope.currentCompany = authService.getCurrentCompany();
+        });
+
+        $rootScope.$on('company:removeCurrent', function() {
+            $scope.isCompany = false;
+            $scope.currentCompany = {};
+        });
 
         // $scope.submenu = function() {
         //     // e.preventDefault();
@@ -30,6 +43,6 @@
     }
 
     angular.module('sande')
-        .controller('SidebarController', ['$scope', '$location', 'authService', SidebarController]);
+        .controller('SidebarController', ['$scope', '$location', 'authService', '$rootScope', SidebarController]);
 
 }());

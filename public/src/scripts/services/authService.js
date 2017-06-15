@@ -3,12 +3,18 @@
 
     function authService(notifier, $http, constants, $q, localStorage, $rootScope, $log, $cacheFactory) {
 
+        // LOGIN
         var TOKEN_KEY = 'Token';
         var baseURL = constants.APP_SERVER;
         var loggedIn = false;
         var currentUser = {};
         var admin = false;
         var authToken;
+        // COMPANY
+        var COMPANY_DATA = 'company_data';
+        var company = false;
+        var currentCompany = {};
+
         // var tokenExpiration;
 
         // function stopInterval() {
@@ -58,6 +64,13 @@
             if (credentials.username !== undefined) {
                 useCredentials(credentials);
             }
+
+            var companyData = localStorage.getObject(COMPANY_DATA, '{}');
+            if (companyData.name !== undefined) {
+                company = true;
+                currentCompany = companyData;
+                $rootScope.$broadcast('company:setCurrent');
+            }
         }
 
         function storeUserCredentials(credentials) {
@@ -75,6 +88,7 @@
             admin = false;
             $http.defaults.headers.common['x-access-token'] = authToken;
             localStorage.remove(TOKEN_KEY);
+            localStorage.remove(COMPANY_DATA);
             var httpCache = $cacheFactory.get('$http');
             httpCache.removeAll();
             // localStorage.remove('tokenExpiration');
@@ -141,6 +155,34 @@
             storeUserCredentials(updatedData);
         }
 
+        function setCompany() {
+            company = true;
+        }
+
+        function isCompany() {
+            return company;
+        }
+
+        function setCurrentCompany(company) {
+            currentCompany = company;
+
+            localStorage.remove(COMPANY_DATA);
+            localStorage.storeObject(COMPANY_DATA, company);
+
+            $rootScope.$broadcast('company:setCurrent');
+        }
+
+        function removeCurrentCompany() {
+            company = false;
+            currentCompany = {};
+            localStorage.remove(COMPANY_DATA);
+            $rootScope.$broadcast('company:removeCurrent');
+        }
+
+        function getCurrentCompany() {
+            return currentCompany;
+        }
+
         loadUserCredentials();
 
         return {
@@ -150,7 +192,12 @@
             isAuthenticated: isAuthenticated,
             isAdmin: isAdmin,
             getCurrentUser: getCurrentUser,
-            updateCurrentUser: updateCurrentUser
+            updateCurrentUser: updateCurrentUser,
+            setCompany: setCompany,
+            isCompany: isCompany,
+            setCurrentCompany: setCurrentCompany,
+            removeCurrentCompany: removeCurrentCompany,
+            getCurrentCompany: getCurrentCompany
         };
     }
 

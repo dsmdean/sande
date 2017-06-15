@@ -19,6 +19,19 @@
     </div>
     <div class="nav-no-collapse pull-right" id="header-nav">
         <ul class="nav navbar-nav pull-right">
+            <li class="mobile-search" ng-click="mobileSearch()">
+                <a class="btn">
+                    <i class="fa fa-search"></i>
+                </a>
+                <div class="drowdown-search">
+                    <form role="search" ng-submit="searchCompanies()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search..." ng-model="search">
+                            <i class="fa fa-search nav-search-icon"></i>
+                        </div>
+                    </form>
+                </div>
+            </li>
             <li class="dropdown profile-dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                     <img ng-src="img/user-profile/{{currentUser.image}}" alt="" />
