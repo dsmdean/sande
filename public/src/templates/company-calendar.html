@@ -14,7 +14,7 @@
         <div class="col-lg-3 col-md-4">
             <div class="main-box">
                 <div class="main-box-body clearfix">
-                    <div class="row" style="margin-right:-20px">
+                    <div ng-show="isCompanyAdmin" class="row" style="margin-right:-20px">
                         <button type="button" data-toggle="modal" data-target="#addEventModal" class="btn btn-xs btn-primary col-md-2 col-xs-2 pull-right"><i class="fa fa-plus" aria-hidden="true"></i></button>
                     </div>
                     <div ng-hide="SelectedEvent">
@@ -25,7 +25,7 @@
                         <h3 style="margin-top:10px;">{{SelectedEvent.title}}</h3>
                         <p>{{SelectedEvent.description}}</p>
                     </div>
-                    <div class="row">
+                    <div class="row" ng-show="isCompanyAdmin">
                         <button ng-show="SelectedEvent" data-toggle="modal" data-target="#deleteEventModal" type="button" class="btn btn-xs btn-danger col-md-2 col-xs-2 pull-right"><i class="fa fa-times" aria-hidden="true"></i></button>
                         <button ng-show="SelectedEvent" data-toggle="modal" data-target="#editEventModal" type="button" class="btn btn-xs btn-success col-md-2 col-xs-2 pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                     </div>

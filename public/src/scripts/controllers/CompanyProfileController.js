@@ -1,9 +1,10 @@
 (function() {
     'use strict';
 
-    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService) {
+    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService, $rootScope) {
 
         $scope.currentUser = authService.getCurrentUser();
+        $scope.isCompanyAdmin = authService.isCompanyAdmin();
         $scope.loading = false;
         // COMPANY IMAGE UPLOAD SECTION
         $scope.picture = {};
@@ -29,6 +30,10 @@
         $scope.detailedService = {};
         // EVENTS SECTION
         $scope.newEvent = {};
+
+        $rootScope.$on('company:setCompanyAdmin', function() {
+            $scope.isCompanyAdmin = authService.isCompanyAdmin();
+        });
 
         function showError(message) {
             notifier.error(message);
@@ -389,6 +394,6 @@
     }
 
     angular.module('sande')
-        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', CompanyProfileController]);
+        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', '$rootScope', CompanyProfileController]);
 
 }());

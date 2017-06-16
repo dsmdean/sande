@@ -9,16 +9,19 @@
         }
 
         $scope.currentUser = authService.getCurrentUser();
-        $scope.isCompany = authService.isCompany();
+        // $scope.isCompany = authService.isCompany();
+        $scope.isCompanyAdmin = authService.isCompanyAdmin();
         $scope.currentCompany = authService.getCurrentCompany();
 
-        $rootScope.$on('company:setCurrent', function() {
-            $scope.isCompany = authService.isCompany();
+        $rootScope.$on('company:setCompanyAdmin', function() {
+            // $scope.isCompany = authService.isCompany();
+            $scope.isCompanyAdmin = authService.isCompanyAdmin();
             $scope.currentCompany = authService.getCurrentCompany();
         });
 
         $rootScope.$on('company:removeCurrent', function() {
-            $scope.isCompany = false;
+            // $scope.isCompany = false;
+            $scope.isCompanyAdmin = false;
             $scope.currentCompany = {};
         });
 

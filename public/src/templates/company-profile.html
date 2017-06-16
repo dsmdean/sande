@@ -20,9 +20,9 @@
 
                     <figure class="margin-bottom-10 img-container">
                         <!-- image -->
-                        <img ng-hide="thumbnail.available" ng-src="img/company-profile/{{company.image}}" alt="" class="profile-img img-responsive center-block pic" />
-                        <img ng-show="thumbnail.available" ng-src="{{thumbnail.dataUrl}}" alt="" class="profile-img img-responsive center-block pic" />
-                        <form enctype="multipart/form-data" ng-submit="uploadPicture()" class="button-overlay">
+                        <img ng-hide="thumbnail.available && !isCompanyAdmin" ng-src="img/company-profile/{{company.image}}" alt="" class="profile-img img-responsive center-block pic" />
+                        <img ng-show="thumbnail.available && isCompanyAdmin" ng-src="{{thumbnail.dataUrl}}" alt="" class="profile-img img-responsive center-block pic" />
+                        <form ng-show="isCompanyAdmin" enctype="multipart/form-data" ng-submit="uploadPicture()" class="button-overlay">
                             <!--<div class="progress" ng-show="uploading">
                                 <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                                     <span class="sr-only"></span>
@@ -39,8 +39,8 @@
                     <!-- /image -->
 
                     <!-- progress bar -->
-                    <h6 class="progress-head" ng-show="uploading">Uploading Profile Picture</h6>
-                    <div class="progress progress-xs" ng-show="uploading">
+                    <h6 class="progress-head" ng-show="uploading && isCompanyAdmin">Uploading Profile Picture</h6>
+                    <div class="progress progress-xs" ng-show="uploading && isCompanyAdmin">
                         <div class="progress-bar" role="progressbar" style="width: 100%"></div>
                     </div>
                     <!-- /progress bar -->
@@ -97,16 +97,16 @@
                     <!--<li class="active">
                         <a href="/company#tab-overview" data-toggle="tab" aria-expanded="true">Overview</a>
                     </li>-->
-                    <li class="active">
-                        <a href="/company-profile#tab-edit" data-toggle="tab" aria-expanded="true">Settings</a>
+                    <li ng-show="isCompanyAdmin" class="" ng-class="{'active': isCompanyAdmin}">
+                        <a href="/company-profile#tab-edit" data-toggle="tab" aria-expanded="isCompanyAdmin">Settings</a>
                     </li>
-                    <li class="">
+                    <li ng-show="isCompanyAdmin" class="">
                         <a href="/company-profile#tab-users" data-toggle="tab" aria-expanded="false">Users</a>
                     </li>
-                    <li class="" ng-show="company.settings.services">
-                        <a href="/company-profile#tab-services" data-toggle="tab" aria-expanded="false">Services</a>
+                    <li ng-show="company.settings.services" class="" ng-class="{'active': !isCompanyAdmin}">
+                        <a href="/company-profile#tab-services" data-toggle="tab" aria-expanded="!isCompanyAdmin">Services</a>
                     </li>
-                    <li class="" ng-show="company.settings.products">
+                    <li ng-show="company.settings.products" class="">
                         <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">Products</a>
                     </li>
                 </ul>
@@ -321,7 +321,7 @@
                     </div>-->
 
                     <!-- Edit -->
-                    <div id="tab-edit" class="tab-pane fade in active">
+                    <div id="tab-edit" class="tab-pane fade" ng-class="{'active': isCompanyAdmin}">
 
                         <form class="form-horizontal" ng-submit="updateCompany()">
                             <h4>Personal Information</h4>
@@ -461,7 +461,7 @@
                     <!-- Products -->
                     <div class="tab-pane clearfix fade" id="tab-products">
                         <div class="main-box-body clearfix">
-                            <header class="main-box-header clearfix">
+                            <header ng-show="isCompanyAdmin" class="main-box-header clearfix">
                                 <a href="/company-profile#tab-add-product" data-toggle="tab" aria-expanded="false">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Product</a>
                             </header><br>
@@ -502,7 +502,7 @@
                             <header class="main-box-header clearfix">
                                 <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">
                                     <i class="fa fa-arrow-circle-left" aria-hidden="true"></i> Back to Products</a>
-                                <a href="" data-toggle="modal" data-target="#deleteProductModal" class="red pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete Product</a>
+                                <a ng-show="isCompanyAdmin" href="" data-toggle="modal" data-target="#deleteProductModal" class="red pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete Product</a>
                             </header><br>
                             <!--<h4>Products</h4>-->
                             <div class="row">
@@ -516,7 +516,7 @@
                                                     <!-- image -->
                                                     <!--<img ng-src="img/company-profile/products/{{img}}" class="profile-img img-responsive center-block pic">-->
                                                     <img ng-src="img/company-profile/products/{{img}}" alt="" class="profile-img img-responsive center-block pic" />
-                                                    <form enctype="multipart/form-data" class="button-overlay">
+                                                    <form ng-show="isCompanyAdmin" enctype="multipart/form-data" class="button-overlay">
                                                         <button type="button" data-toggle="modal" data-target="#addProductImageModal" class="btn btn-xs btn-default col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                                         <button type="button" ng-click="deleteProductImageModal($index)" class="btn btn-xs btn-danger col-md-2 col-xs-2 img-product-button-add-hover"><i class="fa fa-times" aria-hidden="true"></i></button>
                                                     </form>
@@ -532,7 +532,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-xs-12 product-info">
                                         <h3>{{detailedProduct.name}}&nbsp;
-                                            <a href="" ng-click="toggleEditProduct()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                            <a ng-show="isCompanyAdmin" href="" ng-click="toggleEditProduct()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                         </h3>
                                         <!--<div class="list-pro-rating">
                                             <i class="fa fa-star icolor"></i>
@@ -689,9 +689,9 @@
                     </div>
 
                     <!-- Services -->
-                    <div class="tab-pane clearfix fade" id="tab-services">
+                    <div class="tab-pane clearfix fade" ng-class="{'in active': !isCompanyAdmin}" id="tab-services">
                         <div class="main-box-body clearfix">
-                            <header class="main-box-header clearfix">
+                            <header ng-show="isCompanyAdmin" class="main-box-header clearfix">
                                 <a href="/company-profile#tab-add-service" data-toggle="tab" aria-expanded="false">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Service</a>
                             </header><br>
@@ -704,9 +704,11 @@
                                     </div>
                                     <div id="service{{$index}}" class="panel-collapse collapse" ng-class="{'in': $index===0}">
                                         <div class="panel-body">
-                                            <a href="" ng-click="toggleEditService()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Toggle Edit Service</a>
-                                            <a href="" data-toggle="modal" data-target="#deleteServiceModal" ng-click="setDeleteService(service)" class="red pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete Service</a>
-                                            <br/><br/>
+                                            <div ng-show="isCompanyAdmin">
+                                                <a href="" ng-click="toggleEditService()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Toggle Edit Service</a>
+                                                <a href="" data-toggle="modal" data-target="#deleteServiceModal" ng-click="setDeleteService(service)" class="red pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete Service</a>
+                                                <br/><br/>
+                                            </div>
                                             <!--VIEW-->
                                             <div ng-hide="editService">{{service.description}}</div>
                                             <!--EDIT-->
@@ -785,7 +787,7 @@
 
                 <div class="panel-body noradius padding-10">
                     <a ui-sref="company-calendar({name: company.name})"> View Calendar</a>
-                    <a href="" class="pull-right" data-toggle="modal" data-target="#addEventModal">
+                    <a ng-show="isCompanyAdmin" href="" class="pull-right" data-toggle="modal" data-target="#addEventModal">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Event
                     </a><br/><br/>
                     <div class="row profile-activity">
@@ -799,44 +801,15 @@
                             <div class="col-xs-9 col-sm-10">
                                 <h4>
                                     {{event.name}}&nbsp;
-                                    <a href="" data-toggle="modal" data-target="#editEventModal" ng-click="setDetailedEvent(event)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                                    <a ng-show="isCompanyAdmin" href="" data-toggle="modal" data-target="#editEventModal" ng-click="setDetailedEvent(event)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
                                 </h4>
                                 <p>{{event.description | limitTo: 100}}...</p>
                             </div>
-                            <a href="" data-toggle="modal" data-target="#deleteEventModal" ng-click="setDetailedEvent(event)" class="red pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete Event &nbsp;&nbsp;</a>
+                            <a ng-show="isCompanyAdmin" href="" data-toggle="modal" data-target="#deleteEventModal" ng-click="setDetailedEvent(event)" class="red pull-right"><i class="fa fa-trash" aria-hidden="true"></i> Delete Event &nbsp;&nbsp;</a>
                             <div class="col-sm-12">
                                 <hr class="half-margins">
                             </div>
                         </div>
-                        <!--<div>
-                            <div class="col-xs-3 col-sm-2">
-                                <time datetime="2017-06-29" class="datebox">
-                                <strong>Jun</strong>
-                                <span>29</span>
-                            </time>
-                            </div>
-                            <div class="col-xs-9 col-sm-10">
-                                <h6><a href="page-sidebar.html">Sed diam nonummy nibh euismod</a></h6>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt laoreet dolore magna aliquam tincidunt erat volutpat laoreet dolore magna aliquam tincidunt erat volutpat.
-                                </p>
-                            </div>
-
-                            <div class="col-sm-12">
-                                <hr class="half-margins">
-                            </div>
-                        </div>-->
-
-                        <!--<div class="text-center">
-                            <ul class="pagination pagination-sm">
-                                <li class="disabled"><a href="#">Prev</a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">4</a></li>
-                                <li><a href="#">Next</a></li>
-                            </ul>
-                        </div>-->
 
                     </div>
                 </div>

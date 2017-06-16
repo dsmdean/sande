@@ -13,6 +13,7 @@
         // COMPANY
         var COMPANY_DATA = 'company_data';
         var company = false;
+        var companyAdmin = false;
         var currentCompany = {};
 
         // var tokenExpiration;
@@ -67,9 +68,10 @@
 
             var companyData = localStorage.getObject(COMPANY_DATA, '{}');
             if (companyData.name !== undefined) {
-                company = true;
+                // company = true;
+                companyAdmin = true;
                 currentCompany = companyData;
-                $rootScope.$broadcast('company:setCurrent');
+                $rootScope.$broadcast('company:setCompanyAdmin');
             }
         }
 
@@ -86,6 +88,8 @@
             currentUser = {};
             loggedIn = false;
             admin = false;
+            // company = false;
+            companyAdmin = false;
             $http.defaults.headers.common['x-access-token'] = authToken;
             localStorage.remove(TOKEN_KEY);
             localStorage.remove(COMPANY_DATA);
@@ -163,17 +167,28 @@
             return company;
         }
 
+        function isCompanyAdmin() {
+            return companyAdmin;
+        }
+
         function setCurrentCompany(company) {
             currentCompany = company;
 
-            localStorage.remove(COMPANY_DATA);
-            localStorage.storeObject(COMPANY_DATA, company);
+            for (var i = 0; i < company.users.length; i++) {
+                if (company.users[i].user._id === currentUser._id) {
+                    companyAdmin = true;
+                    localStorage.remove(COMPANY_DATA);
+                    localStorage.storeObject(COMPANY_DATA, company);
+                    $rootScope.$broadcast('company:setCompanyAdmin');
+                }
+            }
 
-            $rootScope.$broadcast('company:setCurrent');
+            // $rootScope.$broadcast('company:setCurrent');
         }
 
         function removeCurrentCompany() {
-            company = false;
+            // company = false;
+            companyAdmin = false;
             currentCompany = {};
             localStorage.remove(COMPANY_DATA);
             $rootScope.$broadcast('company:removeCurrent');
@@ -195,6 +210,7 @@
             updateCurrentUser: updateCurrentUser,
             setCompany: setCompany,
             isCompany: isCompany,
+            isCompanyAdmin: isCompanyAdmin,
             setCurrentCompany: setCurrentCompany,
             removeCurrentCompany: removeCurrentCompany,
             getCurrentCompany: getCurrentCompany

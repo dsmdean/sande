@@ -84,6 +84,16 @@
                     }
                 }
             })
+            .state('companies', {
+                parent: 'page',
+                url: '/company',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompaniesController',
+                        templateUrl: 'templates/companies.html'
+                    }
+                }
+            })
             .state('company-profile', {
                 parent: 'page',
                 url: '/company/:name',
@@ -111,16 +121,6 @@
                     'content@dashboard': {
                         controller: 'CompanySearchController',
                         templateUrl: 'templates/company-search.html'
-                    }
-                }
-            })
-            .state('companies', {
-                parent: 'page',
-                url: '/companies',
-                views: {
-                    'content@dashboard': {
-                        controller: 'CompaniesController',
-                        templateUrl: 'templates/companies.html'
                     }
                 }
             });
@@ -156,9 +156,9 @@
                 authService.removeCurrentCompany();
             }
 
-            if (toState.name === 'company-profile') {
-                authService.setCompany();
-            }
+            // if (toState.name === 'company-profile') {
+            //     authService.setCompany();
+            // }
 
         });
 

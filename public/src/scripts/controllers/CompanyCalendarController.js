@@ -1,9 +1,10 @@
 (function() {
     'use strict';
 
-    function CompanyCalendarController($scope, uiCalendarConfig, authService, eventService, notifier) {
+    function CompanyCalendarController($scope, uiCalendarConfig, authService, eventService, notifier, companyService, $rootScope, $state) {
 
         $scope.currentCompany = authService.getCurrentCompany();
+        $scope.isCompanyAdmin = authService.isCompanyAdmin();
         $scope.eventSources = [];
         $scope.SelectedEvent = null;
         var isFirstTime = true;
@@ -11,6 +12,10 @@
         $scope.eventSources = [$scope.events];
         $scope.newEvent = {};
         $scope.loading = false;
+
+        $rootScope.$on('company:setCompanyAdmin', function() {
+            $scope.isCompanyAdmin = authService.isCompanyAdmin();
+        });
 
         function showError(message) {
             notifier.error(message);
@@ -33,27 +38,34 @@
             }
         }
 
-        // Get company events
-        eventService.getCompanyEvents($scope.currentCompany._id)
+        // GET COMPANY DATA
+        companyService.getCompanyByName($state.params.name)
             .then(function(response) {
-                $scope.events.slice(0, $scope.events.length);
-                angular.forEach(response, function(value) {
-                    $scope.events.push({
-                        _id: value._id,
-                        title: value.name,
-                        name: value.name,
-                        description: value.description,
-                        start: Date.parse(value.date),
-                        end: Date.parse(value.date),
-                        allDay: false,
-                        type: value.type,
-                        location: value.location,
-                        image: value.image,
-                        creator: value.creator,
-                        created: value.created,
-                        public: value.public
-                    });
-                });
+                $scope.currentCompany = response;
+
+                // Get company events
+                eventService.getCompanyEvents($scope.currentCompany._id)
+                    .then(function(response) {
+                        $scope.events.slice(0, $scope.events.length);
+                        angular.forEach(response, function(value) {
+                            $scope.events.push({
+                                _id: value._id,
+                                title: value.name,
+                                name: value.name,
+                                description: value.description,
+                                start: Date.parse(value.date),
+                                end: Date.parse(value.date),
+                                allDay: false,
+                                type: value.type,
+                                location: value.location,
+                                image: value.image,
+                                creator: value.creator,
+                                created: value.created,
+                                public: value.public
+                            });
+                        });
+                    })
+                    .catch(showError);
             })
             .catch(showError);
 
@@ -179,6 +191,6 @@
     }
 
     angular.module('sande')
-        .controller('CompanyCalendarController', ['$scope', 'uiCalendarConfig', 'authService', 'eventService', 'notifier', CompanyCalendarController]);
+        .controller('CompanyCalendarController', ['$scope', 'uiCalendarConfig', 'authService', 'eventService', 'notifier', 'companyService', '$rootScope', '$state', CompanyCalendarController]);
 
 }());
