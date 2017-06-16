@@ -1,11 +1,12 @@
 (function() {
     'use strict';
 
-    function HeaderController($scope, $rootScope, $state, authService, notifier, $log) {
+    function HeaderController($scope, $rootScope, $state, authService, notifier, $log, shoppingService) {
 
         $scope.loggedIn = false;
         $scope.isAdmin = false;
         $scope.currentUser = {};
+        $scope.cart = shoppingService.getCart();
 
         function showError(message) {
             notifier.error(message);
@@ -23,6 +24,14 @@
         $scope.searchCompanies = function() {
             $state.go('company-search', { search: $scope.search });
         };
+
+        $rootScope.$on('user:addToCart', function() {
+            $scope.cart = shoppingService.getCart();
+        });
+
+        $rootScope.$on('user:restoreCart', function() {
+            $scope.cart = shoppingService.getCart();
+        });
 
         // $('.mobile-search').on('click', function(e) {
         //     e.preventDefault();
@@ -46,7 +55,7 @@
             $scope.loggedIn = false;
             $scope.isAdmin = false;
 
-            notifier.success('Logout successful!');
+            // notifier.success('Logout successful!');
             $state.go('login');
         });
 
@@ -60,6 +69,6 @@
     }
 
     angular.module('sande')
-        .controller('HeaderController', ['$scope', '$rootScope', '$state', 'authService', 'notifier', '$log', HeaderController]);
+        .controller('HeaderController', ['$scope', '$rootScope', '$state', 'authService', 'notifier', '$log', 'shoppingService', HeaderController]);
 
 }());

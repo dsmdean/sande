@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function authService(notifier, $http, constants, $q, localStorage, $rootScope, $log, $cacheFactory) {
+    function authService(notifier, $http, constants, $q, localStorage, $rootScope, $log, $cacheFactory, shoppingService) {
 
         // LOGIN
         var TOKEN_KEY = 'Token';
@@ -15,6 +15,8 @@
         var company = false;
         var companyAdmin = false;
         var currentCompany = {};
+        // CART
+        var CART_DATA = 'cart_data';
 
         // var tokenExpiration;
 
@@ -73,6 +75,11 @@
                 currentCompany = companyData;
                 $rootScope.$broadcast('company:setCompanyAdmin');
             }
+
+            var cartData = localStorage.getObject(CART_DATA, '{}');
+            if (Array.isArray(cartData)) {
+                shoppingService.restoreCart(cartData);
+            }
         }
 
         function storeUserCredentials(credentials) {
@@ -93,6 +100,7 @@
             $http.defaults.headers.common['x-access-token'] = authToken;
             localStorage.remove(TOKEN_KEY);
             localStorage.remove(COMPANY_DATA);
+            localStorage.remove(CART_DATA);
             var httpCache = $cacheFactory.get('$http');
             httpCache.removeAll();
             // localStorage.remove('tokenExpiration');
@@ -218,6 +226,6 @@
     }
 
     angular.module('sande')
-        .factory('authService', ['notifier', '$http', 'constants', '$q', 'localStorage', '$rootScope', '$log', '$cacheFactory', authService]);
+        .factory('authService', ['notifier', '$http', 'constants', '$q', 'localStorage', '$rootScope', '$log', '$cacheFactory', 'shoppingService', authService]);
 
 }());

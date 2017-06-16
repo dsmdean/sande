@@ -15,7 +15,7 @@
             $scope.loading = true;
             authService.login($scope.user)
                 .then(function(response) {
-                    notifier.success('Logged in successful!');
+                    // notifier.success('Logged in successful!');
                     $scope.loading = false;
                 })
                 .catch(showError);

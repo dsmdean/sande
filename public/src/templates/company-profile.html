@@ -321,7 +321,7 @@
                     </div>-->
 
                     <!-- Edit -->
-                    <div id="tab-edit" class="tab-pane fade" ng-class="{'active': isCompanyAdmin}">
+                    <div id="tab-edit" class="tab-pane fade" ng-class="{'in active': isCompanyAdmin}">
 
                         <form class="form-horizontal" ng-submit="updateCompany()">
                             <h4>Personal Information</h4>
@@ -558,8 +558,12 @@
                                                 <option ng-repeat="optionsOption in option.options">{{optionsOption}}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-success col-lg-6 col-md-8 col-xs-12"><span><i class="fa fa-cart-plus"></i> Add to Cart</span></button>
+                                        <div class="form-group col-md-4">
+                                            <label for="qty">QTY</label>
+                                            <input type="number" id="qty" class="form-control" ng-model="detailedProduct.qty">
+                                        </div>
+                                        <div ng-hide="isCompanyAdmin" class="form-group col-md-12">
+                                            <button type="submit" ng-click="addToCart(detailedProduct)" class="btn btn-success col-lg-6 col-md-8 col-xs-12"><span><i class="fa fa-cart-plus"></i> Add to Cart</span></button>
                                         </div><br><br>
                                     </div>
                                 </div>

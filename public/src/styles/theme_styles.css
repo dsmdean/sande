@@ -406,7 +406,7 @@ h3 .small {
 .navbar-nav>li>.dropdown-menu {
     border-radius: 3px;
     background-clip: padding-box;
-    min-width: 223px;
+    min-width: 200px;
 }
 
 .dropdown-menu>li>a {
@@ -811,7 +811,8 @@ h3 .small {
 }
 
 .navbar-nav>li>.dropdown-menu.notifications-list {
-    min-width: 310px;
+    /*min-width: 310px;*/
+    min-width: 290px;
     padding-bottom: 0;
     padding-top: 0;
     color: #707070;
@@ -918,6 +919,11 @@ h3 .small {
     margin-left: -30px
 }
 
+
+/*.cart-list {
+    margin-left: -30px
+}*/
+
 .dropdown.language.hidden-xs ul.dropdown-menu {
     min-width: 100px;
     max-width: 200pz;
@@ -956,6 +962,69 @@ h3 .small {
     display: block;
     line-height: 1.4;
 }
+
+
+/*.cart-list .item.first-item {
+    border-top: 0!important
+}
+
+.cart-list .item>a {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 25px;
+    transition: border-color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s;
+}
+
+.cart-list .item>a>img {
+    position: absolute;
+    margin-top: 10px;
+}
+
+.cart-list .item>a>.content {
+    display: block;
+    padding-left: 50px;
+    padding-top: 5px;
+}
+
+.cart-list .item>a>.content .content-headline {
+    color: #605F5F;
+    display: block;
+    font-weight: 600;
+}
+
+.cart-list .item>a>.content .content-text {
+    display: block;
+    line-height: 1.4;
+}
+
+.cart-list .item.item-container {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 25px;
+    transition: border-color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s;
+}
+
+.cart-list .item.item-container>img {
+    position: absolute;
+    margin-top: 10px;
+}
+
+.cart-list .item.item-container>.content {
+    display: block;
+    padding-left: 50px;
+    padding-top: 5px;
+}
+
+.cart-list .item.item-container>.content .content-headline {
+    color: #605F5F;
+    display: block;
+    font-weight: 600;
+}
+
+.cart-list .item.item-container>.content .content-text {
+    display: block;
+    line-height: 1.4;
+}*/
 
 @media (max-width: 400px) {
     #header-navbar .container {

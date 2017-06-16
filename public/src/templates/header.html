@@ -36,7 +36,7 @@
                 <a class="btn dropdown-toggle" data-toggle="dropdown">
                     <!--<i class="fa fa-shopping-cart" aria-hidden="true"></i>-->
                     <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                    <span class="count">5</span>
+                    <span class="count">{{cart.length}}</span>
                 </a>
                 <ul class="dropdown-menu notifications-list messages-list">
                     <li class="pointer">
@@ -44,55 +44,23 @@
                             <div class="arrow"></div>
                         </div>
                     </li>
-                    <li class="item first-item">
-                        <a href="#">
-                            <img src="img/samples/messages-photo-1.png" alt="" />
+                    <li class="item first-item" ng-repeat="product in cart">
+                        <a href="">
+                            <!--<div class="item-container">-->
+                            <img ng-src="img/company-profile/products/{{product.images[0]}}" alt="" width="50" style="padding-right:5px" />
                             <span class="content">
-												<span class="content-headline">
-												George Clooney
-												</span>
+                                <span class="content-headline">{{product.qty}} x {{product.name}}</span>
                             <span class="content-text">
-											Look, just because I don't be givin' no man a foot massage don't make it
-											right for Marsellus to throw...
-											</span>
+                                    {{product.description | limitTo: 50}}...
+                                </span>
                             </span>
-                            <span class="time"><i class="fa fa-clock-o"></i>13 min.</span>
+                            <span class="time"><i class="fa fa-money"></i> &dollar;{{product.price}}</span>
+                            <!--<a href=""><span class="red"><i class="fa fa-trash"></i> Remove from cart</span></a>-->
+                            <!--</div>-->
                         </a>
                     </li>
-                    <li class="item">
-                        <a href="#">
-                            <img src="img/samples/messages-photo-2.png" alt="" />
-                            <span class="content">
-											<span class="content-headline">
-											Emma Watson
-											</span>
-                            <span class="content-text">
-											Look, just because I don't be givin' no man a foot massage don't make it
-											right for Marsellus to throw...
-											</span>
-                            </span>
-                            <span class="time"><i class="fa fa-clock-o"></i>13 min.</span>
-                        </a>
-                    </li>
-                    <li class="item">
-                        <a href="#">
-                            <img src="img/samples/messages-photo-3.png" alt="" />
-                            <span class="content">
-											<span class="content-headline">
-											Robert Downey Jr.
-											</span>
-                            <span class="content-text">
-											Look, just because I don't be givin' no man a foot massage don't make it
-											right for Marsellus to throw...
-											</span>
-                            </span>
-                            <span class="time"><i class="fa fa-clock-o"></i>13 min.</span>
-                        </a>
-                    </li>
-                    <li class="item-footer">
-                        <a href="#">
-										View all messages
-										</a>
+                    <li ng-show="cart.length > 0" class="item-footer">
+                        <a href="">View Cart</a>
                     </li>
                 </ul>
             </li>
@@ -119,13 +87,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li class="item">
-                        <a href="">Spanish</a>
-                    </li>
-                    <li class="item">
-                        <a href="">German</a>
-                    </li>
-                    <li class="item">
-                        <a href="">Italian</a>
+                        <a href="">Nederlands</a>
                     </li>
                 </ul>
             </li>

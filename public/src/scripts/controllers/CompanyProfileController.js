@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService, $rootScope) {
+    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService, $rootScope, shoppingService) {
 
         $scope.currentUser = authService.getCurrentUser();
         $scope.isCompanyAdmin = authService.isCompanyAdmin();
@@ -227,6 +227,10 @@
                 .catch(showError);
         };
 
+        $scope.addToCart = function(product) {
+            shoppingService.addToCart(product);
+        };
+
         // PRODUCT IMAGE UPLOAD SECTION
         $scope.detailPhotoChanged = function(files) {
             // console.log(files);
@@ -394,6 +398,6 @@
     }
 
     angular.module('sande')
-        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', '$rootScope', CompanyProfileController]);
+        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', '$rootScope', 'shoppingService', CompanyProfileController]);
 
 }());
