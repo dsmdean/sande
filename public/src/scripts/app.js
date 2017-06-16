@@ -113,6 +113,16 @@
                         templateUrl: 'templates/company-search.html'
                     }
                 }
+            })
+            .state('companies', {
+                parent: 'page',
+                url: '/companies',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompaniesController',
+                        templateUrl: 'templates/companies.html'
+                    }
+                }
             });
 
     }]);

@@ -13,10 +13,12 @@ companiesRouter.use(bodyParser.json());
 // GET/DELETE all companies - POST company
 companiesRouter.route('/')
     .get(function(req, res, next) {
-        Companies.find({}, function(err, companies) {
-            if (err) next(err);
-            res.json(companies);
-        });
+        Companies.find({})
+            .populate('category')
+            .exec(function(err, companies) {
+                if (err) next(err);
+                res.json(companies);
+            });
     })
     .post(Verify.verifyOrdinaryUser, function(req, res, next) {
         Companies.create(req.body, function(err, company) {

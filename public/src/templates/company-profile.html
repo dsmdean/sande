@@ -47,8 +47,9 @@
 
                     <!-- updated -->
                     <ul class="list-unstyled size-13">
-                        <li class="text-gray"><i class="fa fa-envelope"></i> {{company.email}}</li>
-                        <li class="text-gray"><i class="fa fa-phone"></i> {{company.phone}}</li>
+                        <li class="text-gray"><i class="fa fa-envelope"></i>&nbsp; {{company.email}}</li>
+                        <li class="text-gray"><i class="fa fa-phone"></i>&nbsp; {{company.phone}}</li>
+                        <li class="text-gray"><i class="fa fa-map-marker"></i>&nbsp; {{company.location.address}}, {{company.location.city}} {{company.location.province}}</li>
                         <!--<li>Confirm Your Account</li>-->
                         <!--<li>Update Your Address</li>-->
                     </ul>
@@ -102,11 +103,11 @@
                     <li class="">
                         <a href="/company-profile#tab-users" data-toggle="tab" aria-expanded="false">Users</a>
                     </li>
-                    <li class="" ng-show="company.settings.products">
-                        <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">Products</a>
-                    </li>
                     <li class="" ng-show="company.settings.services">
                         <a href="/company-profile#tab-services" data-toggle="tab" aria-expanded="false">Services</a>
+                    </li>
+                    <li class="" ng-show="company.settings.products">
+                        <a href="/company-profile#tab-products" data-toggle="tab" aria-expanded="false">Products</a>
                     </li>
                 </ul>
 
@@ -783,12 +784,12 @@
                 </header>
 
                 <div class="panel-body noradius padding-10">
-                    <a href="" ui-sref="company-calendar({name: company.name})"> View Calendar</a>
+                    <a ui-sref="company-calendar({name: company.name})"> View Calendar</a>
                     <a href="" class="pull-right" data-toggle="modal" data-target="#addEventModal">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i> Add Event
                     </a><br/><br/>
                     <div class="row profile-activity">
-                        <div ng-repeat="event in companyEvent | orderBy: 'date'">
+                        <div ng-repeat="event in companyEvent | orderBy: 'date' | filter: getFutureEvents | limitTo: 3">
                             <div class="col-xs-3 col-sm-2">
                                 <time datetime="event.date" class="datebox">
                                 <strong>{{event.date | date :  "MMM"}}</strong>

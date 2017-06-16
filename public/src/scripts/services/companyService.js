@@ -9,6 +9,17 @@
             notifier.error(message.data.err);
         }
 
+        function getAllCompanies(companyName) {
+            return $http.get(baseURL + '/companies/')
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error getting companies: ' + response.statusText);
+                    return $q.reject('Error getting companies.');
+                });
+        }
+
         function createCompany(companyData) {
             return $http.post(baseURL + '/companies', companyData)
                 .then(function(response) {
@@ -181,6 +192,7 @@
         }
 
         return {
+            getAllCompanies: getAllCompanies,
             createCompany: createCompany,
             uploadPicture: uploadPicture,
             searchCompaniesByName: searchCompaniesByName,

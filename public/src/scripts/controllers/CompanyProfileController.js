@@ -382,6 +382,10 @@
                 })
                 .catch(showError);
         };
+
+        $scope.getFutureEvents = function(event) {
+            return Date.parse(event.date) > new Date();
+        };
     }
 
     angular.module('sande')

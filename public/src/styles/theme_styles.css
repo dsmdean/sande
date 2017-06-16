@@ -5061,8 +5061,10 @@ input[type="radio"] {
 .profile-box-contact .profile-img {
     border-radius: 18%;
     background-clip: padding-box;
+    background-color: #fff;
     width: 110px;
-    height: 110px;
+    /*height: 110px;*/
+    
     float: left;
     margin-right: 15px;
     border: 5px solid #fff;
