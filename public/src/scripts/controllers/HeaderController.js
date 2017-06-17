@@ -6,7 +6,14 @@
         $scope.loggedIn = false;
         $scope.isAdmin = false;
         $scope.currentUser = {};
-        $scope.cart = shoppingService.getCart();
+
+        function addRestoreCart() {
+            $scope.cart = shoppingService.getCart();
+            $scope.cartTotalQTY = shoppingService.getCartTotalQTY();
+            $scope.cartProducts = shoppingService.getCartProducts();
+        };
+
+        addRestoreCart();
 
         function showError(message) {
             notifier.error(message);
@@ -26,11 +33,11 @@
         };
 
         $rootScope.$on('user:addToCart', function() {
-            $scope.cart = shoppingService.getCart();
+            addRestoreCart();
         });
 
         $rootScope.$on('user:restoreCart', function() {
-            $scope.cart = shoppingService.getCart();
+            addRestoreCart();
         });
 
         // $('.mobile-search').on('click', function(e) {

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function SidebarController($scope, $location, authService, $rootScope) {
+    function SidebarController($scope, $location, authService, $rootScope, shoppingService) {
 
         $scope.getClass = function(path) {
             // console.log(path);
@@ -13,6 +13,13 @@
         $scope.isCompanyAdmin = authService.isCompanyAdmin();
         $scope.currentCompany = authService.getCurrentCompany();
 
+        function addRestoreCart() {
+            $scope.cart = shoppingService.getCart();
+            $scope.cartTotalQTY = shoppingService.getCartTotalQTY();
+        };
+
+        addRestoreCart();
+
         $rootScope.$on('company:setCompanyAdmin', function() {
             // $scope.isCompany = authService.isCompany();
             $scope.isCompanyAdmin = authService.isCompanyAdmin();
@@ -23,6 +30,14 @@
             // $scope.isCompany = false;
             $scope.isCompanyAdmin = false;
             $scope.currentCompany = {};
+        });
+
+        $rootScope.$on('user:addToCart', function() {
+            addRestoreCart()
+        });
+
+        $rootScope.$on('user:restoreCart', function() {
+            addRestoreCart()
         });
 
         // $scope.submenu = function() {
@@ -46,6 +61,6 @@
     }
 
     angular.module('sande')
-        .controller('SidebarController', ['$scope', '$location', 'authService', '$rootScope', SidebarController]);
+        .controller('SidebarController', ['$scope', '$location', 'authService', '$rootScope', 'shoppingService', SidebarController]);
 
 }());

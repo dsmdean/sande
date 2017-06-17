@@ -935,6 +935,7 @@ h3 .small {
 }
 
 .messages-list .item>a {
+    cursor: default;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 25px;
@@ -2396,7 +2397,7 @@ blockquote.pull-right:before {
 }
 
 .table tbody>tr>td:first-child {
-    font-size: 1.25em;
+    /*font-size: 1.25em;*/
     font-weight: 600;
 }
 

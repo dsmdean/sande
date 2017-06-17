@@ -77,9 +77,10 @@
             }
 
             var cartData = localStorage.getObject(CART_DATA, '{}');
-            if (Array.isArray(cartData)) {
-                shoppingService.restoreCart(cartData);
-            }
+            shoppingService.restoreCart(cartData);
+            // if (Array.isArray(cartData)) {
+            //     shoppingService.restoreCart(cartData);
+            // }
         }
 
         function storeUserCredentials(credentials) {

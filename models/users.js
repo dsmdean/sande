@@ -3,6 +3,19 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var passportLocalMongoose = require('passport-local-mongoose');
 
+//create a invoices Schema
+var InvoicesSchema = new Schema({
+    total: {
+        type: Number
+    },
+    invoices: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Invoices'
+    }]
+}, {
+    timestamps: true
+});
+
 //create a users Schema
 var Users = new Schema({
     username: {
@@ -46,7 +59,8 @@ var Users = new Schema({
     companies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Companies'
-    }]
+    }],
+    invoices: [InvoicesSchema]
 }, {
     timestamps: true
 });

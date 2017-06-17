@@ -66,7 +66,7 @@
             })
             .state('user', {
                 parent: 'page',
-                url: '/user',
+                url: '/user/profile',
                 views: {
                     'content@dashboard': {
                         controller: 'UserProfileController',
@@ -121,6 +121,36 @@
                     'content@dashboard': {
                         controller: 'CompanySearchController',
                         templateUrl: 'templates/company-search.html'
+                    }
+                }
+            })
+            .state('shopping-cart', {
+                parent: 'page',
+                url: '/user/cart/:name',
+                views: {
+                    'content@dashboard': {
+                        controller: 'ShoppingCartController',
+                        templateUrl: 'templates/shopping-cart.html'
+                    }
+                }
+            })
+            .state('user-invoices', {
+                parent: 'page',
+                url: '/user/invoices',
+                views: {
+                    'content@dashboard': {
+                        controller: 'UserInvoicesController',
+                        templateUrl: 'templates/user-invoices.html'
+                    }
+                }
+            })
+            .state('user-invoice-details', {
+                parent: 'page',
+                url: '/user/invoices/:invoiceId',
+                views: {
+                    'content@dashboard': {
+                        controller: 'UserInvoiceDetailsController',
+                        templateUrl: 'templates/user-invoice-details.html'
                     }
                 }
             });

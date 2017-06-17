@@ -1,0 +1,162 @@
+<div ng-show="loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li><a href="">Dashboard</a></li>
+                <li><a ui-sref="user">User</a></li>
+                <li class="active"><span>Shopping Cart</span></li>
+            </ol>
+            <h1>Shopping Cart</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-4">
+            <div class="main-box clearfix">
+                <div class="main-box-body clearfix">
+                    <br/>
+                    <h2>Delivery time <span class="pull-right"><i class="fa fa-clock-o" aria-hidden="true"></i></span></h2>
+                    <p>Lorem ipsum dolor sit amet, in pri partem essent. Qui debitis meliore ex, tollit debitis conclusionemque te eos.</p>
+                    <div class="col-sm-12">
+                        <hr class="half-margins">
+                    </div>
+                    <h2>Secure payment <span class="pull-right"><i class="fa fa-credit-card-alt" aria-hidden="true"></i></span></h2>
+                    <p>Lorem ipsum dolor sit amet, in pri partem essent. Qui debitis meliore ex, tollit debitis conclusionemque te eos.</p>
+                    <div class="col-sm-12">
+                        <hr class="half-margins">
+                    </div>
+                    <!--<h1 class="text-center"><i class="fa fa-life-ring" aria-hidden="true"></i></h1>-->
+                    <h2 class="text-center">Need Help?<br/><a>+45 423 445 99</a></h2>
+                    <p class="text-center">Monday to Friday 9.00am - 7.30pm</p>
+                    <div class="col-sm-12">
+                        <hr class="half-margins">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-8">
+            <!--<div class="main-box clearfix">-->
+            <section class="cont invoice">
+                <!-- title row -->
+                <div class="row invoice-header">
+                    <div class="col-lg-offset-6 col-lg-6">
+                        <h2 class="sm-size">
+                            <small class="pull-right">Date: {{date | date :  "MM/dd/yyyy"}}</small>
+                        </h2>
+                    </div>
+                </div>
+                <div ng-repeat="company in companies">
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                        <div class="col-sm-4">
+                            <a ui-sref="company-profile({name:company.name})">
+                                <h4>{{company.name}}</h4>
+                            </a>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- Table row -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <!--<th class="hidden-xs">Serial No.</th>-->
+                                        <th class="hidden-xs">Description</th>
+                                        <th>Subtotal</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="product in company.products">
+                                        <td>{{product.name}}</td>
+                                        <td>{{product.qty}}</td>
+                                        <td>&dollar;{{product.price}}</td>
+                                        <!--<td class="hidden-xs">{{product._id}}</td>-->
+                                        <td class="hidden-xs">{{product.description | limitTo:50}}...</td>
+                                        <td><span class="label label-primary">&dollar;{{product.qty * product.price | number:2}}</span></td>
+                                        <td>
+                                            <h4>
+                                                <a href="" ng-click="addToQty(product)"><i class="fa fa-plus-circle" aria-hidden="true"></i></a>&nbsp;
+                                                <a href="" ng-click="subtractFromQty(product)"><i class="fa fa-minus-circle" aria-hidden="true"></i></a>&nbsp;
+                                                <a href="" ng-click="deleteFromCart(company._id, product._id)" class="red"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                            </h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="hidden-xs"></td>
+                                        <th>Total</th>
+                                        <td><span class="label label-primary">&dollar;{{subTotal[$index] | number:2}}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+
+                <div class="row">
+                    <!-- accepted payments column -->
+                    <div class="col-lg-6">
+                        <!--<div class="col-lg-12" style="margin-bottom:10px;">
+                            <p class="lead">Payment Types:</p>
+                            <img src="img/credit/visa.png" class="w-53" alt="Visa" />
+                            <img src="img/credit/cirrus.png" class="w-53" alt="cirrus" />
+                            <img src="img/credit/mastercard.png" class="w-53" alt="Mastercard" />
+                            <img src="img/credit/paypal2.png" class="w-53" alt="Paypal" />
+                        </div>-->
+                        <div class="col-lg-12">
+                            <p class="text-muted well well-sm no-shadow mt-10">
+                                <span class="label label-danger">NOTE:</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eget vestibulum mauris, a egestas tellus.<b> Maecenas tempor pharetra dignissim.</b> Pellentesque ut massa libero.
+                                Cras a elit enim.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-lg-6">
+                        <p class="lead">Total Amount</p>
+                        <div class="">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th><span class="label label-info">Total:</span></th>
+                                        <td><span class="label label-success">&dollar;{{total | number:2}}</span></td>
+                                    </tr>
+                                    <!--<tr>
+                                        <th><span class="label label-info">Shipping:</span></th>
+                                        <td><span class="label label-success">$0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <th><span class="label label-info">Total:</span></th>
+                                        <td><span class="label label-success">$268.44</span></td>
+                                    </tr>-->
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- this row will not appear when printing -->
+                <div class="row no-print">
+                    <div class="col-xs-12">
+                        <button ng-click="orderProducts()" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Order Products</button>
+                    </div>
+                </div>
+            </section>
+            <!--</div>-->
+        </div>
+    </div>
+</div>

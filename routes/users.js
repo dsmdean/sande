@@ -333,5 +333,25 @@ userRouter.route('/:userId/uploadPicture')
         });
     });
 
+// specific user's invoices
+userRouter.route('/:userId/invoices')
+    // get a specific user
+    .get(function(req, res, next) {
+        User.findById(req.params.userId, function(err, user) {
+            if (err) next(err);
+            res.json(user.invoices);
+        });
+    })
+    // delete a specific user
+    .delete(function(req, res, next) {
+        User.findById(req.params.userId, function(err, user) {
+            if (err) next(err);
+
+            user.invoices = [];
+            user.save();
+            res.json({ status: "Succesfully deleted user's invoices" });
+        });
+    });
+
 // export router
 module.exports = userRouter;

@@ -170,6 +170,7 @@
         // DETAILED PRODUCT SECTION
         $scope.setDetailedProduct = function(product) {
             $scope.detailedProduct = product;
+            $scope.detailedProduct.qty = 1;
         }
 
         $scope.toggleEditProduct = function() {
@@ -228,7 +229,16 @@
         };
 
         $scope.addToCart = function(product) {
+            product.companyId = $scope.company._id;
+            product.companyName = $scope.company.name;
+            // console.log(product);
             shoppingService.addToCart(product);
+        };
+
+        $scope.QtyOnChange = function() {
+            if ($scope.detailedProduct.qty < 1) {
+                $scope.detailedProduct.qty = 1;
+            }
         };
 
         // PRODUCT IMAGE UPLOAD SECTION

@@ -74,7 +74,7 @@ companiesRouter.route('/:companyId')
     .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
         Companies.remove({ _id: req.params.companyId }, function(err, resp) {
             if (err) next(err);
-
+            // delete company is users object
             res.json(resp);
         });
     });

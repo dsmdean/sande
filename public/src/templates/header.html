@@ -36,7 +36,7 @@
                 <a class="btn dropdown-toggle" data-toggle="dropdown">
                     <!--<i class="fa fa-shopping-cart" aria-hidden="true"></i>-->
                     <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                    <span class="count">{{cart.length}}</span>
+                    <span class="count">{{cartTotalQTY}}</span>
                 </a>
                 <ul class="dropdown-menu notifications-list messages-list">
                     <li class="pointer">
@@ -44,10 +44,10 @@
                             <div class="arrow"></div>
                         </div>
                     </li>
-                    <li class="item first-item" ng-repeat="product in cart">
+                    <li class="item first-item" ng-repeat="product in cartProducts">
                         <a href="">
                             <!--<div class="item-container">-->
-                            <img ng-src="img/company-profile/products/{{product.images[0]}}" alt="" width="50" style="padding-right:5px" />
+                            <img ng-src="img/company-profile/products/{{product.images[0]}}" alt="" width="50" style="padding-right:10px" />
                             <span class="content">
                                 <span class="content-headline">{{product.qty}} x {{product.name}}</span>
                             <span class="content-text">
@@ -59,8 +59,8 @@
                             <!--</div>-->
                         </a>
                     </li>
-                    <li ng-show="cart.length > 0" class="item-footer">
-                        <a href="">View Cart</a>
+                    <li ng-show="cartTotalQTY > 0" class="item-footer">
+                        <a ui-sref="shopping-cart">View Cart</a>
                     </li>
                 </ul>
             </li>
