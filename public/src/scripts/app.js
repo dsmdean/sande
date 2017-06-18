@@ -94,16 +94,6 @@
                     }
                 }
             })
-            .state('company-profile', {
-                parent: 'page',
-                url: '/company/:name',
-                views: {
-                    'content@dashboard': {
-                        controller: 'CompanyProfileController',
-                        templateUrl: 'templates/company-profile.html'
-                    }
-                }
-            })
             .state('company-calendar', {
                 parent: 'page',
                 url: '/company/calendar/:name',
@@ -126,7 +116,7 @@
             })
             .state('shopping-cart', {
                 parent: 'page',
-                url: '/user/cart/:name',
+                url: '/user/cart',
                 views: {
                     'content@dashboard': {
                         controller: 'ShoppingCartController',
@@ -151,6 +141,36 @@
                     'content@dashboard': {
                         controller: 'UserInvoiceDetailsController',
                         templateUrl: 'templates/user-invoice-details.html'
+                    }
+                }
+            })
+            .state('company-invoices', {
+                parent: 'page',
+                url: '/company/invoices',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompanyInvoicesController',
+                        templateUrl: 'templates/company-invoices.html'
+                    }
+                }
+            })
+            .state('company-invoice-details', {
+                parent: 'page',
+                url: '/company/invoices/:invoiceId',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompanyInvoiceDetailsController',
+                        templateUrl: 'templates/company-invoice-details.html'
+                    }
+                }
+            })
+            .state('company-profile', {
+                parent: 'page',
+                url: '/company/profile/:name',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompanyProfileController',
+                        templateUrl: 'templates/company-profile.html'
                     }
                 }
             });

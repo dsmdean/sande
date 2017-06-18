@@ -26,7 +26,7 @@
                 <div class="main-box-body clearfix">
                     <div class="table-responsive">
                         <table class="table">
-                            <thead>
+                            <thead ng-hide="invoices.length === 0">
                                 <tr>
                                     <th><span>Order ID</span></th>
                                     <th><span>Date</span></th>
@@ -53,6 +53,7 @@
                                         &dollar; {{invoice.subTotal}}
                                     </td>
                                 </tr>
+                                <h1 ng-show="invoices.length === 0">NO INVOICES</h1>
                                 <!--<tr>
                                     <td>
                                         <a href="#">#2547</a>

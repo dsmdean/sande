@@ -11,7 +11,7 @@
             $scope.loading = false;
         }
 
-        shoppingService.getUsersInvoices($scope.currentUser._id)
+        shoppingService.getUserInvoices($scope.currentUser._id)
             .then(function(response) {
                 $scope.invoices = response;
             })

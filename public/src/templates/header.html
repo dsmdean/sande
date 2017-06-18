@@ -49,7 +49,7 @@
                             <!--<div class="item-container">-->
                             <img ng-src="img/company-profile/products/{{product.images[0]}}" alt="" width="50" style="padding-right:10px" />
                             <span class="content">
-                                <span class="content-headline">{{product.qty}} x {{product.name}}</span>
+                                <span class="content-headline">{{product.qty}} x {{product.name}}<span ng-repeat="opt in product.opt">, {{opt.option}}</span></span>
                             <span class="content-text">
                                     {{product.description | limitTo: 50}}...
                                 </span>
@@ -70,7 +70,7 @@
                     <span class="hidden-xs">{{currentUser.firstname}} {{currentUser.lastname[0]}}.</span> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a ui-sref="user"><i class="fa fa-user"></i>Profile</a></li>
+                    <li><a ui-sref="user"><i class="fa fa-user"></i>User Profile</a></li>
                     <hr/>
                     <!--<li><a href=""><i class="fa fa-cog"></i>Settings</a></li>
                     <li><a href=""><i class="fa fa-envelope-o"></i>Messages</a></li>-->

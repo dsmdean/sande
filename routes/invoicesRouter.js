@@ -32,7 +32,7 @@ invoicesRouter.route('/')
             invoice.subTotal = 0;
 
             for (var i = 0; i < req.body[companyId].length; i++) {
-                invoice.products.push({ qty: req.body[companyId][i].qty, product: req.body[companyId][i]._id });
+                invoice.products.push({ qty: req.body[companyId][i].qty, product: req.body[companyId][i]._id, options: req.body[companyId][i].opt });
                 total += req.body[companyId][i].qty * req.body[companyId][i].price;
                 invoice.subTotal += req.body[companyId][i].qty * req.body[companyId][i].price;
             }
@@ -42,6 +42,7 @@ invoicesRouter.route('/')
                 console.log(resp);
                 invoices.push(resp._id);
                 loop++;
+                // add invoice to company
 
                 if (Object.keys(req.body).length === loop) {
                     // User.findById(req.decoded._id, function(err, user) {
@@ -68,6 +69,7 @@ invoicesRouter.route('/:invoiceId')
     .get(function(req, res, next) {
         Invoice.findById(req.params.invoiceId)
             .populate('company')
+            .populate('user')
             .exec(function(err, invoice) {
                 if (err) next(err);
 
@@ -102,11 +104,22 @@ invoicesRouter.route('/:invoiceId')
         });
     });
 
-// GET users invoices
+// GET user invoices
 invoicesRouter.route('/user/:userId')
     .get(function(req, res, next) {
         Invoice.find({ user: req.params.userId })
             .populate('company')
+            .exec(function(err, invoices) {
+                if (err) next(err);
+                res.json(invoices);
+            });
+    });
+
+// GET company invoices
+invoicesRouter.route('/company/:companyId')
+    .get(function(req, res, next) {
+        Invoice.find({ company: req.params.companyId })
+            .populate('user')
             .exec(function(err, invoices) {
                 if (err) next(err);
                 res.json(invoices);

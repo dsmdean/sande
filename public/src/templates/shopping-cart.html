@@ -46,7 +46,8 @@
                         </h2>
                     </div>
                 </div>
-                <div ng-repeat="company in companies">
+                <h1 ng-show="companies.length === 0" class="text-center">No Products in Cart</h1>
+                <div ng-hide="companies.length === 0" ng-repeat="company in companies">
                     <!-- info row -->
                     <div class="row invoice-info">
                         <div class="col-sm-4">
@@ -75,7 +76,10 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="product in company.products">
-                                        <td>{{product.name}}</td>
+                                        <td>
+                                            <img ng-src="img/company-profile/products/{{product.images[0]}}" alt="" width="50" style="padding-right:10px" /> {{product.name}}
+                                            <span ng-repeat="opt in product.opt">, {{opt.option}}</span>
+                                        </td>
                                         <td>{{product.qty}}</td>
                                         <td>&dollar;{{product.price}}</td>
                                         <!--<td class="hidden-xs">{{product._id}}</td>-->
@@ -105,7 +109,7 @@
                     <!-- /.row -->
                 </div>
 
-                <div class="row">
+                <div ng-hide="companies.length === 0" class="row">
                     <!-- accepted payments column -->
                     <div class="col-lg-6">
                         <!--<div class="col-lg-12" style="margin-bottom:10px;">
@@ -150,7 +154,7 @@
                 <!-- /.row -->
 
                 <!-- this row will not appear when printing -->
-                <div class="row no-print">
+                <div ng-hide="companies.length === 0" class="row no-print">
                     <div class="col-xs-12">
                         <button ng-click="orderProducts()" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Order Products</button>
                     </div>

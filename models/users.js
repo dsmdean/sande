@@ -59,8 +59,9 @@ var Users = new Schema({
     companies: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Companies'
-    }],
-    invoices: [InvoicesSchema]
+    }]
+
+    // invoices: [InvoicesSchema]
 }, {
     timestamps: true
 });

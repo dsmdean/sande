@@ -64,8 +64,19 @@
                 });
         }
 
-        function getUsersInvoices(userId) {
+        function getUserInvoices(userId) {
             return $http.get(baseURL + '/invoices/user/' + userId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error getting invoices: ' + response.statusText);
+                    return $q.reject('Error getting invoices.');
+                });
+        }
+
+        function getCompanyInvoices(companyId) {
+            return $http.get(baseURL + '/invoices/company/' + companyId)
                 .then(function(response) {
                     return response.data;
                 })
@@ -109,7 +120,8 @@
             addToCart: addToCart,
             restoreCart: restoreCart,
             orderProducts: orderProducts,
-            getUsersInvoices: getUsersInvoices,
+            getUserInvoices: getUserInvoices,
+            getCompanyInvoices: getCompanyInvoices,
             getInvoiceById: getInvoiceById,
             saveCart: saveCart,
             getCart: getCart,

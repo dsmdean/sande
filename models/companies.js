@@ -103,6 +103,10 @@ var CompaniesSchema = new Schema({
     },
     products: [ProductsSchema],
     services: [ServicesSchema]
+        // newInvoice: {
+        //     type: Number,
+        //     default: 0
+        // }
 }, {
     timestamps: true
 });

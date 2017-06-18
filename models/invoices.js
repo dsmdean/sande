@@ -18,15 +18,19 @@ var InvoicesSchema = new Schema({
         ref: 'Users',
         required: true
     },
-    // products: [{
-    //     type: String,
-    //     required: true
-    // }],
     products: [{
         qty: {
             type: String,
             required: true
         },
+        options: [{
+            name: {
+                type: String
+            },
+            option: {
+                type: String
+            }
+        }],
         product: {
             type: String,
             required: true

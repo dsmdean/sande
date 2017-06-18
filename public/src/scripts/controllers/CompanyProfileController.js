@@ -171,6 +171,12 @@
         $scope.setDetailedProduct = function(product) {
             $scope.detailedProduct = product;
             $scope.detailedProduct.qty = 1;
+            $scope.detailedProduct.opt = [];
+
+            for (var i = 0; i < product.options.length; i++) {
+                $scope.detailedProduct.opt[i] = {};
+                $scope.detailedProduct.opt[i].name = product.options[i].name;
+            }
         }
 
         $scope.toggleEditProduct = function() {
@@ -231,8 +237,10 @@
         $scope.addToCart = function(product) {
             product.companyId = $scope.company._id;
             product.companyName = $scope.company.name;
+            product.qty = parseInt(product.qty);
             // console.log(product);
             shoppingService.addToCart(product);
+            $state.go('shopping-cart');
         };
 
         $scope.QtyOnChange = function() {

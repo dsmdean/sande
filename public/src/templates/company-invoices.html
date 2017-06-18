@@ -1,0 +1,65 @@
+<div ng-show="loading" class="loading" ng-include="'templates/spinner.html'"></div>
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li><a href="">Dashboard</a></li>
+                <li><a ui-sref="company-profile({name:currentCompany.name})">Company</a></li>
+                <li class="active"><span>Invoices</span></li>
+            </ol>
+            <h1>Invoices</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <header class="main-box-header clearfix">
+                    <h2 class="pull-left">Orders</h2>
+                    <div class="filter-block pull-right">
+                        <div class="form-group pull-left">
+                            <input type="text" class="form-control" placeholder="Search..." ng-model="search">
+                            <i class="fa fa-search search-icon"></i>
+                        </div>
+                    </div>
+                </header>
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead ng-hide="invoices.length === 0">
+                                <tr>
+                                    <th><span>Order ID</span></th>
+                                    <th><span>Date</span></th>
+                                    <th><span>User</span></th>
+                                    <th class="text-center"><span>Status</span></th>
+                                    <th class="text-right"><span>Price</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="invoice in invoices | orderBy:'-' | filter: search">
+                                    <td>
+                                        <a ui-sref="company-invoice-details({invoiceId: invoice._id})">#{{invoice._id | limitTo:6:18}}</a>
+                                    </td>
+                                    <td>
+                                        {{invoice.date | date: 'MM/dd/yyyy'}}
+                                    </td>
+                                    <td>
+                                        <!--<a ui-sref="company-profile({name:invoice.company.name})">{{invoice.company.name}}</a>-->
+                                        <a href="">{{invoice.user.firstname}} {{invoice.user.lastname}}</a>
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="label" ng-class="{'label-primary': invoice.status === 'Pending', 'label-danger': invoice.status === 'Cancelled', 'label-success': invoice.status === 'Completed'}">{{invoice.status}}</span>
+                                    </td>
+                                    <td class="text-right">
+                                        &dollar; {{invoice.subTotal}}
+                                    </td>
+                                </tr>
+                                <h1 ng-show="invoices.length === 0">NO INVOICES</h1>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
