@@ -15,6 +15,17 @@
             $scope.loading = false;
         }
 
+        function checkIfCartEmpty(companyId) {
+            if ($scope.cart[companyId].length === 0) {
+                for (var j = 0; $scope.companies.length; j++) {
+                    if ($scope.companies[j]._id === companyId) {
+                        $scope.companies.splice(j, 1);
+                        break;
+                    }
+                }
+            }
+        }
+
         for (var companyId in $scope.cart) {
             var subTotal = 0;
             $scope.companies.push({ _id: $scope.cart[companyId][0].companyId, name: $scope.cart[companyId][0].companyName, products: $scope.cart[companyId] });
@@ -22,7 +33,7 @@
             for (var i = 0; i < $scope.cart[companyId].length; i++) {
                 subTotal += $scope.cart[companyId][i].qty * $scope.cart[companyId][i].price;
             }
-            $scope.subTotal.push(subTotal);
+            // $scope.subTotal.push(subTotal);
             $scope.total += subTotal;
         }
 
@@ -43,13 +54,19 @@
 
         $scope.addToQty = function(product) {
             product.qty++;
+            // $scope.subTotal += product.price;
+            $scope.total += product.price;
             $scope.cartTotalQTY++;
+            checkIfCartEmpty(product.companyId);
             shoppingService.saveCart($scope.cart, $scope.cartTotalQTY);
         };
 
         $scope.subtractFromQty = function(product) {
             product.qty--;
+            // $scope.subTotal -= product.price;
+            $scope.total -= product.price;
             $scope.cartTotalQTY--;
+            checkIfCartEmpty(product.companyId);
             shoppingService.saveCart($scope.cart, $scope.cartTotalQTY);
         };
 
@@ -58,6 +75,8 @@
                 if ($scope.cart[companyId][i]._id == productId) {
                     $scope.cartTotalQTY -= $scope.cart[companyId][i].qty;
                     $scope.cart[companyId].splice(i, 1);
+
+                    checkIfCartEmpty(companyId);
                     break;
                 }
             }
