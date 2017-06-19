@@ -39,21 +39,30 @@ invoicesRouter.route('/')
 
             Invoice.create(invoice, function(err, resp) {
                 if (err) next(err);
-                console.log(resp);
+                // console.log(resp);
                 invoices.push(resp._id);
                 loop++;
                 // add invoice to company
 
-                if (Object.keys(req.body).length === loop) {
-                    // User.findById(req.decoded._id, function(err, user) {
-                    //     if (err) next(err);
-                    //     user.invoices.push({ total: total, invoices: invoices });
-                    //     console.log(user);
-                    //     user.save();
-                    //     res.json({ status: 'Successfully created a invoice' });
-                    // });
-                    res.json({ status: 'Successfully created a invoice' });
-                }
+                Companies.findById(companyId, function(err, company) {
+                    if (err) next(err);
+
+                    company.notification = true;
+                    // company.notifications.amount++;
+                    // company.notifications.notifications.push({ title: 'New order', route: '#/company/invoices/' + resp._id });
+                    company.save();
+
+                    if (Object.keys(req.body).length === loop) {
+                        // User.findById(req.decoded._id, function(err, user) {
+                        //     if (err) next(err);
+                        //     user.invoices.push({ total: total, invoices: invoices });
+                        //     console.log(user);
+                        //     user.save();
+                        //     res.json({ status: 'Successfully created a invoice' });
+                        // });
+                        res.json({ status: 'Successfully created a invoice' });
+                    }
+                });
             });
         }
     })

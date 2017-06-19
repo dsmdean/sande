@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="">Dashboard</a></li>
+                <li><a ui-sref="home">Dashboard</a></li>
                 <li><a ui-sref="company-profile({name:currentCompany.name})">Company</a></li>
                 <li class="active"><span>Invoices</span></li>
             </ol>
@@ -38,7 +38,8 @@
                             <tbody>
                                 <tr ng-repeat="invoice in invoices | orderBy:'-' | filter: search">
                                     <td>
-                                        <a ui-sref="company-invoice-details({invoiceId: invoice._id})">#{{invoice._id | limitTo:6:18}}</a>
+                                        <span ng-show="invoice.new" class="label label-danger">New</span>&nbsp;
+                                        <a ng-click="setInvoiceToOld(invoice._id)" ui-sref="company-invoice-details({invoiceId: invoice._id})">#{{invoice._id | limitTo:6:18}}</a>
                                     </td>
                                     <td>
                                         {{invoice.date | date: 'MM/dd/yyyy'}}

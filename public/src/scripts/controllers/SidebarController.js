@@ -12,6 +12,12 @@
         // $scope.isCompany = authService.isCompany();
         $scope.isCompanyAdmin = authService.isCompanyAdmin();
         $scope.currentCompany = authService.getCurrentCompany();
+        $scope.newInvoices = 0;
+
+        function showError(message) {
+            notifier.error(message);
+            $scope.loading = false;
+        }
 
         function addRestoreCart() {
             $scope.cart = shoppingService.getCart();
@@ -33,12 +39,28 @@
         });
 
         $rootScope.$on('user:addToCart', function() {
-            addRestoreCart()
+            addRestoreCart();
         });
 
         $rootScope.$on('user:restoreCart', function() {
-            addRestoreCart()
+            addRestoreCart();
         });
+
+        $rootScope.$on('company:invoiceToOld', function() {
+            $scope.newInvoices--;
+        });
+
+        shoppingService.getCompanyInvoices($scope.currentCompany._id)
+            .then(function(response) {
+                $scope.invoices = response;
+
+                for (var i = 0; i < $scope.invoices.length; i++) {
+                    if ($scope.invoices[i].new) {
+                        $scope.newInvoices++;
+                    }
+                }
+            })
+            .catch(showError);
 
         // $scope.submenu = function() {
         //     // e.preventDefault();

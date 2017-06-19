@@ -74,7 +74,7 @@
 
         function getCompanyByName(companyName) {
             $rootScope.companyName = companyName;
-            return $http.get(baseURL + '/companies/getByName/' + companyName)
+            return $http.get(baseURL + '/companies/byName/' + companyName)
                 .then(function(response) {
                     return response.data;
                 })
@@ -93,6 +93,28 @@
                     for (var i = 0; i < companies.length; i++) {
                         if (companies[i]._id === company._id) {
                             user.companies[i] = company;
+                            authService.updateCurrentUser(user);
+                            break;
+                        }
+                    }
+
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error updating the company: ' + response.statusText);
+                    return $q.reject('Error updating the company.');
+                });
+        }
+
+        function updateCompanyNotificationToFalse(companyName) {
+            return $http.put(baseURL + '/companies/byName/' + companyName, { notification: false })
+                .then(function(response) {
+                    var user = authService.getCurrentUser();
+                    var companies = user.companies;
+
+                    for (var i = 0; i < companies.length; i++) {
+                        if (companies[i]._id === response.data._id) {
+                            user.companies[i] = response.data;
                             authService.updateCurrentUser(user);
                             break;
                         }
@@ -198,6 +220,7 @@
             searchCompaniesByName: searchCompaniesByName,
             getCompanyByName: getCompanyByName,
             updateCompany: updateCompany,
+            updateCompanyNotificationToFalse: updateCompanyNotificationToFalse,
             addCompanyProduct: addCompanyProduct,
             editCompanyProduct: editCompanyProduct,
             deleteCompanyProduct: deleteCompanyProduct,

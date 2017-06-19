@@ -42,6 +42,10 @@ var InvoicesSchema = new Schema({
     status: {
         type: String,
         default: 'Pending'
+    },
+    new: {
+        type: Boolean,
+        default: true
     }
 }, {
     timestamps: true

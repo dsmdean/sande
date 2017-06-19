@@ -64,6 +64,15 @@
                     }
                 }
             })
+            .state('home', {
+                parent: 'page',
+                url: '/dashboard',
+                views: {
+                    'content@dashboard': {
+                        templateUrl: 'templates/home.html'
+                    }
+                }
+            })
             .state('user', {
                 parent: 'page',
                 url: '/user/profile',

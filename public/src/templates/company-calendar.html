@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-lg-12">
             <ol class="breadcrumb">
-                <li><a href="#">Home</a></li>
+                <li><a ui-sref="home">Dashboard</a></li>
+                <li><a ui-sref="company-profile({name:currentCompany.name})">Company</a></li>
                 <li class="active"><span>Calendar</span></li>
             </ol>
             <h1>Calendar</h1>
@@ -16,7 +17,7 @@
                 <div class="main-box-body clearfix">
                     <div ng-show="isCompanyAdmin" class="row" style="margin-right:-20px">
                         <button type="button" data-toggle="modal" data-target="#addEventModal" class="btn btn-xs btn-primary col-md-2 col-xs-2 pull-right"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                    </div>
+                    </div><br/>
                     <div ng-hide="SelectedEvent">
                         <h2 class="text-center">No Event Selected</h2>
                     </div>

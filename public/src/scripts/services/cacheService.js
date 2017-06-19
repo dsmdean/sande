@@ -25,3 +25,27 @@
         .factory('cacheService', ['$cacheFactory', '$rootScope', 'constants', cacheService]);
 
 }());
+
+// (function() {
+//     'use strict';
+
+//     function myDate() {
+//         var s = 1000;
+//         var m = s * 60;
+//         var h = m * 60;
+//         return function(date) {
+//             var d = date.getTime() - Date.now();
+//             if (d > h)
+//                 return '' + d / h + ' hours ago';
+//             if (d > m)
+//                 return '' + d / m + ' minutes ago';
+//             if (d > s)
+//                 return '' + d / s + ' seconds ago';
+//             return '' + d + ' ms ago';;
+//         }
+//     }
+
+//     angular.module('sande')
+//         .filter('myDate', [myDate]);
+
+// }());

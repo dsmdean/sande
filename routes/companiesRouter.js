@@ -92,7 +92,7 @@ companiesRouter.route('/searchByName/:companyName')
     });
 
 // GET specific company by name
-companiesRouter.route('/getByName/:companyName')
+companiesRouter.route('/byName/:companyName')
     .get(Verify.verifyOrdinaryUser, function(req, res, next) {
         Companies.findOne({ name: req.params.companyName })
             .populate('category')
@@ -101,6 +101,16 @@ companiesRouter.route('/getByName/:companyName')
                 if (err) next(err);
                 res.json(company);
             });
+    })
+    .put(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findOneAndUpdate({ name: req.params.companyName }, {
+            $set: req.body
+        }, {
+            new: true
+        }, function(err, company) {
+            if (err) next(err);
+            res.json(company);
+        });
     });
 
 // GET/DELETE all company products - POST company product

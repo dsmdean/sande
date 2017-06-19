@@ -25,6 +25,20 @@
                 }
             })
             .catch(showError);
+
+        // if ($scope.currentCompany.name === undefined) {
+        //     // GET COMPANY DATA
+        //     companyService.getCompanyByName($state.params.name)
+        //         .then(function(response) {
+        //             $scope.company = response;
+        //             authService.setCurrentCompany(response);
+        //         })
+        //         .catch(showError);
+
+        //     $rootScope.$on('company:setCompanyAdmin', function() {
+        //         $scope.isCompanyAdmin = authService.isCompanyAdmin();
+        //     });
+        // }
     }
 
     angular.module('sande')

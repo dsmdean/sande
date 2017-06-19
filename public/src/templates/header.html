@@ -34,6 +34,31 @@
             </li>
             <li class="dropdown hidden-xs">
                 <a class="btn dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-bell"></i>
+                    <span class="count">{{notificationsAmount}}</span>
+                </a>
+                <ul class="dropdown-menu notifications-list">
+                    <li class="pointer">
+                        <div class="pointer-inner">
+                            <div class="arrow"></div>
+                        </div>
+                    </li>
+                    <li class="item-header">You have {{notificationsAmount}} new notifications</li>
+                    <li class="item" ng-repeat="notification in notifications">
+                        <a ng-click="removeNotification(notification, $index)" ui-sref="company-profile({name: notification})">
+                            <!--<i class="fa fa-eye"></i>-->
+                            <i class="fa fa-tags"></i>
+                            <span class="content">New activities for {{notification}}</span>
+                        </a>
+                    </li>
+                    <li class="item-footer">
+                        <!--<a href="">View all notifications</a>-->
+                        <br/>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown hidden-xs">
+                <a class="btn dropdown-toggle" data-toggle="dropdown">
                     <!--<i class="fa fa-shopping-cart" aria-hidden="true"></i>-->
                     <i class="fa fa-shopping-bag" aria-hidden="true"></i>
                     <span class="count">{{cartTotalQTY}}</span>

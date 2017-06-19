@@ -97,6 +97,17 @@
                 });
         }
 
+        function updateInvoice(invoiceData) {
+            return $http.put(baseURL + '/invoices/' + invoiceData._id, invoiceData)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error updating the invoice: ' + response.statusText);
+                    return $q.reject('Error updating the invoice.');
+                });
+        }
+
         function saveCart(cart, qty) {
             localStorage.remove(CART_DATA);
             localStorage.storeObject(CART_DATA, cart);
@@ -123,6 +134,7 @@
             getUserInvoices: getUserInvoices,
             getCompanyInvoices: getCompanyInvoices,
             getInvoiceById: getInvoiceById,
+            updateInvoice: updateInvoice,
             saveCart: saveCart,
             getCart: getCart,
             getCartTotalQTY: getCartTotalQTY,

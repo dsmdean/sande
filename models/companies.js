@@ -46,6 +46,18 @@ var ServicesSchema = new Schema({
     timestamps: true
 });
 
+//create a notifications Schema
+var NotificationsSchema = new Schema({
+    title: {
+        type: String
+    },
+    route: {
+        type: String
+    }
+}, {
+    timestamps: true
+});
+
 //create a companies Schema
 var CompaniesSchema = new Schema({
     category: {
@@ -102,11 +114,18 @@ var CompaniesSchema = new Schema({
         }
     },
     products: [ProductsSchema],
-    services: [ServicesSchema]
-        // newInvoice: {
-        //     type: Number,
-        //     default: 0
-        // }
+    services: [ServicesSchema],
+    // notifications: {
+    //     amount: {
+    //         type: Number,
+    //         default: 0
+    //     },
+    //     notifications: [NotificationsSchema]
+    // },
+    notification: {
+        type: Boolean,
+        default: false
+    }
 }, {
     timestamps: true
 });

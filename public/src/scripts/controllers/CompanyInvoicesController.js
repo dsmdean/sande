@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function CompanyInvoicesController($scope, authService, notifier, shoppingService, $state) {
+    function CompanyInvoicesController($scope, authService, notifier, shoppingService, $state, $rootScope) {
 
         $scope.currentCompany = authService.getCurrentCompany();
         $scope.loading = false;
@@ -16,9 +16,17 @@
                 $scope.invoices = response;
             })
             .catch(showError);
+
+        $scope.setInvoiceToOld = function(invoiceId) {
+            shoppingService.updateInvoice({ _id: invoiceId, new: false })
+                .then(function(response) {
+                    $rootScope.$broadcast('company:invoiceToOld');
+                })
+                .catch(showError);
+        };
     }
 
     angular.module('sande')
-        .controller('CompanyInvoicesController', ['$scope', 'authService', 'notifier', 'shoppingService', '$state', CompanyInvoicesController]);
+        .controller('CompanyInvoicesController', ['$scope', 'authService', 'notifier', 'shoppingService', '$state', '$rootScope', CompanyInvoicesController]);
 
 }());

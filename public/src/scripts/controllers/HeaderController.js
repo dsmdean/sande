@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function HeaderController($scope, $rootScope, $state, authService, notifier, $log, shoppingService) {
+    function HeaderController($scope, $rootScope, $state, authService, notifier, $log, shoppingService, companyService) {
 
         $scope.loggedIn = false;
         $scope.isAdmin = false;
@@ -40,6 +40,19 @@
             addRestoreCart();
         });
 
+        function refreshNotifications() {
+            $scope.notificationsAmount = 0;
+            $scope.notifications = [];
+            $scope.currentUser = authService.getCurrentUser();
+
+            for (var i = 0; i < $scope.currentUser.companies.length; i++) {
+                if ($scope.currentUser.companies[i].notification) {
+                    $scope.notificationsAmount++;
+                    $scope.notifications.push($scope.currentUser.companies[i].name);
+                }
+            }
+        }
+
         // $('.mobile-search').on('click', function(e) {
         //     e.preventDefault();
 
@@ -49,11 +62,20 @@
 
         if (authService.isAuthenticated()) {
             $scope.loggedIn = true;
-            $scope.currentUser = authService.getCurrentUser();
 
             if (authService.isAdmin()) {
                 $scope.isAdmin = true;
             }
+
+            refreshNotifications();
+            // $scope.currentUser = authService.getCurrentUser();
+            // for (var i = 0; i < $scope.currentUser.companies.length; i++) {
+            //     if ($scope.currentUser.companies[i].notification) {
+            //         $scope.notificationsAmount++;
+            //         $scope.notifications.push($scope.currentUser.companies[i].name);
+            //     }
+            // }
+            // console.log($scope.notifications);
 
             // $state.go("page.user");
         }
@@ -73,9 +95,20 @@
                 })
                 .catch(showError);
         };
+
+        $scope.removeNotification = function(companyName, index) {
+            companyService.updateCompanyNotificationToFalse(companyName)
+                .then(function(response) {
+                    // console.log(response);
+                    // $scope.notificationsAmount--;
+                    // $scope.notifications.splice(index, 1);
+                    refreshNotifications();
+                })
+                .catch(showError);
+        };
     }
 
     angular.module('sande')
-        .controller('HeaderController', ['$scope', '$rootScope', '$state', 'authService', 'notifier', '$log', 'shoppingService', HeaderController]);
+        .controller('HeaderController', ['$scope', '$rootScope', '$state', 'authService', 'notifier', '$log', 'shoppingService', 'companyService', HeaderController]);
 
 }());
