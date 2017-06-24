@@ -203,10 +203,10 @@
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
             // $log.debug('State changed - Auth: ' + authentication.isAuthenticated());
 
-            if (!authService.isAuthenticated() && toState.name != 'login' && toState.name != 'register' && toState.name != 'forgot-password' && toState.name != 'activate' && toState.name != 'recover') {
+            if (!authService.isAuthenticated() && toState.name !== 'login' && toState.name !== 'register' && toState.name !== 'forgot-password' && toState.name !== 'activate' && toState.name !== 'recover') {
                 event.preventDefault();
                 $state.go('login');
-            } else if (authService.isAuthenticated() && (toState.name == 'login' || toState.name == 'register')) {
+            } else if (authService.isAuthenticated() && (toState.name === 'login' || toState.name === 'register')) {
                 event.preventDefault();
                 $state.go('user');
             }

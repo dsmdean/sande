@@ -45,7 +45,7 @@
                     </li>
                     <li class="item-header">You have {{notificationsAmount}} new notifications</li>
                     <li class="item" ng-repeat="notification in notifications">
-                        <a ng-click="removeNotification(notification, $index)" ui-sref="company-profile({name: notification})">
+                        <a ng-click="removeNotification(notification)" ui-sref="company-profile({name: notification})">
                             <!--<i class="fa fa-eye"></i>-->
                             <i class="fa fa-tags"></i>
                             <span class="content">New activities for {{notification}}</span>
@@ -69,6 +69,7 @@
                             <div class="arrow"></div>
                         </div>
                     </li>
+                    <li class="item-header">You have {{cartTotalQTY}} products in your cart</li>
                     <li class="item first-item" ng-repeat="product in cartProducts">
                         <a href="">
                             <!--<div class="item-container">-->

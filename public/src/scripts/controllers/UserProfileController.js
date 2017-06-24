@@ -32,6 +32,7 @@
                 .then(function(response) {
                     if (response.success) {
                         notifier.success(response.status);
+                        // console.log(response.user);
                         $state.reload();
                     } else {
                         notifier.error(response.status);
@@ -56,7 +57,7 @@
                         $scope.thumbnail.dataUrl = e.target.result;
                         $scope.uploading = false;
                     });
-                }
+                };
             } else {
                 $scope.thumbnail = {
                     available: false
@@ -77,7 +78,7 @@
                         .catch(showError);
                 })
                 .catch(showError);
-        }
+        };
 
         $scope.updateProfile = function() {
             $scope.loading = true;

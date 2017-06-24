@@ -5,11 +5,11 @@
 
         var baseURL = constants.APP_SERVER;
 
-        function showError(message) {
-            notifier.error(message.data.err);
-        }
+        // function showError(message) {
+        //     notifier.error(message.data.err);
+        // }
 
-        function getAllCompanies(companyName) {
+        function getAllCompanies() {
             return $http.get(baseURL + '/companies/')
                 .then(function(response) {
                     return response.data;

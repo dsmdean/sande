@@ -5,9 +5,9 @@
 
         var baseURL = constants.APP_SERVER;
 
-        function showError(message) {
-            notifier.error(message.data.err);
-        }
+        // function showError(message) {
+        //     notifier.error(message.data.err);
+        // }
 
         function getUserById(userID) {
             $rootScope.userID = userID;

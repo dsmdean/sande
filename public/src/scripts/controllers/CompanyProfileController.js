@@ -85,7 +85,7 @@
                 case "none":
                     $scope.company.settings.services = false;
                     $scope.company.settings.products = false;
-            };
+            }
 
             companyService.updateCompany($scope.company)
                 .then(function(response) {
@@ -131,7 +131,7 @@
                         $scope.thumbnail.dataUrl = e.target.result;
                         $scope.uploading = false;
                     });
-                }
+                };
             } else {
                 $scope.thumbnail = {
                     available: false
@@ -177,7 +177,7 @@
                 $scope.detailedProduct.opt[i] = {};
                 $scope.detailedProduct.opt[i].name = product.options[i].name;
             }
-        }
+        };
 
         $scope.toggleEditProduct = function() {
             $scope.editProduct = !$scope.editProduct;
@@ -263,7 +263,7 @@
                         $scope.productThumbnail.dataUrl = e.target.result;
                         $scope.productUploading = false;
                     });
-                }
+                };
             } else {
                 $scope.productThumbnail = {
                     available: false

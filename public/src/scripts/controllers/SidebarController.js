@@ -1,18 +1,17 @@
 (function() {
     'use strict';
 
-    function SidebarController($scope, $location, authService, $rootScope, shoppingService) {
+    function SidebarController($scope, $location, authService, $rootScope, shoppingService, notifier) {
 
         $scope.getClass = function(path) {
             // console.log(path);
             return $location.path().substr(0, path.length) === path ? 'active' : '';
-        }
+        };
 
         $scope.currentUser = authService.getCurrentUser();
         // $scope.isCompany = authService.isCompany();
         $scope.isCompanyAdmin = authService.isCompanyAdmin();
         $scope.currentCompany = authService.getCurrentCompany();
-        $scope.newInvoices = 0;
 
         function showError(message) {
             notifier.error(message);
@@ -22,14 +21,32 @@
         function addRestoreCart() {
             $scope.cart = shoppingService.getCart();
             $scope.cartTotalQTY = shoppingService.getCartTotalQTY();
-        };
+        }
+
+        function getCompanyInvoices() {
+            shoppingService.getCompanyInvoices($scope.currentCompany._id)
+                .then(function(response) {
+                    $scope.invoices = response;
+                    $scope.newInvoices = 0;
+
+                    for (var i = 0; i < $scope.invoices.length; i++) {
+                        if ($scope.invoices[i].new) {
+                            $scope.newInvoices++;
+                        }
+                    }
+                })
+                .catch(showError);
+        }
 
         addRestoreCart();
+        getCompanyInvoices();
 
         $rootScope.$on('company:setCompanyAdmin', function() {
             // $scope.isCompany = authService.isCompany();
             $scope.isCompanyAdmin = authService.isCompanyAdmin();
             $scope.currentCompany = authService.getCurrentCompany();
+
+            getCompanyInvoices();
         });
 
         $rootScope.$on('company:removeCurrent', function() {
@@ -49,18 +66,6 @@
         $rootScope.$on('company:invoiceToOld', function() {
             $scope.newInvoices--;
         });
-
-        shoppingService.getCompanyInvoices($scope.currentCompany._id)
-            .then(function(response) {
-                $scope.invoices = response;
-
-                for (var i = 0; i < $scope.invoices.length; i++) {
-                    if ($scope.invoices[i].new) {
-                        $scope.newInvoices++;
-                    }
-                }
-            })
-            .catch(showError);
 
         // $scope.submenu = function() {
         //     // e.preventDefault();
@@ -83,6 +88,6 @@
     }
 
     angular.module('sande')
-        .controller('SidebarController', ['$scope', '$location', 'authService', '$rootScope', 'shoppingService', SidebarController]);
+        .controller('SidebarController', ['$scope', '$location', 'authService', '$rootScope', 'shoppingService', 'notifier', SidebarController]);
 
 }());

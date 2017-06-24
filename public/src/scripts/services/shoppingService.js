@@ -9,9 +9,9 @@
         var cartTotalQTY = 0;
         var cartProducts = [];
 
-        function showError(message) {
-            notifier.error(message.data.err);
-        }
+        // function showError(message) {
+        //     notifier.error(message.data.err);
+        // }
 
         function addToCart(product) {
             if (Array.isArray(cart[product.companyId])) {

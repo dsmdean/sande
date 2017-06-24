@@ -314,20 +314,22 @@ userRouter.route('/:userId/uploadPicture')
                         status: 'No file was selected'
                     });
                 } else {
-                    User.findById(req.params.userId, function(err, user) {
-                        if (err) next(err);
+                    User.findById(req.params.userId)
+                        .populate('companies')
+                        .exec(function(err, user) {
+                            if (err) next(err);
 
-                        // console.log(req.file);
+                            // console.log(req.file);
 
-                        user.image = req.file.date + '_' + user._id + '.jpg';
-                        user.save();
+                            user.image = req.file.date + '_' + user._id + '.jpg';
+                            user.save();
 
-                        res.status(200).json({
-                            success: true,
-                            status: 'You\'ve successfully uploaded your profile picture',
-                            user: user
+                            res.status(200).json({
+                                success: true,
+                                status: 'You\'ve successfully uploaded your profile picture',
+                                user: user
+                            });
                         });
-                    });
                 }
             }
         });

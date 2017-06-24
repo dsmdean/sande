@@ -5,6 +5,8 @@
 
         $scope.currentCompany = authService.getCurrentCompany();
         $scope.loading = false;
+        $scope.editStatus = false;
+        $scope.select = '';
 
         function showError(message) {
             notifier.error(message);
@@ -17,7 +19,7 @@
 
                 for (var i = 0; i < $scope.invoice.company.products.length; i++) {
                     for (var j = 0; j < $scope.invoice.products.length; j++) {
-                        if ($scope.invoice.company.products[i]._id == $scope.invoice.products[j].product) {
+                        if ($scope.invoice.company.products[i]._id === $scope.invoice.products[j].product) {
                             $scope.invoice.products[j].product = $scope.invoice.company.products[i];
                             break;
                         }
@@ -25,6 +27,18 @@
                 }
             })
             .catch(showError);
+
+        $scope.toggleEditStatus = function() {
+            $scope.editStatus = !$scope.editStatus;
+        };
+
+        $scope.saveStatus = function() {
+            shoppingService.updateInvoice($scope.invoice)
+                .then(function(response) {
+                    $scope.toggleEditStatus();
+                })
+                .catch(showError);
+        };
 
         // if ($scope.currentCompany.name === undefined) {
         //     // GET COMPANY DATA

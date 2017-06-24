@@ -26,8 +26,29 @@
                         <i class="fa fa-circle"></i> Online
                         <span ng-if="!currentUser.activated" class="label label-danger">NOT ACTIVATED</span>
                     </div>
-                    <img ng-src="img/user-profile/{{currentUser.image}}" alt="" class="profile-img img-responsive center-block" />
-                    <!--<button type="button" class="btn btn-primary center-block">Upload New Picture</button>-->
+                    <!--<img ng-src="img/user-profile/{{currentUser.image}}" alt="" class="profile-img img-responsive center-block" />-->
+
+                    <figure class="margin-bottom-10 img-container">
+                        <!-- image -->
+                        <img ng-hide="thumbnail.available" ng-src="img/user-profile/{{currentUser.image}}" alt="" class="profile-img img-responsive center-block pic" />
+                        <img ng-show="thumbnail.available" ng-src="{{thumbnail.dataUrl}}" alt="" class="profile-img img-responsive center-block pic" />
+                        <form enctype="multipart/form-data" ng-submit="uploadPicture()" class="button-overlay">
+                            <label class="btn btn-primary col-lg-12 col-md-12 col-xs-12 img-company-profile-button-hover">
+                                Browse
+                                <input id="choose-image" class="hidden" type="file" file-parse="picture.upload" name="picture" ng-disabled="uploading" onchange="angular.element(this).scope().photoChanged(this.files)">
+                            </label>
+                            <button type="submit" class="btn btn-success col-lg-12 col-md-12 col-xs-12 img-company-profile-button-hover" ng-disabled="uploading">Upload Picture</button>
+                        </form>
+                    </figure>
+                    <!-- /image -->
+
+                    <!-- progress bar -->
+                    <h6 class="progress-head" ng-show="uploading">Uploading Profile Picture</h6>
+                    <div class="progress progress-xs" ng-show="uploading">
+                        <div class="progress-bar" role="progressbar" style="width: 100%"></div>
+                    </div>
+                    <!-- /progress bar -->
+
                     <div class="profile-label">
                         <span class="label label-danger">{{currentUser.username}}</span>
                     </div>
@@ -74,7 +95,7 @@
                             <div class="row">
                                 <div class="col-lg-8 col-md-8 col-sm-12">
                                     <div class="main-box-body clearfix">
-                                        <form role="form" ng-submit="">
+                                        <form role="form">
                                             <div class="row">
                                                 <div class="form-group col-xs-6">
                                                     <label for="firstname">Firstname</label>
@@ -103,7 +124,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                <!--<div class="col-lg-3 col-md-4 col-sm-6">
                                     <div class="main-box clearfix">
                                         <header class="main-box-header clearfix">
                                             <h2>Profile Picture</h2>
@@ -126,7 +147,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
                             </div>
                         </div>
                         <div class="tab-pane fade in" id="tab-account">

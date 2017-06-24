@@ -1,13 +1,13 @@
 (function() {
     'use strict';
 
-    function eventService(notifier, $http, constants, $log, $q, authService, $rootScope) {
+    function eventService(notifier, $http, constants, $log, $q) {
 
         var baseURL = constants.APP_SERVER;
 
-        function showError(message) {
-            notifier.error(message.data.err);
-        }
+        // function showError(message) {
+        //     notifier.error(message.data.err);
+        // }
 
         function addEvent(eventData) {
             return $http.post(baseURL + '/events', eventData)
@@ -62,6 +62,6 @@
     }
 
     angular.module('sande')
-        .factory('eventService', ['notifier', '$http', 'constants', '$log', '$q', 'authService', '$rootScope', eventService]);
+        .factory('eventService', ['notifier', '$http', 'constants', '$log', '$q', eventService]);
 
 }());

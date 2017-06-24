@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function UserActivationController($scope, $state, $stateParams, userService) {
+    function UserActivationController($scope, $state, $stateParams, userService, notifier) {
 
         function showError(message) {
             notifier.error(message);
@@ -27,6 +27,6 @@
     }
 
     angular.module('sande')
-        .controller('UserActivationController', ['$scope', '$state', '$stateParams', 'userService', UserActivationController]);
+        .controller('UserActivationController', ['$scope', '$state', '$stateParams', 'userService', 'notifier', UserActivationController]);
 
 }());

@@ -11,7 +11,7 @@
             $scope.cart = shoppingService.getCart();
             $scope.cartTotalQTY = shoppingService.getCartTotalQTY();
             $scope.cartProducts = shoppingService.getCartProducts();
-        };
+        }
 
         addRestoreCart();
 
@@ -96,7 +96,7 @@
                 .catch(showError);
         };
 
-        $scope.removeNotification = function(companyName, index) {
+        $scope.removeNotification = function(companyName) {
             companyService.updateCompanyNotificationToFalse(companyName)
                 .then(function(response) {
                     // console.log(response);

@@ -22,21 +22,21 @@
             $scope.loading = false;
         }
 
-        function getDate(datetime) {
-            if (datetime != null) {
-                var mili = datetime.replace(/\/Date\((-?\d+)\)\//, '$1');
-                return new Date(parseInt(mili));
-            } else {
-                return "";
-            }
-        }
+        // function getDate(datetime) {
+        //     if (datetime !== null) {
+        //         var mili = datetime.replace(/\/Date\((-?\d+)\)\//, '$1');
+        //         return new Date(parseInt(mili));
+        //     } else {
+        //         return "";
+        //     }
+        // }
 
-        function clearCalendar() {
-            if (uiCalendarConfig.calendars.myCalendar != null) {
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
-                uiCalendarConfig.calendars.myCalendar.fullCalendar('unselect');
-            }
-        }
+        // function clearCalendar() {
+        //     if (uiCalendarConfig.calendars.myCalendar !== null) {
+        //         uiCalendarConfig.calendars.myCalendar.fullCalendar('removeEvents');
+        //         uiCalendarConfig.calendars.myCalendar.fullCalendar('unselect');
+        //     }
+        // }
 
         // GET COMPANY DATA
         companyService.getCompanyByName($state.params.name)
@@ -48,21 +48,41 @@
                     .then(function(response) {
                         $scope.events.slice(0, $scope.events.length);
                         angular.forEach(response, function(value) {
-                            $scope.events.push({
-                                _id: value._id,
-                                title: value.name,
-                                name: value.name,
-                                description: value.description,
-                                start: Date.parse(value.date),
-                                end: Date.parse(value.date),
-                                allDay: false,
-                                type: value.type,
-                                location: value.location,
-                                image: value.image,
-                                creator: value.creator,
-                                created: value.created,
-                                public: value.public
-                            });
+                            if ($scope.isCompanyAdmin) {
+                                $scope.events.push({
+                                    _id: value._id,
+                                    title: value.name,
+                                    name: value.name,
+                                    description: value.description,
+                                    start: Date.parse(value.date),
+                                    end: Date.parse(value.date),
+                                    allDay: false,
+                                    type: value.type,
+                                    location: value.location,
+                                    image: value.image,
+                                    creator: value.creator,
+                                    created: value.created,
+                                    public: value.public
+                                });
+                            } else {
+                                if (value.public) {
+                                    $scope.events.push({
+                                        _id: value._id,
+                                        title: value.name,
+                                        name: value.name,
+                                        description: value.description,
+                                        start: Date.parse(value.date),
+                                        end: Date.parse(value.date),
+                                        allDay: false,
+                                        type: value.type,
+                                        location: value.location,
+                                        image: value.image,
+                                        creator: value.creator,
+                                        created: value.created,
+                                        public: value.public
+                                    });
+                                }
+                            }
                         });
                     })
                     .catch(showError);
@@ -90,25 +110,28 @@
                 select: function(start, end) {
                     var fromDate = moment(event.start).format('YYYY/MM/DD LT');
                     var endDate = moment(event.end).format('YYYY/MM/DD LT');
-                    $scope.newEvent = {
-                        _id: event._id,
-                        title: event.name,
-                        name: event.name,
-                        description: event.description,
-                        start: Date.parse(event.date),
-                        end: Date.parse(event.date),
-                        startDate: fromDate,
-                        endDate: endDate,
-                        allDay: false,
-                        type: event.type,
-                        location: event.location,
-                        image: event.image,
-                        creator: event.creator,
-                        created: event.created,
-                        public: event.public
-                    };
 
-                    $('#addEventModal').modal('show');
+                    if ($scope.isCompanyAdmin) {
+                        $scope.newEvent = {
+                            _id: event._id,
+                            title: event.name,
+                            name: event.name,
+                            description: event.description,
+                            start: Date.parse(event.date),
+                            end: Date.parse(event.date),
+                            startDate: fromDate,
+                            endDate: endDate,
+                            allDay: false,
+                            type: event.type,
+                            location: event.location,
+                            image: event.image,
+                            creator: event.creator,
+                            created: event.created,
+                            public: event.public
+                        };
+
+                        $('#addEventModal').modal('show');
+                    }
                 },
                 eventClick: function(event) {
                     $scope.SelectedEvent = event;

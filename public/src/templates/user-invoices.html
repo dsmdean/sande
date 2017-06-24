@@ -33,6 +33,7 @@
                                     <th><span>Company</span></th>
                                     <th class="text-center"><span>Status</span></th>
                                     <th class="text-right"><span>Price</span></th>
+                                    <th>&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,10 +48,24 @@
                                         <a ui-sref="company-profile({name:invoice.company.name})">{{invoice.company.name}}</a>
                                     </td>
                                     <td class="text-center">
-                                        <span class="label" ng-class="{'label-primary': invoice.status === 'Pending', 'label-danger': invoice.status === 'Cancelled', 'label-success': invoice.status === 'Completed'}">{{invoice.status}}</span>
+                                        <span class="label" ng-class="{'label-primary': invoice.status === 'Pending', 'label-danger': invoice.status === 'Cancelled', 'label-info': invoice.status === 'Processing', 'label-success': invoice.status === 'Completed'}">{{invoice.status}}</span>
                                     </td>
                                     <td class="text-right">
                                         &dollar; {{invoice.subTotal}}
+                                    </td>
+                                    <td style="width: 15%;">
+                                        <a ui-sref="user-invoice-details({invoiceId: invoice._id})" class="table-link" title="View the order">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
+                                        <a ng-click="cancelOrder(invoice._id)" ng-hide="invoice.status !== 'Pending'" href="" class="table-link danger red" title="Cancel the order">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-times fa-stack-1x fa-inverse"></i>
+                                            </span>
+                                        </a>
                                     </td>
                                 </tr>
                                 <h1 ng-show="invoices.length === 0">NO INVOICES</h1>

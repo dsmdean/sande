@@ -16,6 +16,14 @@
                 $scope.invoices = response;
             })
             .catch(showError);
+
+        $scope.cancelOrder = function(invoiceId) {
+            shoppingService.updateInvoice({ _id: invoiceId, status: 'Cancelled' })
+                .then(function() {
+                    $state.reload();
+                })
+                .catch(showError);
+        };
     }
 
     angular.module('sande')

@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function CompaniesController($scope, authService, notifier, companyCategoriesService, companyService, $state) {
+    function CompaniesController($scope, authService, notifier, companyCategoriesService, companyService) {
 
         $scope.loading = false;
         $scope.selectedCategory = "";
@@ -23,7 +23,7 @@
                 var j = 0;
                 for (var i = 0; i < response.length; i++) {
                     if (j > 5) {
-                        j = 0
+                        j = 0;
                     }
                     response[i].color = $scope.boxColors[j];
                     j++;
@@ -33,13 +33,9 @@
             })
             .catch(showError);
 
-        $scope.print = function() {
-            $scope.selectedCategory;
-        };
-
         $scope.categoryFilter = function(company) {
             if ($scope.selectedCategory !== "") {
-                return company.category._id == $scope.selectedCategory;
+                return company.category._id === $scope.selectedCategory;
             } else {
                 return company;
             }
@@ -47,6 +43,6 @@
     }
 
     angular.module('sande')
-        .controller('CompaniesController', ['$scope', 'authService', 'notifier', 'companyCategoriesService', 'companyService', '$state', CompaniesController]);
+        .controller('CompaniesController', ['$scope', 'authService', 'notifier', 'companyCategoriesService', 'companyService', CompaniesController]);
 
 }());

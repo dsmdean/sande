@@ -5,9 +5,9 @@
 
         var baseURL = constants.APP_SERVER;
 
-        function showError(message) {
-            notifier.error(message.data.err);
-        }
+        // function showError(message) {
+        //     notifier.error(message.data.err);
+        // }
 
         function getAllCompanyCategories() {
             return $http.get(baseURL + '/company-categories', {

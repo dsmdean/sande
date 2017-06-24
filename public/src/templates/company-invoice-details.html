@@ -18,7 +18,28 @@
             <section class="cont invoice">
                 <!-- title row -->
                 <div class="row invoice-header">
-                    <div class="col-lg-offset-6 col-lg-6">
+                    <div class="col-lg-6">
+                        <h5 class="sm-size">
+                            Status:&nbsp;
+                            <span ng-show="!editStatus" class="label" ng-class="{'label-primary': invoice.status === 'Pending', 'label-danger': invoice.status === 'Cancelled', 'label-info': invoice.status === 'Processing', 'label-success': invoice.status === 'Completed'}">{{invoice.status}}</span>
+                            <div ng-hide="invoice.status === 'Cancelled'">
+                                <br/>
+                                <a ng-show="!editStatus" ng-click="toggleEditStatus()" href="" title="Edit the Status"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit Status</a>
+                                <div ng-show="editStatus" class="btn-group">
+                                    <div class="form-group">
+                                        <select class="form-control" ng-model="invoice.status">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Processing">Processing</option>
+                                            <option value="Completed">Completed</option>
+                                        </select>
+                                    </div>
+                                    <a ng-click="saveStatus()" href="">Save</a>
+                                    <a ng-click="toggleEditStatus()" href="" class="red">Cancel</a>
+                                </div>
+                            </div>
+                        </h5>
+                    </div>
+                    <div class="col-lg-6">
                         <h2 class="sm-size">
                             <small class="pull-right">Date: {{invoice.date | date :  "MM/dd/yyyy"}}</small>
                         </h2>

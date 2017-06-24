@@ -50,7 +50,7 @@
                     $state.go('user-invoices');
                 })
                 .catch(showError);
-        }
+        };
 
         $scope.addToQty = function(product) {
             product.qty++;
@@ -72,7 +72,7 @@
 
         $scope.deleteFromCart = function(companyId, productId) {
             for (var i = 0; i < $scope.cart[companyId].length; i++) {
-                if ($scope.cart[companyId][i]._id == productId) {
+                if ($scope.cart[companyId][i]._id === productId) {
                     $scope.cartTotalQTY -= $scope.cart[companyId][i].qty;
                     $scope.cart[companyId].splice(i, 1);
 
