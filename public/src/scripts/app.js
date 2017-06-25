@@ -182,6 +182,16 @@
                         templateUrl: 'templates/company-profile.html'
                     }
                 }
+            })
+            .state('user-calendar', {
+                parent: 'page',
+                url: '/user/calendar',
+                views: {
+                    'content@dashboard': {
+                        controller: 'UserCalendarController',
+                        templateUrl: 'templates/user-calendar.html'
+                    }
+                }
             });
 
     }]);

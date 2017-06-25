@@ -53,11 +53,23 @@
                 });
         }
 
+        function getUserEvents(userId) {
+            return $http.get(baseURL + '/events/user/' + userId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error getting user events: ' + response.statusText);
+                    return $q.reject('Error getting user events.');
+                });
+        }
+
         return {
             addEvent: addEvent,
             updateEvent: updateEvent,
             deleteEvent: deleteEvent,
-            getCompanyEvents: getCompanyEvents
+            getCompanyEvents: getCompanyEvents,
+            getUserEvents: getUserEvents
         };
     }
 

@@ -31,11 +31,22 @@ eventsRouter.route('/')
         });
     });
 
-// GET/DELETE all events - POST event
+// GET company events
 eventsRouter.route('/company/:companyId')
     .get(function(req, res, next) {
         Events.find({ created: req.params.companyId })
             .populate('creator.company')
+            .exec(function(err, events) {
+                if (err) next(err);
+                res.json(events);
+            });
+    });
+
+// GET user events
+eventsRouter.route('/user/:userId')
+    .get(function(req, res, next) {
+        Events.find({ created: req.params.userId })
+            .populate('creator.user')
             .exec(function(err, events) {
                 if (err) next(err);
                 res.json(events);
