@@ -20,7 +20,7 @@
 
                     <figure class="margin-bottom-10 img-container">
                         <!-- image -->
-                        <img ng-hide="thumbnail.available && !isCompanyAdmin" ng-src="img/company-profile/{{company.image}}" alt="" class="profile-img img-responsive center-block pic" />
+                        <img ng-hide="thumbnail.available && isCompanyAdmin" ng-src="img/company-profile/{{company.image}}" alt="" class="profile-img img-responsive center-block pic" />
                         <img ng-show="thumbnail.available && isCompanyAdmin" ng-src="{{thumbnail.dataUrl}}" alt="" class="profile-img img-responsive center-block pic" />
                         <form ng-show="isCompanyAdmin" enctype="multipart/form-data" ng-submit="uploadPicture()" class="button-overlay">
                             <!--<div class="progress" ng-show="uploading">
@@ -558,7 +558,7 @@
                                                 <option ng-repeat="optionsOption in option.options">{{optionsOption}}</option>
                                             </select>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div ng-hide="isCompanyAdmin" class="form-group col-md-4">
                                             <label for="qty">QTY</label>
                                             <!--<input type="number" id="qty" class="form-control" ng-model="detailedProduct.qty">-->
                                             <select class="form-control" id="qty" ng-model="detailedProduct.qty" required>

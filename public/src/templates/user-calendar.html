@@ -23,7 +23,12 @@
                     </div>
                     <div ng-show="SelectedEvent">
                         <span ng-hide="SelectedEvent.public" class="label label-danger">Private</span>
-                        <h3 style="margin-top:10px;">{{SelectedEvent.title}}</h3>
+                        <h3 style="margin-top:10px;">{{SelectedEvent.type}}: {{SelectedEvent.title}}</h3>
+                        <div ng-hide="SelectedEvent.location.address === ''">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <small> {{SelectedEvent.location.address}}, {{SelectedEvent.location.city}} {{SelectedEvent.location.province}}</small>
+                            <br/><br/>
+                        </div>
                         <p>{{SelectedEvent.description}}</p>
                     </div>
                     <div class="row">
@@ -72,7 +77,6 @@
                             <label class="col-md-3 control-label" for="eventType">Type</label>
                             <div class="col-md-8">
                                 <select class="form-control" id="eventType" ng-model="newEvent.type">
-                                    <option value=""></option>
                                     <option value="Event">Event</option>
                                     <option value="Meeting">Meeting</option>
                                 </select>
@@ -154,7 +158,6 @@
                             <label class="col-md-3 control-label" for="eventType">Type</label>
                             <div class="col-md-8">
                                 <select class="form-control" id="eventType" ng-model="SelectedEvent.type">
-                                    <option value=""></option>
                                     <option value="Event">Event</option>
                                     <option value="Meeting">Meeting</option>
                                 </select>

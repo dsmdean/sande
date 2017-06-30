@@ -147,7 +147,9 @@
                     notifier.success(response.status);
                     $scope.loading = false;
                     $scope.company.products.push(response.product);
-                    $scope.newProduct = {};
+                    $scope.newProduct = {
+                        options: []
+                    };
                     $scope.newOption = false;
                 })
                 .catch(showError);

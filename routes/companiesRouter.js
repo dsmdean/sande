@@ -154,9 +154,9 @@ companiesRouter.route('/:companyId/products/:productId')
         Companies.findById(req.params.companyId, function(err, company) {
             if (err) next(err);
 
-            company.products.id(req.params.productId) = req.body;
-            // company.products.id(req.params.productId).remove();
-            // company.products.push(req.body);
+            // company.products.id(req.params.productId) = req.body;
+            company.products.id(req.params.productId).remove();
+            company.products.push(req.body);
             company.save();
 
             res.json({ status: "Product updated successfully!", products: company.products, product: req.body });
