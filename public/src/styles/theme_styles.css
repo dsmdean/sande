@@ -4507,6 +4507,9 @@ input[type="radio"] {
     position: relative;
     transition: border-color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s;
 }
+.conversations li>a {
+    min-height: 70px !important;
+}
 @media only screen and (max-width: 440px) {
     .widget-products li>a {
         height: auto;
@@ -4532,6 +4535,11 @@ input[type="radio"] {
     color: #cccccc;
     font-size: 1.3em;
 }
+.widget-products li>a.active {
+    color: #929292;
+    text-decoration: none;
+    background-color: #f6f6f6;
+}
 @media only screen and (max-width: 440px) {
     .widget-products li>a:after {
         display: none
@@ -4544,7 +4552,7 @@ input[type="radio"] {
     width: 70px;
     height: 68px;
     overflow: hidden;
-    margin-top: 7px;
+    margin-top: 4px;
 }
 .widget-products li .product {
     display: block;

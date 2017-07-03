@@ -1,0 +1,222 @@
+<!--<div ng-show="loading" class="loading" ng-include="'templates/spinner.html'"></div>-->
+
+<div class="col-lg-12">
+    <div class="row">
+        <div class="col-lg-12">
+            <ol class="breadcrumb">
+                <li><a ui-sref="home">Dashboard</a></li>
+                <li><a ui-sref="user">User</a></li>
+                <li class="active"><span>Messages</span></li>
+            </ol>
+            <h1>User Messages</h1>
+        </div>
+    </div>
+    <div class="row" id="user-profile">
+        <div class="col-lg-4 col-md-5 col-sm-5">
+            <div class="main-box clearfix">
+                <header class="main-box-header clearfix">
+                    <h2>
+                        {{currentUser.firstname}} {{currentUser.lastname}}
+                    </h2>
+                    <div class="profile-status" style="margin-top:0px">
+                        <i class="fa fa-circle"></i> Online
+                    </div>
+                </header>
+                <div class="main-box-body clearfix">
+                    <h2 ng-show="conversations.length === 0" class="text-center">No Conversations</h2>
+                    <center>
+                        <img ng-show="loading" src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" width="75px" />
+                    </center>
+                    <ul class="widget-products conversations">
+                        <li ng-repeat="conversation in conversations | orderBy: '-'">
+                            <a href="" ng-class="{'active': currentConversation._id === conversation._id}" ng-click="selectConversation(conversation)">
+                                <div class="img col-lg-1 col-md-1 col-xs-2">
+                                    <img ng-src="img/company-profile/{{conversation.company.image}}" alt="" />
+                                </div>
+                                <div class="product clearfix col-lg-8 col-md-8 col-xs-7">
+                                    <div class="name col-lg-12">
+                                        {{conversation.company.name}}
+                                    </div>
+                                    <div class="name col-lg-12" style="margin-top:-7px">
+                                        {{conversation.message.body | limitTo:55}}
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-7 col-sm-7">
+            <div class="main-box clearfix">
+                <div class="tabs-wrapper profile-tabs">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="/user/messenger#tab-conversation" data-toggle="tab">Conversation</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab-conversation">
+                            <div class="row">
+                                <div class="conversation-wrapper">
+                                    <h2 ng-show="currentConversation._id === undefined" class="text-center">No Conversation Selected</h2>
+                                    <div ng-hide="currentConversation._id === undefined" class="conversation-content">
+                                        <div class="conversation-inner" scroll-glue>
+                                            <div class="conversation-item clearfix" ng-class="{'item-right': message.user, 'item-left': message.company}" ng-repeat="message in messages">
+                                                <div class="conversation-user">
+                                                    <img ng-show="message.user" ng-src="img/user-profile/{{currentUser.image}}" width="50px" alt="" />
+                                                    <img ng-show="message.company" ng-src="img/company-profile/{{currentConversation.company.image}}" width="50px" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name" ng-show="message.user">
+                                                        {{currentUser.firstname}} {{currentUser.lastname}}
+                                                    </div>
+                                                    <div class="name" ng-show="message.company">
+                                                        {{currentConversation.company.name}}
+                                                    </div>
+                                                    <div class="time hidden-xs"> {{message.createdAt | date:"MMMM dd yyyy, HH:mm a"}}</div>
+                                                    <div class="text">
+                                                        {{message.body}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--<div class="conversation-item item-left clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/ryan.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Ryan Gossling
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 10:36 am</div>
+                                                    <div class="text">
+                                                        I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="conversation-item item-right clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/kunis.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Mila Kunis
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 10:40 am</div>
+                                                    <div class="text">
+                                                        The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="conversation-item item-right clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/kunis.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Mila Kunis
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 10:45 am</div>
+                                                    <div class="text">
+                                                        The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="conversation-item item-left clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/ryan.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Ryan Gossling
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 10:50 am</div>
+                                                    <div class="text">
+                                                        I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="conversation-item item-right clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/kunis.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Mila Kunis
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 11:07 am</div>
+                                                    <div class="text">
+                                                        The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="conversation-item item-right clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/kunis.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Mila Kunis
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 11:16 am</div>
+                                                    <div class="text">
+                                                        The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="conversation-item item-left clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/ryan.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Ryan Gossling
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 11:21 am</div>
+                                                    <div class="text">
+                                                        I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="conversation-item item-right clearfix">
+                                                <div class="conversation-user">
+                                                    <img src="img/samples/kunis.png" alt="" />
+                                                </div>
+                                                <div class="conversation-body">
+                                                    <div class="name">
+                                                        Mila Kunis
+                                                    </div>
+                                                    <div class="time hidden-xs">January 17th 2016, 11:27 am</div>
+                                                    <div class="text">
+                                                        The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will.
+                                                    </div>
+                                                </div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div ng-hide="currentConversation._id === undefined" class="conversation-new-message">
+                                        <form ng-submit="sendMessage()">
+                                            <div class="form-group">
+                                                <textarea class="form-control chat-input" rows="2" ng-model="composedMessage" placeholder="Enter your message..."></textarea>
+                                            </div>
+                                            <div class="clearfix chat-send">
+                                                <button type="submit" class="btn btn-success pull-right">Send message</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('.conversation-inner').slimScroll({
+            height: '405px',
+            wheelStep: 35,
+        });
+    });
+</script>

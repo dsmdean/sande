@@ -24,6 +24,7 @@ var companyCategoriesRouter = require('./routes/companyCategoriesRouter');
 var companiesRouter = require('./routes/companiesRouter');
 var eventsRouter = require('./routes/eventsRouter');
 var invoicesRouter = require('./routes/invoicesRouter');
+var messengerRouter = require('./routes/messengerRouter');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/api/company-categories', companyCategoriesRouter);
 app.use('/api/companies', companiesRouter);
 app.use('/api/events', eventsRouter);
 app.use('/api/invoices', invoicesRouter);
+app.use('/api/messenger', messengerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

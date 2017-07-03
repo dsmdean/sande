@@ -39,7 +39,10 @@
         }
 
         addRestoreCart();
-        getCompanyInvoices();
+
+        if ($scope.currentCompany._id !== undefined) {
+            getCompanyInvoices();
+        }
 
         $rootScope.$on('company:setCompanyAdmin', function() {
             // $scope.isCompany = authService.isCompany();

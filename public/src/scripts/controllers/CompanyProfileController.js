@@ -415,6 +415,14 @@
         $scope.getFutureEvents = function(event) {
             return Date.parse(event.date) > new Date();
         };
+
+        // SEND MESSAGE
+        $scope.sendMessage = function() {
+            // $rootScope.$broadcast('user:sendMessage');
+            $rootScope.newMessage = true;
+            $rootScope.company = $scope.company;
+            $state.go('user-messages');
+        };
     }
 
     angular.module('sande')

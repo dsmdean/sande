@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var app = angular.module('sande', ['ui.router', 'ngFileUpload', 'ui.calendar']);
+    var app = angular.module('sande', ['ui.router', 'ngFileUpload', 'ui.calendar', 'luegg.directives']);
 
     app.config(['$logProvider', '$stateProvider', '$urlRouterProvider', function($logProvider, $stateProvider, $urlRouterProvider) {
 
@@ -190,6 +190,26 @@
                     'content@dashboard': {
                         controller: 'UserCalendarController',
                         templateUrl: 'templates/user-calendar.html'
+                    }
+                }
+            })
+            .state('user-messages', {
+                parent: 'page',
+                url: '/user/messages',
+                views: {
+                    'content@dashboard': {
+                        controller: 'UserMessagesController',
+                        templateUrl: 'templates/user-messages.html'
+                    }
+                }
+            })
+            .state('company-messages', {
+                parent: 'page',
+                url: '/company/messages/:companyId',
+                views: {
+                    'content@dashboard': {
+                        controller: 'CompanyMessagesController',
+                        templateUrl: 'templates/company-messages.html'
                     }
                 }
             });
