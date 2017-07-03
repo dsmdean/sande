@@ -2,8 +2,8 @@
     'use strict';
 
     function Websocket($rootScope, constants) {
-        // var baseURL = constants.APP_SERVER;
-        var baseURL = 'http://localhost:3000';
+        var baseURL = constants.APP_SOCKET;
+        // var baseURL = 'http://localhost:3000';
         var socket = io.connect(baseURL);
 
         socket.on('connect', function() {
