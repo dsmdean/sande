@@ -61,12 +61,26 @@
                 });
         }
 
+        function notificationsFalse(conversationId) {
+            // Websocket.sendMessage(message);
+            return $http.put(baseURL + '/messenger/' + conversationId, {})
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    console.log('Error setting notification to false: ' + response.statusText);
+                    console.log(response);
+                    return $q.reject('Error setting notification to false.');
+                });
+        }
+
         return {
             getUserMessages: getUserMessages,
             getCompanyMessages: getCompanyMessages,
             getConversation: getConversation,
             sendMessage: sendMessage,
-            newConversation: newConversation
+            newConversation: newConversation,
+            notificationsFalse: notificationsFalse
         };
     }
 

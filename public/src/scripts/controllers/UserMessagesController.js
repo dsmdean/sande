@@ -37,12 +37,29 @@
         $rootScope.$on('refresh messages', function() {
             var newMessage = { createdAt: Date.now(), body: $rootScope.newMessage.composedMessage, user: $rootScope.newMessage.user, company: $rootScope.newMessage.company, conversationId: $rootScope.newMessage.conversationId };
             // console.log(newMessage);
-            $rootScope.$apply(function() {
-                if ($rootScope.newMessage.conversationId === $scope.currentConversation._id) {
+            if ($scope.currentConversation !== undefined && $rootScope.newMessage.conversationId === $scope.currentConversation._id) {
+                $rootScope.$apply(function() {
                     $scope.messages.push(newMessage);
                     // console.log($scope.messages);
-                }
-            });
+
+                    messageService.notificationsFalse($scope.currentConversation._id)
+                        .then(function(response) {
+                            $scope.currentConversation.notifications.new = false;
+                            $scope.currentConversation.notifications.total = 0;
+                        })
+                        .catch(showError);
+                });
+            } else {
+                $scope.conversations.forEach(function(conversation) {
+                    if (conversation._id === $rootScope.newMessage.conversationId) {
+                        $rootScope.$apply(function() {
+                            conversation.message.body = $rootScope.newMessage.composedMessage;
+                            conversation.notifications.new = true;
+                            conversation.notifications.total++;
+                        });
+                    }
+                });
+            }
         });
 
         $scope.startConversation = function() {
@@ -72,6 +89,15 @@
                 .then(function(response) {
                     $scope.messages = response;
                     // console.log(response);
+
+                    if ($scope.currentConversation.notifications.new) {
+                        messageService.notificationsFalse(conversation._id)
+                            .then(function(response) {
+                                $scope.currentConversation.notifications.new = false;
+                                $scope.currentConversation.notifications.total = 0;
+                            })
+                            .catch(showError);
+                    }
                 })
                 .catch(showError);
         };

@@ -40,7 +40,7 @@ messengerRouter.get('/user', Verify.verifyOrdinaryUser, function(req, res, next)
                         }
 
                         // conversation.message = message[0];
-                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, message: message[0] });
+                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, notifications: conversation.notifications, message: message[0] });
                         if (fullConversations.length === conversations.length) {
                             return res.status(200).json(fullConversations);
                         }
@@ -117,8 +117,29 @@ messengerRouter.route('/:conversationId')
             return res.status(200).json(messages);
         });
     })
+    .put(function(req, res, next) {
+        Conversations.findOne({ _id: req.params.conversationId }, function(err, conversation) {
+            if (err) {
+                res.send({ error: err });
+                return next(err);
+            }
+
+            conversation.notifications.new = false;
+            conversation.notifications.total = 0;
+
+            conversation.save(function(err, savedConversation) {
+                if (err) {
+                    res.send({ error: err });
+                    return next(err);
+                }
+
+                return res.status(200).json({ message: 'Conversation notifications successfully set to false!', conversation: savedConversation });
+                // return (next);
+            });
+        });
+    })
     // Send reply in conversation
-    .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+    .post(function(req, res, next) {
         var reply = new Messages({
             conversation: req.params.conversationId,
             body: req.body.composedMessage,
@@ -132,8 +153,50 @@ messengerRouter.route('/:conversationId')
                 return next(err);
             }
 
-            return res.status(200).json({ message: 'Reply successfully sent!', reply: sentReply });
-            // return (next);
+            Conversations.findOne({ _id: req.params.conversationId }, function(err, conversation) {
+                if (err) {
+                    res.send({ error: err });
+                    return next(err);
+                }
+
+                conversation.notifications.new = true;
+                conversation.notifications.total++;
+
+                conversation.save(function(err, savedConversation) {
+                    if (err) {
+                        res.send({ error: err });
+                        return next(err);
+                    }
+
+                    return res.status(200).json({ message: 'Reply successfully sent!', reply: sentReply });
+                    // return (next);
+                });
+            });
+        });
+    });
+
+// GET/POST conversation
+messengerRouter.route('/:conversationId/notificationsFalse')
+    // Retrieve single conversation
+    .put(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Conversations.findOne({ _id: req.params.conversationId }, function(err, conversation) {
+            if (err) {
+                res.send({ error: err });
+                return next(err);
+            }
+
+            conversation.notifications.new = false;
+            conversation.notifications.total = 0;
+
+            conversation.save(function(err, savedConversation) {
+                if (err) {
+                    res.send({ error: err });
+                    return next(err);
+                }
+
+                return res.status(200).json({ message: 'Conversation notifications successfully set to false!', conversation: savedConversation });
+                // return (next);
+            });
         });
     });
 
@@ -166,7 +229,7 @@ messengerRouter.get('/company/:companyId', Verify.verifyOrdinaryUser, function(r
                         }
 
                         // conversation.message = message[0];
-                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, message: message[0] });
+                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, notifications: conversation.notifications, message: message[0] });
                         if (fullConversations.length === conversations.length) {
                             return res.status(200).json(fullConversations);
                         }
