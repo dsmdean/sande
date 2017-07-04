@@ -61,9 +61,9 @@
                 });
         }
 
-        function notificationsFalse(conversationId) {
+        function notificationsFalse(conversationId, data) {
             // Websocket.sendMessage(message);
-            return $http.put(baseURL + '/messenger/' + conversationId, {})
+            return $http.put(baseURL + '/messenger/' + conversationId, data)
                 .then(function(response) {
                     return response.data;
                 })

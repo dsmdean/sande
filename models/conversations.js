@@ -12,7 +12,27 @@ var ConversationsSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Companies'
     },
-    notifications: {
+    // notifications: {
+    //     new: {
+    //         type: Boolean,
+    //         default: false
+    //     },
+    //     total: {
+    //         type: Number,
+    //         default: 0
+    //     }
+    // },
+    userNotifications: {
+        new: {
+            type: Boolean,
+            default: false
+        },
+        total: {
+            type: Number,
+            default: 0
+        }
+    },
+    companyNotifications: {
         new: {
             type: Boolean,
             default: false

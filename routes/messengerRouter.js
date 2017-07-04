@@ -40,7 +40,7 @@ messengerRouter.get('/user', Verify.verifyOrdinaryUser, function(req, res, next)
                         }
 
                         // conversation.message = message[0];
-                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, notifications: conversation.notifications, message: message[0] });
+                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, userNotifications: conversation.userNotifications, companyNotifications: conversation.companyNotifications, message: message[0] });
                         if (fullConversations.length === conversations.length) {
                             return res.status(200).json(fullConversations);
                         }
@@ -49,7 +49,7 @@ messengerRouter.get('/user', Verify.verifyOrdinaryUser, function(req, res, next)
         });
 });
 
-messengerRouter.get('/all', function(req, res, next) {
+messengerRouter.get('/allMessages', function(req, res, next) {
     // Only return one message from each conversation to display as snippet
     Messages.find({}, function(err, messages) {
         if (err) {
@@ -58,6 +58,18 @@ messengerRouter.get('/all', function(req, res, next) {
         }
 
         return res.status(200).json(messages);
+    });
+});
+
+messengerRouter.get('/allConversations', function(req, res, next) {
+    // Only return one message from each conversation to display as snippet
+    Conversations.find({}, function(err, conversations) {
+        if (err) {
+            res.send({ error: err });
+            return next(err);
+        }
+
+        return res.status(200).json(conversations);
     });
 });
 
@@ -124,8 +136,16 @@ messengerRouter.route('/:conversationId')
                 return next(err);
             }
 
-            conversation.notifications.new = false;
-            conversation.notifications.total = 0;
+            if (req.body.user) {
+                conversation.userNotifications.new = false;
+                conversation.userNotifications.total = 0;
+            } else if (req.body.company) {
+                conversation.companyNotifications.new = false;
+                conversation.companyNotifications.total = 0;
+            }
+
+            // conversation.notifications.new = false;
+            // conversation.notifications.total = 0;
 
             conversation.save(function(err, savedConversation) {
                 if (err) {
@@ -159,8 +179,16 @@ messengerRouter.route('/:conversationId')
                     return next(err);
                 }
 
-                conversation.notifications.new = true;
-                conversation.notifications.total++;
+                if (req.body.company) {
+                    conversation.userNotifications.new = true;
+                    conversation.userNotifications.total++;
+                } else if (req.body.user) {
+                    conversation.companyNotifications.new = true;
+                    conversation.companyNotifications.total++;
+                }
+
+                // conversation.notifications.new = true;
+                // conversation.notifications.total++;
 
                 conversation.save(function(err, savedConversation) {
                     if (err) {
@@ -229,7 +257,7 @@ messengerRouter.get('/company/:companyId', Verify.verifyOrdinaryUser, function(r
                         }
 
                         // conversation.message = message[0];
-                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, notifications: conversation.notifications, message: message[0] });
+                        fullConversations.push({ _id: conversation._id, user: conversation.user, company: conversation.company, userNotifications: conversation.userNotifications, companyNotifications: conversation.companyNotifications, message: message[0] });
                         if (fullConversations.length === conversations.length) {
                             return res.status(200).json(fullConversations);
                         }
