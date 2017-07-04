@@ -49,21 +49,9 @@ messengerRouter.get('/user', Verify.verifyOrdinaryUser, function(req, res, next)
         });
 });
 
-messengerRouter.get('/allMessages', function(req, res, next) {
+messengerRouter.get('/userconversations', Verify.verifyOrdinaryUser, function(req, res, next) {
     // Only return one message from each conversation to display as snippet
-    Messages.find({}, function(err, messages) {
-        if (err) {
-            res.send({ error: err });
-            return next(err);
-        }
-
-        return res.status(200).json(messages);
-    });
-});
-
-messengerRouter.get('/allConversations', function(req, res, next) {
-    // Only return one message from each conversation to display as snippet
-    Conversations.find({}, function(err, conversations) {
+    Conversations.find({ user: req.decoded._id }, function(err, conversations) {
         if (err) {
             res.send({ error: err });
             return next(err);
@@ -264,6 +252,18 @@ messengerRouter.get('/company/:companyId', Verify.verifyOrdinaryUser, function(r
                     });
             });
         });
+});
+
+messengerRouter.get('/companyconversations/:companyId', function(req, res, next) {
+    // Only return one message from each conversation to display as snippet
+    Conversations.find({ company: req.params.companyId }, function(err, conversations) {
+        if (err) {
+            res.send({ error: err });
+            return next(err);
+        }
+
+        return res.status(200).json(conversations);
+    });
 });
 
 module.exports = messengerRouter;

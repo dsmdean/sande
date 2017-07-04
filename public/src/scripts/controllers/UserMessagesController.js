@@ -25,12 +25,12 @@
                 $scope.loading = false;
                 // console.log($scope.conversations);
 
-                if ($rootScope.newMessage) {
-                    $scope.newConversation = true;
-                    $scope.company = $rootScope.company;
-                    $scope.conversations.push({ company: $scope.company, user: $scope.currentUser._id, message: "I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd." });
-                    // console.log($scope.conversations);
-                }
+                // if ($rootScope.newMessage) {
+                //     $scope.newConversation = true;
+                //     $scope.company = $rootScope.company;
+                //     $scope.conversations.push({ company: $scope.company, user: $scope.currentUser._id, message: "I don't think they tried to market it to the billionaire, spelunking, base-jumping crowd." });
+                //     // console.log($scope.conversations);
+                // }
             })
             .catch(showError);
 
@@ -93,6 +93,9 @@
                     if ($scope.currentConversation.userNotifications.new) {
                         messageService.notificationsFalse(conversation._id, { user: true, company: false })
                             .then(function(response) {
+                                $rootScope.messageTotal = $scope.currentConversation.userNotifications.total;
+                                $rootScope.$broadcast('user:Message opened');
+
                                 $scope.currentConversation.userNotifications.new = false;
                                 $scope.currentConversation.userNotifications.total = 0;
                             })

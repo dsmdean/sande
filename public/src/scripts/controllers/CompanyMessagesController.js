@@ -61,6 +61,9 @@
                     if ($scope.currentConversation.companyNotifications.new) {
                         messageService.notificationsFalse(conversation._id, { company: true, user: false })
                             .then(function(response) {
+                                $rootScope.messageTotal = $scope.currentConversation.companyNotifications.total;
+                                $rootScope.$broadcast('company:Message opened');
+
                                 $scope.currentConversation.companyNotifications.new = false;
                                 $scope.currentConversation.companyNotifications.total = 0;
                             })

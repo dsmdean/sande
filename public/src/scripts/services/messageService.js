@@ -74,13 +74,37 @@
                 });
         }
 
+        function getAllUserConversations() {
+            return $http.get(baseURL + '/messenger/userconversations')
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    console.log('Error getting conversations: ' + response.statusText);
+                    return $q.reject('Error getting conversations.');
+                });
+        }
+
+        function getAllCompanyConversations(companyId) {
+            return $http.get(baseURL + '/messenger/companyconversations/' + companyId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    console.log('Error getting conversations: ' + response.statusText);
+                    return $q.reject('Error getting conversations.');
+                });
+        }
+
         return {
             getUserMessages: getUserMessages,
             getCompanyMessages: getCompanyMessages,
             getConversation: getConversation,
             sendMessage: sendMessage,
             newConversation: newConversation,
-            notificationsFalse: notificationsFalse
+            notificationsFalse: notificationsFalse,
+            getAllUserConversations: getAllUserConversations,
+            getAllCompanyConversations: getAllCompanyConversations
         };
     }
 

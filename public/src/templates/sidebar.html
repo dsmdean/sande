@@ -67,6 +67,7 @@
                     <a ui-sref="user-messages">
                         <i class="fa fa-comments-o"></i>
                         <span>Messages</span>
+                        <span class="label label-danger label-circle pull-right">{{userMessagesTotal}}</span>
                     </a>
                 </li>
                 <li ng-hide="isCompanyAdmin" ng-class="getClass('/user/cart')">
@@ -120,6 +121,7 @@
                     <a ui-sref="company-messages({companyId: currentCompany._id})">
                         <i class="fa fa-comments-o"></i>
                         <span>Messages</span>
+                        <span class="label label-danger label-circle pull-right">{{companyMessagesTotal}}</span>
                     </a>
                 </li>
             </ul>
