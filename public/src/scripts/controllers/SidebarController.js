@@ -101,7 +101,9 @@
             // var newMessage = { createdAt: Date.now(), body: $rootScope.newMessage.composedMessage, user: $rootScope.newMessage.user, company: $rootScope.newMessage.company, conversationId: $rootScope.newMessage.conversationId };
             // console.log(newMessage);
             $scope.conversations.forEach(function(conversation) {
-                if (conversation._id === $rootScope.newMessage.conversationId) {
+                if ($rootScope.currentConversation !== undefined && $rootScope.newMessage.conversationId === $rootScope.currentConversation) {
+                    //
+                } else if (conversation._id === $rootScope.newMessage.conversationId) {
                     $rootScope.$apply(function() {
                         if ($rootScope.newMessage.company) {
                             $scope.userMessagesTotal++;

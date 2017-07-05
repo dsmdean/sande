@@ -7,6 +7,7 @@
         $scope.loading = true;
         $scope.conversations = [];
         $scope.currentConversation = undefined;
+        $rootScope.currentConversation = undefined;
         // $scope.messages = [];
 
         // $('.conversation-inner').slimScroll({
@@ -60,6 +61,8 @@
                     }
                 });
             }
+
+            // $rootScope.newMessage = undefined;
         });
 
         $scope.startConversation = function() {
@@ -84,6 +87,7 @@
 
         $scope.selectConversation = function(conversation) {
             $scope.currentConversation = conversation;
+            $rootScope.currentConversation = conversation._id;
 
             messageService.getConversation(conversation._id)
                 .then(function(response) {

@@ -7,6 +7,7 @@
         $scope.loading = true;
         $scope.conversations = [];
         $scope.currentConversation = undefined;
+        $rootScope.currentConversation = undefined;
         // $scope.messages = [];
 
         function showError(message) {
@@ -48,10 +49,13 @@
                     }
                 });
             }
+
+            // $rootScope.newMessage = undefined;
         });
 
         $scope.selectConversation = function(conversation) {
             $scope.currentConversation = conversation;
+            $rootScope.currentConversation = conversation._id;
 
             messageService.getConversation(conversation._id)
                 .then(function(response) {

@@ -125,7 +125,21 @@ var CompaniesSchema = new Schema({
     notification: {
         type: Boolean,
         default: false
-    }
+    },
+    reviews: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Users'
+        },
+        value: {
+            type: Number,
+            min: 1,
+            max: 5
+        },
+        comment: {
+            type: String
+        }
+    }]
 }, {
     timestamps: true
 });

@@ -213,6 +213,17 @@
                 });
         }
 
+        function addCompanyReview(companyId, review) {
+            return $http.post(baseURL + '/companies/' + companyId + '/review', review)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    $log.error('Error adding review: ' + response.statusText);
+                    return $q.reject('Error adding review.');
+                });
+        }
+
         return {
             getAllCompanies: getAllCompanies,
             createCompany: createCompany,
@@ -227,7 +238,8 @@
             addCompanyProductImage: addCompanyProductImage,
             addCompanyService: addCompanyService,
             editCompanyService: editCompanyService,
-            deleteCompanyService: deleteCompanyService
+            deleteCompanyService: deleteCompanyService,
+            addCompanyReview: addCompanyReview
         };
     }
 

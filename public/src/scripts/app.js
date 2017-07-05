@@ -245,6 +245,10 @@
                 authService.removeCurrentCompany();
             }
 
+            if (toState.name !== 'user-messages' || toState.name !== 'company-messages') {
+                $rootScope.currentConversation = undefined;
+            }
+
             // if (toState.name === 'company-profile') {
             //     authService.setCompany();
             // }

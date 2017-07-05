@@ -380,4 +380,17 @@ companiesRouter.route('/:companyId/uploadPicture')
         });
     });
 
+// add a new review
+companiesRouter.route('/:companyId/review')
+    .post(Verify.verifyOrdinaryUser, function(req, res, next) {
+        Companies.findById(req.params.companyId, function(err, company) {
+            if (err) next(err);
+
+            company.reviews.push(req.body);
+            company.save();
+
+            res.status(200).json(company.reviews);
+        });
+    });
+
 module.exports = companiesRouter;

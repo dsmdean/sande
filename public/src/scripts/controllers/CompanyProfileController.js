@@ -30,6 +30,7 @@
         $scope.detailedService = {};
         // EVENTS SECTION
         $scope.newEvent = {};
+        $scope.reviewSet = false;
 
         $rootScope.$on('company:setCompanyAdmin', function() {
             $scope.isCompanyAdmin = authService.isCompanyAdmin();
@@ -61,6 +62,21 @@
                         $scope.companyEvent = response;
                     })
                     .catch(showError);
+
+                if ($scope.company.reviews.length > 0) {
+                    var reviewTotalValue = 0;
+                    $scope.company.reviews.forEach(function(review) {
+                        reviewTotalValue += review.value;
+
+                        if (review.user === $scope.currentUser._id) {
+                            $scope.reviewSet = true;
+                        }
+                    });
+
+                    $scope.companyReview = reviewTotalValue / $scope.company.reviews.length;
+                } else {
+                    $scope.companyReview = 0;
+                }
             })
             .catch(showError);
 
@@ -422,6 +438,37 @@
             $rootScope.newMessage = true;
             $rootScope.company = $scope.company;
             $state.go('user-messages');
+        };
+
+        // REVIEW COMPANY
+        $scope.reviewCompany = function(value) {
+            // console.log('Review: ' + value);
+            if (!$scope.reviewSet) {
+                $scope.newReview = {
+                    user: $scope.currentUser._id,
+                    value: value
+                };
+
+                $('#reviewCommentModal').modal('show');
+            } else {
+                notifier.success('You have already set a review');
+            }
+        };
+
+        $scope.addReview = function() {
+            console.log($scope.newReview);
+
+            companyService.addCompanyReview($scope.company._id, $scope.newReview)
+                .then(function(response) {
+                    // var reviewTotalValue = 0;
+                    // $scope.company.reviews.forEach(function(review) {
+                    //     reviewTotalValue += review.value;
+                    // });
+
+                    // $scope.companyReview = reviewTotalValue / $scope.company.reviews.length;
+                    $scope.reviewSet = true;
+                })
+                .catch(showError);
         };
     }
 
