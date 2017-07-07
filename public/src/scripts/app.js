@@ -64,6 +64,15 @@
                     }
                 }
             })
+            // .state('fb-login-callback', {
+            //     parent: 'page',
+            //     url: '/login/callback',
+            //     views: {
+            //         'content@dashboard': {
+            //             templateUrl: 'templates/home.html'
+            //         }
+            //     }
+            // })
             .state('home', {
                 parent: 'page',
                 url: '/dashboard',

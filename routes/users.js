@@ -170,11 +170,27 @@ userRouter.get('/facebook/callback', function(req, res, next) {
 
             var token = Verify.getToken(user);
 
-            res.status(200).json({
-                status: 'Login succesful!',
-                succes: true,
-                token: token
-            });
+            User.findById(user._id)
+                .populate('companies')
+                .exec(function(err, populatedUser) {
+                    if (err) next(err);
+
+                    // console.log(populatedUser);
+
+                    res.status(200).json({
+                        status: 'Login Successful!',
+                        succes: true,
+                        token: token,
+                        user: populatedUser
+                    });
+                });
+
+            // res.status(200).json({
+            //     status: 'Login succesful!',
+            //     succes: true,
+            //     token: token,
+            //     user: user
+            // });
         });
     })(req, res, next);
 });

@@ -21,6 +21,14 @@
                 .catch(showError);
         };
 
+        $scope.fbLogin = function() {
+            authService.fbLogin()
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(showError);
+        };
+
         $rootScope.$on('login:Successful', function() {
             $scope.loggedIn = true;
             $scope.currentUser = authService.getCurrentUser();

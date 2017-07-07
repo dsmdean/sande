@@ -150,6 +150,17 @@
                 });
         }
 
+        function fbLogin() {
+            return $http.get(baseURL + '/users/facebook')
+                .then(function(response) {
+                    return response;
+                })
+                .catch(function(response) {
+                    $log.error(response);
+                    return $q.reject('Error logging in with facebook. (HTTP status: ' + response.status + ')');
+                });
+        }
+
         function isAuthenticated() {
             return loggedIn;
         }
@@ -213,6 +224,7 @@
             register: register,
             login: login,
             logout: logout,
+            fbLogin: fbLogin,
             isAuthenticated: isAuthenticated,
             isAdmin: isAdmin,
             getCurrentUser: getCurrentUser,
