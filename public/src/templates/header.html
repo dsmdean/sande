@@ -93,7 +93,9 @@
             <li class="dropdown profile-dropdown">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
                     <img ng-src="img/user-profile/{{currentUser.image}}" alt="" />
-                    <span class="hidden-xs">{{currentUser.firstname}} {{currentUser.lastname[0]}}.</span> <b class="caret"></b>
+                    <span ng-hide="currentUser.firstname === '' && currentUser.lastname === ''" class="hidden-xs">{{currentUser.firstname}} {{currentUser.lastname[0]}}.</span>
+                    <span ng-show="currentUser.firstname === '' && currentUser.lastname === ''" class="hidden-xs">{{currentUser.username}}.</span>
+                    <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                     <li><a ui-sref="user"><i class="fa fa-user"></i>User Profile</a></li>

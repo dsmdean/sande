@@ -2,6 +2,7 @@
 var express = require('express');
 var userRouter = express.Router();
 var passport = require('passport');
+var querystring = require('querystring');
 var nodemailer = require('nodemailer');
 var multer = require('multer');
 var storage = multer.diskStorage({
@@ -170,27 +171,11 @@ userRouter.get('/facebook/callback', function(req, res, next) {
 
             var token = Verify.getToken(user);
 
-            User.findById(user._id)
-                .populate('companies')
-                .exec(function(err, populatedUser) {
-                    if (err) next(err);
+            user.activated = true;
+            user.save();
 
-                    // console.log(populatedUser);
-
-                    res.status(200).json({
-                        status: 'Login Successful!',
-                        succes: true,
-                        token: token,
-                        user: populatedUser
-                    });
-                });
-
-            // res.status(200).json({
-            //     status: 'Login succesful!',
-            //     succes: true,
-            //     token: token,
-            //     user: user
-            // });
+            res.redirect('https://sande-test.herokuapp.com/src/#/login/callback?token=' + token + '&user=' + user._id);
+            // res.redirect('http://localhost:3000/src/#/login/callback?token=' + token + '&user=' + user._id);
         });
     })(req, res, next);
 });
@@ -224,16 +209,17 @@ userRouter.route('/recoverPassword')
 
 // specific user
 userRouter.route('/:userId')
-    .all(Verify.verifyOrdinaryUser)
     // get a specific user
     .get(function(req, res, next) {
-        User.findById(req.params.userId, function(err, user) {
-            if (err) next(err);
-            res.json(user);
-        });
+        User.findById(req.params.userId)
+            .populate('companies')
+            .exec(function(err, user) {
+                if (err) next(err);
+                res.json(user);
+            });
     })
     // update a specific user
-    .put(function(req, res, next) {
+    .put(Verify.verifyOrdinaryUser, function(req, res, next) {
         User.findByIdAndUpdate(req.params.userId, {
             $set: req.body
         }, {
@@ -244,7 +230,7 @@ userRouter.route('/:userId')
         });
     })
     // delete a specific user
-    .delete(function(req, res, next) {
+    .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
         User.findById(req.params.userId, function(err, user) {
             if (err) next(err);
 

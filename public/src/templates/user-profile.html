@@ -15,10 +15,8 @@
             <div class="main-box clearfix">
                 <header class="main-box-header clearfix">
                     <h2>
-                        {{currentUser.firstname}} {{currentUser.lastname}}
-                        <!--<a href="" class="md-trigger box-close pull-right danger-close" title="Delete Account" data-toggle="modal" data-target="#deleteModal">
-                            <i class="fa fa-times"></i>
-                        </a>-->
+                        <span ng-hide="currentUser.firstname === '' && currentUser.lastname === ''">{{currentUser.firstname}} {{currentUser.lastname}}</span>
+                        <span ng-show="currentUser.firstname === '' && currentUser.lastname === ''">{{currentUser.username}}</span>
                     </h2>
                 </header>
                 <div class="main-box-body clearfix">

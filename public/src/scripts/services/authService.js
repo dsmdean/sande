@@ -86,6 +86,8 @@
         function storeUserCredentials(credentials) {
             delete credentials['hash'];
             delete credentials['salt'];
+            delete credentials['OauthToken'];
+            delete credentials['OauthId'];
 
             localStorage.storeObject(TOKEN_KEY, credentials);
             useCredentials(credentials);
@@ -150,15 +152,8 @@
                 });
         }
 
-        function fbLogin() {
-            return $http.get(baseURL + '/users/facebook')
-                .then(function(response) {
-                    return response;
-                })
-                .catch(function(response) {
-                    $log.error(response);
-                    return $q.reject('Error logging in with facebook. (HTTP status: ' + response.status + ')');
-                });
+        function fbLogin(user) {
+            storeUserCredentials(user);
         }
 
         function isAuthenticated() {
