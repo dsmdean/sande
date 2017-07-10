@@ -188,6 +188,8 @@
 
         function setCurrentCompany(company) {
             currentCompany = company;
+            // console.log(company.users[0].user._id);
+            // console.log(currentUser._id);
 
             for (var i = 0; i < company.users.length; i++) {
                 if (company.users[i].user._id === currentUser._id) {
@@ -195,6 +197,7 @@
                     localStorage.remove(COMPANY_DATA);
                     localStorage.storeObject(COMPANY_DATA, company);
                     $rootScope.$broadcast('company:setCompanyAdmin');
+                    break;
                 }
             }
 

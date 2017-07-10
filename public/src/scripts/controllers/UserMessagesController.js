@@ -7,7 +7,7 @@
         $scope.loading = true;
         $scope.conversations = [];
         $scope.currentConversation = undefined;
-        $rootScope.currentConversation = undefined;
+        // $rootScope.currentConversation = undefined;
         // $scope.messages = [];
 
         // $('.conversation-inner').slimScroll({
@@ -126,6 +126,12 @@
                 })
                 .catch(showError);
         };
+
+        if ($rootScope.currentConversation !== undefined) {
+            // $scope.conversations.push($rootScope.currentConversation);
+            console.log($rootScope.currentConversation);
+            $scope.selectConversation($rootScope.currentConversation);
+        }
     }
 
     angular.module('sande')

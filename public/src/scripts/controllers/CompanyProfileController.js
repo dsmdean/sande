@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService, $rootScope, shoppingService) {
+    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService, $rootScope, shoppingService, messageService) {
 
         $scope.currentUser = authService.getCurrentUser();
         $scope.isCompanyAdmin = authService.isCompanyAdmin();
@@ -434,10 +434,17 @@
 
         // SEND MESSAGE
         $scope.sendMessage = function() {
-            // $rootScope.$broadcast('user:sendMessage');
-            $rootScope.newMessage = true;
-            $rootScope.company = $scope.company;
-            $state.go('user-messages');
+            if ($scope.isCompanyAdmin) {
+                notifier.success("You're the company admin");
+            } else {
+                messageService.userCompanyconversation($scope.company._id)
+                    .then(function(response) {
+                        $rootScope.currentConversation = response;
+                        console.log($rootScope.currentConversation);
+                        $state.go('user-messages');
+                    })
+                    .catch(showError);
+            }
         };
 
         // REVIEW COMPANY
@@ -473,6 +480,6 @@
     }
 
     angular.module('sande')
-        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', '$rootScope', 'shoppingService', CompanyProfileController]);
+        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', '$rootScope', 'shoppingService', 'messageService', CompanyProfileController]);
 
 }());

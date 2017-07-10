@@ -266,4 +266,16 @@ messengerRouter.get('/companyconversations/:companyId', function(req, res, next)
     });
 });
 
+messengerRouter.get('/userCompanyconversation/:companyId', Verify.verifyOrdinaryUser, function(req, res, next) {
+    // Only return one message from each conversation to display as snippet
+    Conversations.findOne({ company: req.params.companyId, user: req.decoded._id }, function(err, conversation) {
+        if (err) {
+            res.send({ error: err });
+            return next(err);
+        }
+
+        return res.status(200).json(conversation);
+    });
+});
+
 module.exports = messengerRouter;

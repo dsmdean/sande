@@ -96,6 +96,17 @@
                 });
         }
 
+        function userCompanyconversation(companyId) {
+            return $http.get(baseURL + '/messenger/userCompanyconversation/' + companyId)
+                .then(function(response) {
+                    return response.data;
+                })
+                .catch(function(response) {
+                    console.log('Error getting conversation: ' + response.statusText);
+                    return $q.reject('Error getting conversation.');
+                });
+        }
+
         return {
             getUserMessages: getUserMessages,
             getCompanyMessages: getCompanyMessages,
@@ -104,7 +115,8 @@
             newConversation: newConversation,
             notificationsFalse: notificationsFalse,
             getAllUserConversations: getAllUserConversations,
-            getAllCompanyConversations: getAllCompanyConversations
+            getAllCompanyConversations: getAllCompanyConversations,
+            userCompanyconversation: userCompanyconversation
         };
     }
 

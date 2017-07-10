@@ -94,6 +94,11 @@
                 })
                 .catch(showError);
         };
+
+        if ($rootScope.currentConversation !== undefined) {
+            $scope.conversations.push($rootScope.currentConversation);
+            $scope.selectConversation($rootScope.currentConversation);
+        }
     }
 
     angular.module('sande')

@@ -230,7 +230,7 @@ userRouter.route('/:userId')
         });
     })
     // delete a specific user
-    .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
+    .delete(function(req, res, next) {
         User.findById(req.params.userId, function(err, user) {
             if (err) next(err);
 
