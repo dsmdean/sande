@@ -15,7 +15,7 @@ companyCategoryRouter.route('/')
             res.json(categories);
         });
     })
-    .post(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
+    .post(Verify.verifyOrdinaryUser, function(req, res, next) {
         CompanyCategories.create(req.body, function(err, category) {
             if (err) next(err);
 
@@ -28,7 +28,7 @@ companyCategoryRouter.route('/')
             res.end('Added the category with id: ' + id);
         });
     })
-    .delete(Verify.verifyOrdinaryUser, Verify.verifyAdmin, function(req, res, next) {
+    .delete(Verify.verifyOrdinaryUser, function(req, res, next) {
         CompanyCategories.remove({}, function(err, resp) {
             if (err) next(err);
             res.json(resp);
@@ -43,7 +43,7 @@ companyCategoryRouter.route('/:categoryId')
             res.json(category);
         });
     })
-    .put(Verify.verifyAdmin, function(req, res, next) {
+    .put(function(req, res, next) {
         CompanyCategories.findByIdAndUpdate(req.params.categoryId, {
             $set: req.body
         }, {
@@ -53,7 +53,7 @@ companyCategoryRouter.route('/:categoryId')
             res.json(category);
         });
     })
-    .delete(Verify.verifyAdmin, function(req, res, next) {
+    .delete(function(req, res, next) {
         CompanyCategories.remove(req.params.categoryId, function(err, resp) {
             if (err) next(err);
 

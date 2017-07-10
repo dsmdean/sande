@@ -37,7 +37,6 @@ var ProductsSchema = new Schema({
 var ServicesSchema = new Schema({
     name: {
         type: String
-            // unique: true
     },
     description: {
         type: String
