@@ -29,6 +29,7 @@
                 })
                 .catch(function(response) {
                     $log.error('Error creating a company: ' + response.statusText);
+                    $log.log(response);
                     return $q.reject('Error creating a company.');
                 });
         }
