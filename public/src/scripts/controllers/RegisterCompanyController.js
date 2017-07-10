@@ -35,7 +35,7 @@
                 .then(function(response) {
                     if (response.success) {
                         notifier.success(response.status);
-                        $state.reload();
+                        $state.go('user');
                     } else {
                         notifier.error(response.status);
                     }
