@@ -21,7 +21,7 @@
             .catch(showError);
 
         $rootScope.$on('login:Successful', function() {
-            $scope.loading = false;
+            // $scope.loading = false;
             $scope.loggedIn = true;
             $scope.currentUser = authService.getCurrentUser();
 
