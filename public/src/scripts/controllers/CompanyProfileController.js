@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService, $rootScope, shoppingService, messageService) {
+    function CompanyProfileController($scope, authService, companyService, notifier, $log, $state, $timeout, eventService, $rootScope, shoppingService, messageService, $location) {
 
         $scope.currentUser = authService.getCurrentUser();
         $scope.isCompanyAdmin = authService.isCompanyAdmin();
@@ -437,13 +437,7 @@
             if ($scope.isCompanyAdmin) {
                 notifier.success("You're the company admin");
             } else {
-                messageService.userCompanyconversation($scope.company._id)
-                    .then(function(response) {
-                        $rootScope.currentConversation = response;
-                        console.log($rootScope.currentConversation);
-                        $state.go('user-messages');
-                    })
-                    .catch(showError);
+                $state.go('user-messages', { companyId: $scope.company._id });
             }
         };
 
@@ -480,6 +474,6 @@
     }
 
     angular.module('sande')
-        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', '$rootScope', 'shoppingService', 'messageService', CompanyProfileController]);
+        .controller('CompanyProfileController', ['$scope', 'authService', 'companyService', 'notifier', '$log', '$state', '$timeout', 'eventService', '$rootScope', 'shoppingService', 'messageService', '$location', CompanyProfileController]);
 
 }());

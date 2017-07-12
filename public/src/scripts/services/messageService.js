@@ -51,7 +51,7 @@
 
         function newConversation(data) {
             // Websocket.sendMessage(message);
-            return $http.post(baseURL + '/messenger/new/', data)
+            return $http.post(baseURL + '/messenger/new', data)
                 .then(function(response) {
                     return response.data;
                 })

@@ -7,7 +7,7 @@
         $scope.loading = true;
         $scope.conversations = [];
         $scope.currentConversation = undefined;
-        // $rootScope.currentConversation = undefined;
+        $rootScope.currentConversation = undefined;
         // $scope.messages = [];
 
         // $('.conversation-inner').slimScroll({
@@ -127,10 +127,21 @@
                 .catch(showError);
         };
 
-        if ($rootScope.currentConversation !== undefined) {
-            // $scope.conversations.push($rootScope.currentConversation);
-            console.log($rootScope.currentConversation);
-            $scope.selectConversation($rootScope.currentConversation);
+        if ($state.params.companyId !== undefined) {
+            messageService.userCompanyconversation($state.params.companyId)
+                .then(function(conversation) {
+                    if (conversation === null) {
+                        messageService.newConversation({ company: $state.params.companyId })
+                            .then(function(newConversation) {
+                                $scope.conversations.push(newConversation);
+                                $scope.selectConversation(newConversation);
+                            })
+                            .catch(showError);
+                    } else {
+                        $scope.selectConversation(conversation);
+                    }
+                })
+                .catch(showError);
         }
     }
 

@@ -63,18 +63,14 @@ messengerRouter.get('/userconversations', Verify.verifyOrdinaryUser, function(re
 
 // Start new conversation
 messengerRouter.post('/new', Verify.verifyOrdinaryUser, function(req, res, next) {
-    // if (!req.params.recipient) {
-    //     res.status(422).send({ error: 'Please choose a valid recipient for your message.' });
-    //     return next();
-    // }
 
-    if (!req.body.composedMessage) {
-        res.status(422).send({ error: 'Please enter a message.' });
+    if (!req.body.company) {
+        res.status(422).send({ error: 'Please enter a company.' });
         return next();
     }
 
     var conversation = new Conversations({
-        user: req.body.user,
+        user: req.decoded._id,
         company: req.body.company
     });
 
@@ -84,22 +80,35 @@ messengerRouter.post('/new', Verify.verifyOrdinaryUser, function(req, res, next)
             return next(err);
         }
 
-        var message = new Messages({
-            conversation: newConversation._id,
-            body: req.body.composedMessage,
-            user: req.body.author.user,
-            company: req.body.author.company
-        });
+        // var message = new Messages({
+        //     conversation: newConversation._id,
+        //     body: req.body.composedMessage,
+        //     user: req.body.author.user,
+        //     company: req.body.author.company
+        // });
 
-        message.save(function(err, newMessage) {
-            if (err) {
-                res.send({ error: err });
-                return next(err);
-            }
+        // message.save(function(err, newMessage) {
+        //     if (err) {
+        //         res.send({ error: err });
+        //         return next(err);
+        //     }
 
-            return res.status(200).json({ message: 'Conversation started!', conversationId: conversation._id, newMessage: newMessage });
-            // return next();
-        });
+        //     return res.status(200).json({ message: 'Conversation started!', conversationId: conversation._id, newMessage: newMessage });
+        //     // return next();
+        // });
+
+        // return res.status(200).json({ message: 'Conversation started!', conversation: newConversation });
+
+        Conversations.findOne({ _id: newConversation._id })
+            .populate('company')
+            .exec(function(err, populatedConversation) {
+                if (err) {
+                    res.send({ error: err });
+                    return next(err);
+                }
+
+                return res.status(200).json(populatedConversation);
+            });
     });
 });
 

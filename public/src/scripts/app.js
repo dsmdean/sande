@@ -200,7 +200,7 @@
             })
             .state('user-messages', {
                 parent: 'page',
-                url: '/user/messages',
+                url: '/user/messages/:companyId',
                 views: {
                     'content@dashboard': {
                         controller: 'UserMessagesController',
