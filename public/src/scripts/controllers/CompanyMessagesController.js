@@ -30,6 +30,7 @@
                 $rootScope.$apply(function() {
                     $scope.messages.push(newMessage);
                     // console.log($scope.messages);
+                    $scope.currentConversation.message.body = $rootScope.newMessage.composedMessage;
 
                     messageService.notificationsFalse($scope.currentConversation._id, { company: true, user: false })
                         .then(function(response) {
@@ -62,6 +63,13 @@
                     $scope.messages = response;
                     // console.log(response);
 
+                    if ($scope.currentConversation.companyNotifications === undefined) {
+                        $scope.currentConversation.companyNotifications = {
+                            new: false,
+                            total: 0
+                        };
+                    }
+
                     if ($scope.currentConversation.companyNotifications.new) {
                         messageService.notificationsFalse(conversation._id, { company: true, user: false })
                             .then(function(response) {
@@ -72,6 +80,12 @@
                                 $scope.currentConversation.companyNotifications.total = 0;
                             })
                             .catch(showError);
+                    }
+
+                    if ($scope.currentConversation.message === undefined) {
+                        $scope.currentConversation.message = {
+                            body: ''
+                        };
                     }
                 })
                 .catch(showError);

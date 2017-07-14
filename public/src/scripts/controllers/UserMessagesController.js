@@ -93,6 +93,14 @@
                 .then(function(response) {
                     $scope.messages = response;
                     // console.log(response);
+                    $scope.currentConversation.message.body = $rootScope.newMessage.composedMessage;
+
+                    if ($scope.currentConversation.userNotifications === undefined) {
+                        $scope.currentConversation.userNotifications = {
+                            new: false,
+                            total: 0
+                        };
+                    }
 
                     if ($scope.currentConversation.userNotifications.new) {
                         messageService.notificationsFalse(conversation._id, { user: true, company: false })
@@ -104,6 +112,12 @@
                                 $scope.currentConversation.userNotifications.total = 0;
                             })
                             .catch(showError);
+                    }
+
+                    if ($scope.currentConversation.message === undefined) {
+                        $scope.currentConversation.message = {
+                            body: ''
+                        };
                     }
                 })
                 .catch(showError);
@@ -134,11 +148,16 @@
                         messageService.newConversation({ company: $state.params.companyId })
                             .then(function(newConversation) {
                                 $scope.conversations.push(newConversation);
+                                // newConversation.userNotifications = {
+                                //     new: false,
+                                //     total: 0
+                                // };
+                                // newConversation.message = {
+                                //     body: ''
+                                // };
                                 $scope.selectConversation(newConversation);
                             })
                             .catch(showError);
-                    } else {
-                        $scope.selectConversation(conversation);
                     }
                 })
                 .catch(showError);
