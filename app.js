@@ -28,6 +28,14 @@ var messengerRouter = require('./routes/messengerRouter');
 
 var app = express();
 
+app.use(function(req, res, next) {
+    // configure CORS
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With, x-access-token");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+    next();
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
