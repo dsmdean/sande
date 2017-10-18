@@ -139,6 +139,59 @@ userRouter.post('/login', function(req, res, next) {
     })(req, res, next);
 });
 
+// log user in mobile
+userRouter.post('/login-mobile', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!user) {
+            return res.status(401).json({
+                err: info
+            });
+        }
+
+        if (user.suspended) {
+            return res.status(500).json({
+                err: 'User suspended! Could not log in user'
+            });
+        }
+
+        req.logIn(user, function(err) {
+            if (err) {
+                return res.status(500).json({
+                    err: 'Could not log in user'
+                });
+            }
+
+            var token = Verify.getTokenMobile({ "username": user.username, "_id": user._id, "admin": user.admin });
+
+            User.findById(user._id)
+                .populate('companies')
+                .exec(function(err, populatedUser) {
+                    if (err) next(err);
+
+                    // console.log(populatedUser);
+
+                    res.status(200).json({
+                        status: 'Login Successful!',
+                        succes: true,
+                        token: token,
+                        user: populatedUser
+                    });
+                });
+
+            // res.status(200).json({
+            //     status: 'Login Successful!',
+            //     succes: true,
+            //     token: token,
+            //     user: user
+            // });
+        });
+    })(req, res, next);
+});
+
 // logout user
 userRouter.get('/logout', Verify.verifyOrdinaryUser, function(req, res) {
     req.logout();

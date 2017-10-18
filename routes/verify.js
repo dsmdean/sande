@@ -10,6 +10,13 @@ exports.getToken = function(user) {
     });
 };
 
+// get token mobile
+exports.getTokenMobile = function(user) {
+    return jwt.sign(user, config.secretKey, {
+        expiresInMinutes: 43200
+    });
+};
+
 // verify ordinary user
 exports.verifyOrdinaryUser = function(req, res, next) {
 
